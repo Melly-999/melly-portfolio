@@ -16,7 +16,37 @@ Narrative: **Process → Platform → Product**
 
 - Docs-first planning complete
 - Claude Design prototype preserved ([`reference/claude-design/`](reference/claude-design/))
-- Production implementation not started
+- Production scaffold in place: Astro + TypeScript, base layout, navigation,
+  footer, dark design tokens, and route skeletons for all 7 pages
+- Full homepage and case-study content not yet implemented
+
+## Production Stack
+
+- **Framework:** [Astro](https://astro.build) (static output, TypeScript strict)
+- **Styling:** plain CSS with CSS custom properties (`src/styles/tokens.css`) — no Tailwind, no CSS-in-JS
+- No React/Vue/Svelte integration and no animation library added yet — see [`docs/portfolio/implementation_backlog_001.md`](docs/portfolio/implementation_backlog_001.md) for when (if ever) an island is justified
+
+### Local development
+
+```
+npm install       # first time / after dependency changes
+npm run dev        # local dev server (default: http://localhost:4321)
+npm run build       # static production build → dist/
+npm run preview      # preview the production build locally
+npm run check       # astro check (TypeScript + template diagnostics)
+```
+
+### Routes
+
+| Route | Status |
+|---|---|
+| `/` | Walking skeleton (hero, Process → Platform → Product strip, projects placeholder, contact CTA) |
+| `/projects` | Project index with 3 cards |
+| `/projects/mellytrade` | Placeholder case study — safety label visible |
+| `/projects/aios` | Placeholder case study |
+| `/projects/workspace` | Placeholder case study |
+| `/about` | Placeholder |
+| `/contact` | Email (mailto) + GitHub; CV link intentionally omitted (no approved CV asset yet) |
 
 ## Safety And Honesty Principles
 
@@ -46,4 +76,4 @@ implementation will reproduce the approved design using the chosen framework.
 
 ## Next Recommended Task
 
-PF-010 — production scaffold, base layout and dark design tokens
+PF-020 — Home page full implementation per [`docs/portfolio/homepage_copy_001.md`](docs/portfolio/homepage_copy_001.md), followed by the project content model and the three case studies.

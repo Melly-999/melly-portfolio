@@ -1,0 +1,82 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectBadge from "../components/ProjectBadge.astro";
+
+const narrative = [
+  { variant: "process" as const, label: "Process", name: "AI Agent Workspace" },
+  { variant: "platform" as const, label: "Platform", name: "MellyCore AIOS" },
+  { variant: "product" as const, label: "Product", name: "MellyTrade" },
+];
+---
+
+<BaseLayout>
+  <section class="section content-width">
+    <p class="mono" style="color:var(--color-accent-amber);font-size:var(--text-label);letter-spacing:0.14em;text-transform:uppercase;">
+      Junior Full-Stack Developer
+    </p>
+    <h1 style="font-size:var(--text-display);max-width:16ch;margin-top:var(--space-16);">
+      I build safety-first AI applications and developer tools.
+    </h1>
+    <p class="reading-width" style="margin-top:var(--space-16);color:var(--color-text-secondary);font-size:var(--text-body-lg);">
+      React · TypeScript · FastAPI · AI Tools
+    </p>
+    <p class="mono" style="margin-top:var(--space-12);color:var(--color-text-muted);font-size:var(--text-label);">
+      Available now · Poland / Remote · B2B · Freelance · Contract
+    </p>
+    <div class="cluster" style="margin-top:var(--space-32);">
+      <a href="/projects" class="button button--primary">View Projects</a>
+      <a
+        href="https://github.com/Melly-999"
+        class="button button--secondary"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
+    </div>
+  </section>
+
+  <section class="section content-width" aria-labelledby="narrative-heading">
+    <h2 id="narrative-heading" style="font-size:var(--text-h2);">
+      Process → Platform → Product
+    </h2>
+    <p class="reading-width" style="margin-top:var(--space-8);color:var(--color-text-secondary);">
+      One system, three layers — each documented, each safety-first.
+    </p>
+    <div class="grid-auto" style="margin-top:var(--space-24);">
+      {
+        narrative.map((item) => (
+          <div class="panel" style="padding:var(--space-24);">
+            <ProjectBadge variant={item.variant} label={item.label} />
+            <p style="margin-top:var(--space-12);font-weight:700;font-size:var(--text-h3);">
+              {item.name}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section content-width" aria-labelledby="projects-heading">
+    <h2 id="projects-heading" style="font-size:var(--text-h2);">Selected Projects</h2>
+    <p class="reading-width" style="margin-top:var(--space-8);color:var(--color-text-secondary);">
+      Full project cards are coming in the next implementation pass. For now,
+      browse the project index.
+    </p>
+    <div style="margin-top:var(--space-24);">
+      <a href="/projects" class="button button--secondary">Browse projects</a>
+    </div>
+  </section>
+
+  <section class="section content-width panel" style="padding:var(--space-32);" aria-labelledby="contact-cta-heading">
+    <h2 id="contact-cta-heading" style="font-size:var(--text-h2);">
+      Looking for a junior developer who ships with AI leverage?
+    </h2>
+    <p class="reading-width" style="margin-top:var(--space-8);color:var(--color-text-secondary);">
+      The fastest way to reach me is email.
+    </p>
+    <div style="margin-top:var(--space-24);">
+      <a href="/contact" class="button button--primary">Contact</a>
+    </div>
+  </section>
+</BaseLayout>

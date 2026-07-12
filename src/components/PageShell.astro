@@ -1,0 +1,13 @@
+---
+import SiteHeader from "./SiteHeader.astro";
+import SiteFooter from "./SiteFooter.astro";
+---
+
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="page-shell">
+  <SiteHeader />
+  <main id="main" class="page-shell__main">
+    <slot />
+  </main>
+  <SiteFooter />
+</div>

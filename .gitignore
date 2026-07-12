@@ -3,6 +3,7 @@
 Thumbs.db
 .vscode/
 .vs/
+.claude/
 
 # Local environment
 .env
@@ -15,3 +16,6 @@ dist/
 build/
 __pycache__/
 *.py[cod]
+
+# Astro generated types
+.astro/
