@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/mellytrade-design-system-1248faa8-d020-4833-9f8e-6d8dede5dd2c/colors_and_type.css">
+<script src="_ds/mellytrade-design-system-1248faa8-d020-4833-9f8e-6d8dede5dd2c/_ds_bundle.js"></script>
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;background:#0A0E14;}
+  a{color:#f7933c;}
+  a:hover{color:#ff9d4a;}
+  @keyframes psFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes psPulse{0%,100%{opacity:0.55}50%{opacity:0.95}}
+  @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}
+</style>
+</helmet>
+<div style="position:relative;width:100%;height:100%;min-height:400px;background:#0A0E14;overflow:hidden;">
+
+  <!-- soft even lighting -->
+  <div style="position:absolute;left:{{ surfaceX }};top:46%;transform:translate(-50%,-50%);width:980px;height:660px;background:radial-gradient(closest-side,rgba(86,196,222,0.06),transparent 70%);pointer-events:none;"></div>
+  <div style="position:absolute;left:{{ surfaceX }};top:20%;transform:translate(-50%,-50%);width:560px;height:340px;background:radial-gradient(closest-side,rgba(247,147,60,0.05),transparent 70%);pointer-events:none;"></div>
+
+  <!-- isometric planning surface -->
+  <div style="position:absolute;left:{{ surfaceX }};top:50%;transform:translate(-50%,-50%);width:760px;height:640px;">
+    <div style="position:absolute;inset:0;perspective:1300px;animation:psFloat 9s ease-in-out infinite;">
+    <div style="position:absolute;left:50%;top:50%;width:660px;height:520px;margin:-260px 0 0 -330px;transform:rotateX(55deg) rotateZ(-34deg);transform-style:preserve-3d;">
+
+      <!-- connector lines -->
+      <div style="position:absolute;left:328px;top:88px;width:2px;height:40px;background:linear-gradient(180deg,rgba(247,147,60,0.6),rgba(86,196,222,0.55));box-shadow:0 0 8px rgba(86,196,222,0.4);"></div>
+      <div style="position:absolute;left:109px;top:244px;width:2px;height:40px;background:rgba(86,196,222,0.45);box-shadow:0 0 7px rgba(86,196,222,0.35);animation:psPulse 5s ease-in-out infinite;"></div>
+      <div style="position:absolute;left:328px;top:244px;width:2px;height:40px;background:rgba(86,196,222,0.45);box-shadow:0 0 7px rgba(86,196,222,0.35);animation:psPulse 6s ease-in-out infinite;animation-delay:-2s;"></div>
+      <div style="position:absolute;left:548px;top:244px;width:2px;height:40px;background:rgba(86,196,222,0.45);box-shadow:0 0 7px rgba(86,196,222,0.35);animation:psPulse 7s ease-in-out infinite;animation-delay:-4s;"></div>
+      <div style="position:absolute;left:219px;top:400px;width:2px;height:40px;background:rgba(86,196,222,0.32);"></div>
+      <div style="position:absolute;left:438px;top:400px;width:2px;height:40px;background:rgba(86,196,222,0.32);"></div>
+
+      <!-- amber focal anchor panel -->
+      <div style="position:absolute;left:240px;top:0;width:180px;height:88px;border-radius:12px;background:linear-gradient(160deg,rgba(247,147,60,0.16),rgba(247,147,60,0.06));border:1px solid rgba(247,155,80,0.55);box-shadow:0 0 30px -6px rgba(247,147,60,0.4),0 22px 44px -20px rgba(0,0,0,0.7);transform:translateZ(26px);padding:14px;">
+        <div style="width:68%;height:7px;border-radius:4px;background:rgba(255,190,130,0.55);filter:blur(1.2px);"></div>
+        <div style="width:42%;height:7px;border-radius:4px;background:rgba(255,190,130,0.35);filter:blur(1.2px);margin-top:9px;"></div>
+      </div>
+
+      <!-- row 1 -->
+      <div style="position:absolute;left:20px;top:128px;width:180px;height:116px;border-radius:12px;background:linear-gradient(160deg,rgba(150,180,220,0.11),rgba(150,180,220,0.04));border:1px solid rgba(170,200,235,0.17);box-shadow:0 20px 40px -20px rgba(0,0,0,0.65),inset 0 0 22px rgba(120,160,210,0.05);transform:translateZ(12px);padding:14px;display:flex;flex-direction:column;gap:9px;">
+        <div style="width:72%;height:6px;border-radius:3px;background:rgba(159,180,208,0.4);filter:blur(1.4px);"></div>
+        <div style="width:56%;height:6px;border-radius:3px;background:rgba(159,180,208,0.3);filter:blur(1.4px);"></div>
+        <div style="width:64%;height:6px;border-radius:3px;background:rgba(127,216,234,0.35);filter:blur(1.4px);"></div>
+        <div style="width:38%;height:6px;border-radius:3px;background:rgba(159,180,208,0.25);filter:blur(1.4px);"></div>
+      </div>
+      <div style="position:absolute;left:240px;top:128px;width:180px;height:116px;border-radius:12px;background:linear-gradient(160deg,rgba(150,180,220,0.11),rgba(150,180,220,0.04));border:1px solid rgba(170,200,235,0.17);box-shadow:0 20px 40px -20px rgba(0,0,0,0.65),inset 0 0 22px rgba(120,160,210,0.05);transform:translateZ(18px);padding:14px;display:flex;gap:10px;">
+        <div style="flex:1;display:flex;flex-direction:column;gap:7px;"><div style="height:15px;border-radius:4px;background:rgba(127,216,234,0.3);filter:blur(1.4px);"></div><div style="height:15px;border-radius:4px;background:rgba(159,180,208,0.24);filter:blur(1.4px);"></div><div style="height:15px;border-radius:4px;background:rgba(159,180,208,0.18);filter:blur(1.4px);"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:7px;"><div style="height:15px;border-radius:4px;background:rgba(159,180,208,0.28);filter:blur(1.4px);"></div><div style="height:15px;border-radius:4px;background:rgba(127,216,234,0.22);filter:blur(1.4px);"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:7px;"><div style="height:15px;border-radius:4px;background:rgba(159,180,208,0.22);filter:blur(1.4px);"></div></div>
+      </div>
+      <div style="position:absolute;left:460px;top:128px;width:180px;height:116px;border-radius:12px;background:linear-gradient(160deg,rgba(150,180,220,0.11),rgba(150,180,220,0.04));border:1px solid rgba(170,200,235,0.17);box-shadow:0 20px 40px -20px rgba(0,0,0,0.65),inset 0 0 22px rgba(120,160,210,0.05);transform:translateZ(8px);padding:14px;display:flex;flex-direction:column;gap:9px;">
+        <div style="width:60%;height:6px;border-radius:3px;background:rgba(127,216,234,0.4);filter:blur(1.4px);"></div>
+        <div style="width:74%;height:6px;border-radius:3px;background:rgba(159,180,208,0.3);filter:blur(1.4px);"></div>
+        <div style="width:46%;height:6px;border-radius:3px;background:rgba(159,180,208,0.24);filter:blur(1.4px);"></div>
+      </div>
+
+      <!-- row 2 -->
+      <div style="position:absolute;left:20px;top:284px;width:180px;height:116px;border-radius:12px;background:linear-gradient(160deg,rgba(150,180,220,0.09),rgba(150,180,220,0.03));border:1px solid rgba(170,200,235,0.14);box-shadow:0 20px 40px -20px rgba(0,0,0,0.6);padding:14px;display:flex;gap:10px;">
+        <div style="flex:1;display:flex;flex-direction:column;gap:7px;"><div style="height:15px;border-radius:4px;background:rgba(159,180,208,0.24);filter:blur(1.5px);"></div><div style="height:15px;border-radius:4px;background:rgba(159,180,208,0.18);filter:blur(1.5px);"></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:7px;"><div style="height:15px;border-radius:4px;background:rgba(127,216,234,0.24);filter:blur(1.5px);"></div><div style="height:15px;border-radius:4px;background:rgba(159,180,208,0.16);filter:blur(1.5px);"></div><div style="height:15px;border-radius:4px;background:rgba(159,180,208,0.12);filter:blur(1.5px);"></div></div>
+      </div>
+      <div style="position:absolute;left:240px;top:284px;width:180px;height:116px;border-radius:12px;background:linear-gradient(160deg,rgba(150,180,220,0.09),rgba(150,180,220,0.03));border:1px solid rgba(170,200,235,0.14);box-shadow:0 20px 40px -20px rgba(0,0,0,0.6);padding:14px;display:flex;flex-direction:column;gap:9px;">
+        <div style="width:66%;height:6px;border-radius:3px;background:rgba(159,180,208,0.32);filter:blur(1.5px);"></div>
+        <div style="width:50%;height:6px;border-radius:3px;background:rgba(159,180,208,0.24);filter:blur(1.5px);"></div>
+        <div style="width:70%;height:6px;border-radius:3px;background:rgba(127,216,234,0.28);filter:blur(1.5px);"></div>
+        <div style="width:34%;height:6px;border-radius:3px;background:rgba(159,180,208,0.18);filter:blur(1.5px);"></div>
+      </div>
+      <div style="position:absolute;left:460px;top:284px;width:180px;height:116px;border-radius:12px;background:linear-gradient(160deg,rgba(150,180,220,0.09),rgba(150,180,220,0.03));border:1px solid rgba(170,200,235,0.14);box-shadow:0 20px 40px -20px rgba(0,0,0,0.6);padding:14px;display:flex;flex-direction:column;gap:9px;">
+        <div style="width:58%;height:6px;border-radius:3px;background:rgba(159,180,208,0.3);filter:blur(1.5px);"></div>
+        <div style="width:72%;height:6px;border-radius:3px;background:rgba(159,180,208,0.22);filter:blur(1.5px);"></div>
+        <div style="width:44%;height:6px;border-radius:3px;background:rgba(127,216,234,0.24);filter:blur(1.5px);"></div>
+      </div>
+
+      <!-- row 3 · farther, shallow depth of field -->
+      <div style="position:absolute;left:130px;top:440px;width:180px;height:70px;border-radius:12px;background:linear-gradient(160deg,rgba(150,180,220,0.07),rgba(150,180,220,0.02));border:1px solid rgba(170,200,235,0.1);filter:blur(1.6px);padding:13px;display:flex;flex-direction:column;gap:8px;">
+        <div style="width:62%;height:6px;border-radius:3px;background:rgba(159,180,208,0.22);"></div>
+        <div style="width:44%;height:6px;border-radius:3px;background:rgba(159,180,208,0.16);"></div>
+      </div>
+      <div style="position:absolute;left:350px;top:440px;width:180px;height:70px;border-radius:12px;background:linear-gradient(160deg,rgba(150,180,220,0.07),rgba(150,180,220,0.02));border:1px solid rgba(170,200,235,0.1);filter:blur(1.6px);padding:13px;display:flex;flex-direction:column;gap:8px;">
+        <div style="width:54%;height:6px;border-radius:3px;background:rgba(127,216,234,0.2);"></div>
+        <div style="width:68%;height:6px;border-radius:3px;background:rgba(159,180,208,0.14);"></div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- glow beneath surface -->
+  <div style="position:absolute;left:{{ surfaceX }};bottom:2%;transform:translateX(-50%);width:640px;height:110px;background:radial-gradient(56% 100% at 50% 0%,rgba(86,196,222,0.08),transparent 72%),radial-gradient(30% 100% at 50% 0%,rgba(247,147,60,0.06),transparent 70%);filter:blur(8px);pointer-events:none;"></div>
+
+  <!-- calm side for copy -->
+  <sc-if value="{{ calmLeft }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,8,15,0.82) 0%,rgba(6,8,15,0.5) 34%,transparent 62%);pointer-events:none;"></div>
+  </sc-if>
+
+  <!-- vignette -->
+  <div style="position:absolute;inset:0;background:radial-gradient(120% 92% at {{ surfaceX }} 46%,transparent 56%,rgba(4,6,10,0.55) 100%);pointer-events:none;"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:960,&quot;height&quot;:540},&quot;calmLeft&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Planning Surface&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const calmLeft = this.props.calmLeft ?? false;
+    return {
+      calmLeft,
+      surfaceX: calmLeft ? '64%' : '50%',
+    };
+  }
+}
+</script>
+</body>
+</html>

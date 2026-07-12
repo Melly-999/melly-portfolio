@@ -4,25 +4,29 @@ Owner: Mateusz Ozimkiewicz
 
 Positioning: Junior Full-Stack Developer | React · TypeScript · FastAPI · AI Tools
 
-Melly Portfolio is a docs-first portfolio planning repository built around the narrative: Process → Platform → Product.
+Narrative: **Process → Platform → Product**
 
 ## Featured Projects
 
-- AI Second Brain / Agent Workspace
-- MellyCore AIOS
-- MellyTrade
+- **AI Agent Workspace** — Process
+- **MellyCore AIOS** — Platform
+- **MellyTrade** — Product
 
 ## Current Status
 
-Docs-first portfolio planning.
+- Docs-first planning complete
+- Claude Design prototype preserved ([`reference/claude-design/`](reference/claude-design/))
+- Production implementation not started
 
 ## Safety And Honesty Principles
 
 - No fake clients
+- No fake awards
 - No fake metrics
 - No fake production claims
-- MellyTrade is read-only / dry-run / advisory
+- MellyTrade is read-only, dry-run and advisory
 - No broker execution
+- Fixture/static data must be clearly labeled as such wherever shown
 
 ## Documentation Index
 
@@ -33,6 +37,13 @@ Docs-first portfolio planning.
 - [Implementation Backlog 001](docs/portfolio/implementation_backlog_001.md)
 - [Higgsfield Prompt Pack 001](docs/portfolio/higgsfield_prompt_pack_001.md)
 
+## Design Reference
+
+[`reference/claude-design/`](reference/claude-design/) contains the original
+Claude Design prototype (`.dc.html` files and design-system bundle). It is a
+**design reference only** — not the production application. The production
+implementation will reproduce the approved design using the chosen framework.
+
 ## Next Recommended Task
 
-PF-010 — scaffold + base layout + dark design tokens
+PF-010 — production scaffold, base layout and dark design tokens

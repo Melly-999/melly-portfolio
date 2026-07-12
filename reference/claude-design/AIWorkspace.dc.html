@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/mellytrade-design-system-1248faa8-d020-4833-9f8e-6d8dede5dd2c/colors_and_type.css">
+<script src="_ds/mellytrade-design-system-1248faa8-d020-4833-9f8e-6d8dede5dd2c/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;background:#06080f;}
+  a{color:#f7933c;}
+  a:hover{color:#ff9d4a;}
+</style>
+</helmet>
+<div style="position:relative;min-height:100vh;font-family:'JetBrains Mono',ui-monospace,monospace;color:#eef1f8;overflow:hidden;background:radial-gradient(1100px 620px at 80% -12%,rgba(79,147,230,0.12),transparent 58%),radial-gradient(900px 520px at 4% 10%,rgba(247,147,60,0.07),transparent 55%),#06080f;">
+  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(1000px 700px at 50% 0%,#000,transparent 78%);-webkit-mask-image:radial-gradient(1000px 700px at 50% 0%,#000,transparent 78%);pointer-events:none;"></div>
+  <div style="position:relative;z-index:1;">
+    <dc-import name="SiteNav" active="projects" hint-size="100%,64px"></dc-import>
+
+    <div style="max-width:1000px;margin:0 auto;padding:clamp(24px,4vw,44px) clamp(16px,4vw,40px) 0;font-size:12px;color:#6f7a93;">
+      <a href="Projects.dc.html" style="color:#6f7a93;text-decoration:none;" style-hover="color:#f7933c;">Projects</a> / <span style="color:#67a6f2;">AI Agent Workspace · Process</span>
+    </div>
+
+    <!-- POSTER · PlanningSurface CSS placeholder (swap for generated poster later) -->
+    <header style="position:relative;overflow:hidden;min-height:440px;display:flex;align-items:center;">
+      <div style="position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;pointer-events:none;opacity:0.9;">
+        <dc-import name="PlanningSurface" calm-left="{{ true }}" style="position:absolute;left:0;top:0;width:100%;height:100%;" hint-size="100%,440px"></dc-import>
+      </div>
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,8,15,0.55),transparent 30%,transparent 68%,rgba(6,8,15,0.92));pointer-events:none;"></div>
+      <div style="position:relative;width:100%;max-width:1000px;margin:0 auto;padding:clamp(16px,3vw,28px) clamp(16px,4vw,40px) clamp(24px,4vw,40px);">
+      <span style="display:inline-block;padding:5px 12px;border-radius:999px;color:#67a6f2;background:rgba(79,147,230,0.1);border:1px solid rgba(79,147,230,0.3);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;">01 · Process layer</span>
+      <h1 style="margin:16px 0 0;font-size:clamp(32px,5.4vw,56px);font-weight:800;line-height:1.02;letter-spacing:-0.02em;">AI Agent Workspace</h1>
+      <p style="margin:14px 0 0;font-size:clamp(15px,1.8vw,20px);color:#f7933c;font-weight:500;">The agent workspace that powers everything else.</p>
+      <p style="margin:18px 0 0;font-size:clamp(14px,1.6vw,16.5px);line-height:1.65;color:#aab2c6;max-width:60ch;">Before the platform and the product, there's a way of working. My second brain is an agent-based development workflow — AI tools and notes connected so that ideas move from thought to shipped code with context preserved at every step.</p>
+      </div>
+    </header>
+
+    <!-- WORKFLOW PIPELINE -->
+    <section style="max-width:1000px;margin:0 auto;padding:clamp(8px,2vw,20px) clamp(16px,4vw,40px) clamp(24px,4vw,36px);">
+      <p style="margin:0 0 16px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#f7933c;">The loop</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;">
+        <sc-for list="{{ loop }}" as="s" hint-placeholder-count="4">
+          <div style="border:1px solid #1d2740;border-radius:14px;background:rgba(14,19,32,0.55);padding:20px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <span style="font-size:11px;color:#6f7a93;letter-spacing:0.12em;">{{ s.n }}</span>
+              <span style="{{ s.dot }}"></span>
+            </div>
+            <h3 style="margin:0;font-size:15px;font-weight:700;color:#eef1f8;">{{ s.title }}</h3>
+            <p style="margin:8px 0 0;font-size:12.5px;line-height:1.55;color:#aab2c6;">{{ s.body }}</p>
+            <div style="margin-top:12px;font-size:11px;color:#67a6f2;">{{ s.tools }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- TOOLCHAIN GRID -->
+    <section style="max-width:1000px;margin:0 auto;padding:clamp(16px,3vw,28px) clamp(16px,4vw,40px);">
+      <div style="border:1px solid #1d2740;border-radius:16px;background:rgba(8,11,19,0.6);padding:clamp(20px,3vw,30px);">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+          <h2 style="margin:0;font-size:18px;font-weight:700;">The toolchain</h2>
+          <span style="font-size:11px;color:#6f7a93;letter-spacing:0.12em;text-transform:uppercase;">connected, not scattered</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;">
+          <sc-for list="{{ tools }}" as="t" hint-placeholder-count="6">
+            <div style="border:1px solid #161d30;border-radius:11px;background:rgba(19,26,43,0.45);padding:16px;">
+              <div style="font-size:13px;font-weight:700;color:#eef1f8;">{{ t.name }}</div>
+              <div style="margin-top:5px;font-size:11.5px;color:#aab2c6;line-height:1.5;">{{ t.role }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRINCIPLES -->
+    <section style="max-width:1000px;margin:0 auto;padding:clamp(16px,3vw,28px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;">
+      <div style="border:1px solid #1d2740;border-radius:14px;background:rgba(14,19,32,0.5);padding:24px;">
+        <h3 style="margin:0 0 14px;font-size:16px;font-weight:700;">How agents fit in</h3>
+        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;">
+          <sc-for list="{{ principles }}" as="p" hint-placeholder-count="3">
+            <li style="display:flex;gap:10px;font-size:13px;line-height:1.55;color:#aab2c6;"><span style="color:#67a6f2;flex-shrink:0;">▸</span>{{ p }}</li>
+          </sc-for>
+        </ul>
+      </div>
+      <div style="border:1px solid #1d2740;border-radius:14px;background:rgba(14,19,32,0.5);padding:24px;">
+        <h3 style="margin:0 0 14px;font-size:16px;font-weight:700;">Why it matters for the work</h3>
+        <p style="margin:0;font-size:13px;line-height:1.65;color:#aab2c6;">This process is the reason the other two projects exist. MellyCore AIOS makes it a platform; MellyTrade proves it can ship a real, safety-first product. The second brain is where the system starts.</p>
+        <div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:8px;">
+          <a href="MellyCoreAIOS.dc.html" style="padding:8px 13px;border-radius:8px;border:1px solid rgba(247,147,60,0.35);background:rgba(247,147,60,0.08);color:#ff9d4a;text-decoration:none;font-size:12px;" style-hover="filter:brightness(1.1);">→ becomes the platform</a>
+          <a href="MellyTrade.dc.html" style="padding:8px 13px;border-radius:8px;border:1px solid rgba(47,191,107,0.35);background:rgba(47,191,107,0.08);color:#3ad17e;text-decoration:none;font-size:12px;" style-hover="filter:brightness(1.1);">→ becomes the product</a>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:1000px;margin:0 auto;padding:clamp(20px,3vw,36px) clamp(16px,4vw,40px) clamp(48px,7vw,80px);">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;border-top:1px solid #161d30;padding-top:28px;">
+        <a href="Projects.dc.html" style="font-size:13px;color:#aab2c6;text-decoration:none;" style-hover="color:#f7933c;">← All projects</a>
+        <a href="MellyCoreAIOS.dc.html" style="display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:10px;background:linear-gradient(145deg,#f7933c,#e8623a);color:#0a0e17;text-decoration:none;font-weight:700;font-size:14px;" style-hover="filter:brightness(1.08);">MellyCore AIOS →</a>
+      </div>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1000,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    const dot = (c) => 'width:9px;height:9px;border-radius:50%;background:'+c+';box-shadow:0 0 10px '+c+';';
+    return {
+      loop: [
+        { n:'01', title:'Capture', body:'Ideas, specs and research land in one place before anything is built.', tools:'Obsidian · ChatGPT', dot: dot('#67a6f2') },
+        { n:'02', title:'Plan', body:'Break work into agent-runnable steps with clear context and intent.', tools:'Claude Code · ClickUp', dot: dot('#f7933c') },
+        { n:'03', title:'Build', body:'Agents implement against the plan; I steer, review and correct.', tools:'Codex · Claude Code', dot: dot('#ffd23f') },
+        { n:'04', title:'Ship', body:'Code, notes and tasks stay in sync as work is committed and closed.', tools:'GitHub · ClickUp', dot: dot('#3ad17e') },
+      ],
+      tools: [
+        { name:'ChatGPT', role:'Reasoning, research, quick drafts' },
+        { name:'Claude Code', role:'Planning & agentic implementation' },
+        { name:'Codex', role:'Focused code generation' },
+        { name:'Obsidian', role:'Second brain · linked notes' },
+        { name:'GitHub', role:'Source of truth · version control' },
+        { name:'ClickUp', role:'Tasks, scope & delivery' },
+      ],
+      principles: [
+        'Context first — agents only do good work when they inherit the right notes and intent.',
+        'Human in the loop — I plan, review and make the call; agents accelerate the middle.',
+        'Small, verifiable steps — each handoff is reviewable, reversible and traceable.',
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

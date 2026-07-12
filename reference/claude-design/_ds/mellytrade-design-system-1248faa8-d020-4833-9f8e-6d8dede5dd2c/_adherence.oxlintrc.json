@@ -1,0 +1,135 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": []
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {},
+    "tokens": [
+      "--bg-base",
+      "--bg-inset",
+      "--bg-panel",
+      "--bg-panel-2",
+      "--bg-void",
+      "--brand",
+      "--brand-bright",
+      "--brand-deep",
+      "--brand-glow",
+      "--candle-down",
+      "--candle-up",
+      "--danger",
+      "--danger-bright",
+      "--fg-1",
+      "--fg-2",
+      "--fg-3",
+      "--fg-4",
+      "--font-mono",
+      "--font-ui",
+      "--glow-amber",
+      "--info",
+      "--info-bright",
+      "--line",
+      "--line-glow",
+      "--line-soft",
+      "--melly-salmon",
+      "--r-lg",
+      "--r-md",
+      "--r-pill",
+      "--r-sm",
+      "--safe",
+      "--safe-bright",
+      "--shadow-card",
+      "--shadow-panel",
+      "--t-body",
+      "--t-display",
+      "--t-h1",
+      "--t-h2",
+      "--t-h3",
+      "--t-label",
+      "--t-micro",
+      "--warn",
+      "--warn-bright"
+    ],
+    "tokenKinds": {
+      "--bg-void": "color",
+      "--bg-base": "color",
+      "--bg-panel": "color",
+      "--bg-panel-2": "color",
+      "--bg-inset": "color",
+      "--line": "color",
+      "--line-soft": "color",
+      "--line-glow": "color",
+      "--melly-salmon": "color",
+      "--brand": "color",
+      "--brand-bright": "color",
+      "--brand-deep": "color",
+      "--brand-glow": "color",
+      "--safe": "color",
+      "--safe-bright": "color",
+      "--info": "color",
+      "--info-bright": "color",
+      "--warn": "color",
+      "--warn-bright": "color",
+      "--danger": "color",
+      "--danger-bright": "color",
+      "--candle-up": "color",
+      "--candle-down": "color",
+      "--fg-1": "color",
+      "--fg-2": "color",
+      "--fg-3": "color",
+      "--fg-4": "color",
+      "--font-mono": "font",
+      "--font-ui": "font",
+      "--t-display": "spacing",
+      "--t-h1": "spacing",
+      "--t-h2": "spacing",
+      "--t-h3": "spacing",
+      "--t-body": "spacing",
+      "--t-label": "spacing",
+      "--t-micro": "spacing",
+      "--r-sm": "spacing",
+      "--r-md": "spacing",
+      "--r-lg": "spacing",
+      "--r-pill": "spacing",
+      "--shadow-panel": "shadow",
+      "--shadow-card": "shadow",
+      "--glow-amber": "color"
+    },
+    "fontFamilies": []
+  }
+}

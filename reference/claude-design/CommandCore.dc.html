@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;background:#0A0E14;}
+  a{color:#f7933c;}
+  a:hover{color:#ff9d4a;}
+  @keyframes ccSpin{from{transform:rotateZ(0deg)}to{transform:rotateZ(360deg)}}
+  @keyframes ccSpinRev{from{transform:rotateZ(360deg)}to{transform:rotateZ(0deg)}}
+  @keyframes ccDrift{0%,100%{transform:translateY(0);opacity:0.2}50%{transform:translateY(-16px);opacity:0.55}}
+  @keyframes ccBreathe{0%,100%{opacity:0.8}50%{opacity:1}}
+  @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}
+</style>
+</helmet>
+<div style="position:relative;width:100%;height:100%;min-height:420px;background:#0A0E14;overflow:hidden;">
+
+  <!-- atmospheric haze -->
+  <div style="position:absolute;left:42%;top:50%;transform:translate(-50%,-50%);width:900px;height:640px;background:radial-gradient(closest-side,rgba(86,196,222,0.07),transparent 70%);pointer-events:none;"></div>
+  <div style="position:absolute;left:42%;top:62%;transform:translate(-50%,-50%);width:700px;height:420px;background:radial-gradient(closest-side,rgba(247,147,60,0.06),transparent 70%);pointer-events:none;"></div>
+
+  <!-- command core scene -->
+  <div style="position:absolute;left:42%;top:50%;transform:translate(-50%,-50%);width:520px;height:520px;perspective:1100px;">
+    <div style="position:absolute;inset:0;transform-style:preserve-3d;">
+
+      <!-- outer cyan ring · 3 nodes -->
+      <div style="position:absolute;left:50%;top:50%;width:480px;height:480px;margin:-240px 0 0 -240px;transform:rotateX(72deg) rotateZ(-14deg);transform-style:preserve-3d;">
+        <div style="position:absolute;inset:0;border-radius:50%;border:1px solid rgba(86,196,222,0.32);box-shadow:0 0 26px -6px rgba(86,196,222,0.35);"></div>
+        <div style="position:absolute;inset:0;animation:ccSpin 34s linear infinite;">
+          <span style="position:absolute;top:-4px;left:calc(50% - 4px);width:8px;height:8px;border-radius:50%;background:#7fd8ea;box-shadow:0 0 12px 3px rgba(86,196,222,0.75);"></span>
+        </div>
+        <div style="position:absolute;inset:0;animation:ccSpin 34s linear infinite;animation-delay:-12s;">
+          <span style="position:absolute;top:-3px;left:calc(50% - 3px);width:6px;height:6px;border-radius:50%;background:#5fc8de;box-shadow:0 0 10px 2px rgba(86,196,222,0.65);"></span>
+        </div>
+        <div style="position:absolute;inset:0;animation:ccSpin 34s linear infinite;animation-delay:-23s;">
+          <span style="position:absolute;top:-3px;left:calc(50% - 3px);width:6px;height:6px;border-radius:50%;background:#5fc8de;box-shadow:0 0 10px 2px rgba(86,196,222,0.65);"></span>
+        </div>
+      </div>
+
+      <!-- middle cyan ring · 2 nodes -->
+      <div style="position:absolute;left:50%;top:50%;width:370px;height:370px;margin:-185px 0 0 -185px;transform:rotateX(68deg) rotateZ(16deg);transform-style:preserve-3d;">
+        <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(86,196,222,0.5);box-shadow:0 0 24px -5px rgba(86,196,222,0.45);"></div>
+        <div style="position:absolute;inset:0;animation:ccSpinRev 24s linear infinite;">
+          <span style="position:absolute;top:-4px;left:calc(50% - 4px);width:8px;height:8px;border-radius:50%;background:#8fdeee;box-shadow:0 0 14px 3px rgba(86,196,222,0.8);"></span>
+        </div>
+        <div style="position:absolute;inset:0;animation:ccSpinRev 24s linear infinite;animation-delay:-11s;">
+          <span style="position:absolute;top:-3px;left:calc(50% - 3px);width:6px;height:6px;border-radius:50%;background:#5fc8de;box-shadow:0 0 10px 2px rgba(86,196,222,0.65);"></span>
+        </div>
+      </div>
+
+      <!-- inner amber safety ring · unbroken, no nodes -->
+      <div style="position:absolute;left:50%;top:50%;width:258px;height:258px;margin:-129px 0 0 -129px;transform:rotateX(70deg) rotateZ(2deg);animation:ccBreathe 5s ease-in-out infinite;">
+        <div style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(247,155,80,0.9);box-shadow:0 0 34px -4px rgba(247,147,60,0.6),inset 0 0 18px -6px rgba(247,147,60,0.35);"></div>
+      </div>
+
+      <!-- obsidian core -->
+      <div style="position:absolute;left:50%;top:50%;width:168px;height:168px;margin:-84px 0 0 -84px;border-radius:50%;background:radial-gradient(circle at 33% 28%,#323d51 0%,#171e2b 44%,#0a0e16 74%,#06080d 100%);box-shadow:inset -18px -24px 40px rgba(0,0,0,0.7),inset 10px 12px 24px rgba(122,152,192,0.12),0 0 70px -14px rgba(86,196,222,0.28);">
+        <div style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 200deg,rgba(255,255,255,0.06) 0deg 24deg,transparent 24deg 60deg,rgba(255,255,255,0.035) 60deg 96deg,transparent 96deg 150deg,rgba(255,255,255,0.05) 150deg 190deg,transparent 190deg 262deg,rgba(255,255,255,0.04) 262deg 300deg,transparent 300deg 360deg);mix-blend-mode:screen;"></div>
+        <div style="position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 116%,rgba(247,147,60,0.3),transparent 55%);"></div>
+        <div style="position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 14% 8%,rgba(127,216,234,0.16),transparent 45%);"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- reflective floor -->
+  <sc-if value="{{ showFloor }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;left:42%;bottom:4%;transform:translateX(-50%);width:680px;height:130px;background:radial-gradient(52% 100% at 50% 0%,rgba(247,147,60,0.11),transparent 70%),radial-gradient(74% 100% at 50% 0%,rgba(86,196,222,0.08),transparent 76%);filter:blur(7px);pointer-events:none;"></div>
+    <div style="position:absolute;left:42%;bottom:calc(4% + 128px);transform:translateX(-50%);width:520px;height:1px;background:linear-gradient(90deg,transparent,rgba(150,180,210,0.14),transparent);pointer-events:none;"></div>
+  </sc-if>
+
+  <!-- drifting particles -->
+  <sc-if value="{{ particles }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;inset:0;pointer-events:none;">
+      <span style="position:absolute;left:26%;top:30%;width:2px;height:2px;border-radius:50%;background:#7fd8ea;animation:ccDrift 7s ease-in-out infinite;"></span>
+      <span style="position:absolute;left:55%;top:22%;width:2px;height:2px;border-radius:50%;background:#aab2c6;animation:ccDrift 9s ease-in-out infinite;animation-delay:-3s;"></span>
+      <span style="position:absolute;left:34%;top:68%;width:3px;height:3px;border-radius:50%;background:#f7a95c;animation:ccDrift 8s ease-in-out infinite;animation-delay:-5s;"></span>
+      <span style="position:absolute;left:60%;top:60%;width:2px;height:2px;border-radius:50%;background:#7fd8ea;animation:ccDrift 10s ease-in-out infinite;animation-delay:-2s;"></span>
+      <span style="position:absolute;left:18%;top:52%;width:2px;height:2px;border-radius:50%;background:#aab2c6;animation:ccDrift 11s ease-in-out infinite;animation-delay:-6s;"></span>
+      <span style="position:absolute;left:48%;top:80%;width:2px;height:2px;border-radius:50%;background:#f7a95c;animation:ccDrift 9s ease-in-out infinite;animation-delay:-4s;"></span>
+    </div>
+  </sc-if>
+
+  <!-- calm right third for headline copy -->
+  <sc-if value="{{ calmRight }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent 52%,rgba(7,9,15,0.55) 80%,rgba(7,9,15,0.78) 100%);pointer-events:none;"></div>
+  </sc-if>
+
+  <!-- vignette -->
+  <div style="position:absolute;inset:0;background:radial-gradient(120% 90% at 42% 48%,transparent 55%,rgba(4,6,10,0.55) 100%);pointer-events:none;"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:960,&quot;height&quot;:540},&quot;calmRight&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Command Core&quot;},&quot;showFloor&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Command Core&quot;},&quot;particles&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Command Core&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      calmRight: this.props.calmRight ?? true,
+      showFloor: this.props.showFloor ?? true,
+      particles: this.props.particles ?? true,
+    };
+  }
+}
+</script>
+</body>
+</html>

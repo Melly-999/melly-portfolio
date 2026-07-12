@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;background:#06080f;}
+  a{color:#f7933c;}
+  a:hover{color:#ff9d4a;}
+  code{font-family:'JetBrains Mono',monospace;}
+</style>
+</helmet>
+<div style="position:relative;min-height:100vh;font-family:'JetBrains Mono',ui-monospace,monospace;color:#eef1f8;overflow:hidden;background:radial-gradient(1100px 600px at 78% -10%,rgba(247,147,60,0.10),transparent 58%),radial-gradient(900px 520px at 4% 12%,rgba(79,147,230,0.08),transparent 55%),#06080f;">
+  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(1000px 700px at 50% 0%,#000,transparent 78%);-webkit-mask-image:radial-gradient(1000px 700px at 50% 0%,#000,transparent 78%);pointer-events:none;"></div>
+  <div style="position:relative;z-index:1;">
+    <dc-import name="SiteNav" active="tokens" hint-size="100%,64px"></dc-import>
+
+    <header style="max-width:1080px;margin:0 auto;padding:clamp(36px,6vw,72px) clamp(16px,4vw,40px) clamp(16px,3vw,28px);">
+      <p style="margin:0 0 12px;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#f7933c;">Design system</p>
+      <h1 style="margin:0;font-size:clamp(28px,4.6vw,46px);font-weight:800;line-height:1.05;letter-spacing:-0.02em;">Tokens & implementation</h1>
+      <p style="margin:16px 0 0;font-size:clamp(14px,1.6vw,16px);line-height:1.6;color:#aab2c6;max-width:60ch;">The foundation the whole portfolio is built on — a dark terminal aesthetic with amber/orange brand and semantic safety accents. Everything below maps directly to CSS custom properties.</p>
+    </header>
+
+    <!-- COLORS -->
+    <section style="max-width:1080px;margin:0 auto;padding:clamp(12px,2vw,24px) clamp(16px,4vw,40px);">
+      <h2 style="margin:0 0 16px;font-size:20px;font-weight:800;">Colors</h2>
+      <sc-for list="{{ colorGroups }}" as="g" hint-placeholder-count="3">
+        <div style="margin-bottom:20px;">
+          <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#6f7a93;margin-bottom:10px;">{{ g.title }}</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">
+            <sc-for list="{{ g.swatches }}" as="s" hint-placeholder-count="4">
+              <div style="border:1px solid #1d2740;border-radius:11px;overflow:hidden;background:rgba(14,19,32,0.5);">
+                <div style="height:56px;background:{{ s.hex }};"></div>
+                <div style="padding:10px;">
+                  <div style="font-size:11.5px;color:#eef1f8;font-weight:600;">{{ s.name }}</div>
+                  <div style="font-size:11px;color:#6f7a93;margin-top:3px;">{{ s.hex }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </section>
+
+    <!-- TYPOGRAPHY -->
+    <section style="max-width:1080px;margin:0 auto;padding:clamp(16px,3vw,28px) clamp(16px,4vw,40px);">
+      <h2 style="margin:0 0 16px;font-size:20px;font-weight:800;">Typography</h2>
+      <div style="border:1px solid #1d2740;border-radius:14px;background:rgba(14,19,32,0.5);padding:24px;">
+        <div style="font-size:12px;color:#6f7a93;margin-bottom:20px;">Single family — <span style="color:#f7933c;">JetBrains Mono</span> · weights 400–800. Monospace throughout reinforces the terminal / command-center feel.</div>
+        <sc-for list="{{ typeScale }}" as="t" hint-placeholder-count="5">
+          <div style="display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid #161d30;">
+            <span style="font-size:11px;color:#6f7a93;min-width:150px;">{{ t.meta }}</span>
+            <span style="{{ t.style }}">{{ t.sample }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- SPACING + RADII -->
+    <section style="max-width:1080px;margin:0 auto;padding:clamp(16px,3vw,28px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;">
+      <div style="border:1px solid #1d2740;border-radius:14px;background:rgba(14,19,32,0.5);padding:24px;">
+        <h2 style="margin:0 0 16px;font-size:18px;font-weight:800;">Spacing</h2>
+        <div style="font-size:12px;color:#6f7a93;margin-bottom:16px;">4px base scale. Section padding uses <code style="color:#f7933c;">clamp()</code> for mobile-first fluidity.</div>
+        <sc-for list="{{ spacing }}" as="s" hint-placeholder-count="5">
+          <div style="display:flex;align-items:center;gap:14px;padding:7px 0;">
+            <span style="font-size:11px;color:#aab2c6;min-width:70px;">{{ s.label }}</span>
+            <span style="height:12px;background:linear-gradient(90deg,#f7933c,#e8623a);border-radius:3px;width:{{ s.px }};"></span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="border:1px solid #1d2740;border-radius:14px;background:rgba(14,19,32,0.5);padding:24px;">
+        <h2 style="margin:0 0 16px;font-size:18px;font-weight:800;">Radii & elevation</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;">
+          <sc-for list="{{ radii }}" as="r" hint-placeholder-count="4">
+            <div style="border:1px solid #1d2740;background:rgba(19,26,43,0.6);padding:16px;text-align:center;border-radius:{{ r.px }};">
+              <div style="font-size:12px;color:#eef1f8;">{{ r.name }}</div>
+              <div style="font-size:11px;color:#6f7a93;margin-top:4px;">{{ r.px }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="font-size:12px;color:#6f7a93;line-height:1.6;">Panels use soft ambient shadows + a subtle amber glow ring on hover: <code style="color:#f7933c;">0 0 40px -6px rgba(247,147,60,.35)</code>.</div>
+      </div>
+    </section>
+
+    <!-- COMPONENTS: cards, buttons, badges -->
+    <section style="max-width:1080px;margin:0 auto;padding:clamp(16px,3vw,28px) clamp(16px,4vw,40px);">
+      <h2 style="margin:0 0 16px;font-size:20px;font-weight:800;">Components</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;">
+        <!-- buttons -->
+        <div style="border:1px solid #1d2740;border-radius:14px;background:rgba(14,19,32,0.5);padding:24px;">
+          <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#6f7a93;margin-bottom:16px;">Buttons</div>
+          <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
+            <span style="padding:13px 22px;border-radius:10px;background:linear-gradient(145deg,#f7933c,#e8623a);color:#0a0e17;font-weight:700;font-size:14px;box-shadow:0 14px 34px -14px rgba(247,147,60,0.85);">Primary → ship</span>
+            <span style="padding:13px 22px;border-radius:10px;background:rgba(14,19,32,0.7);border:1px solid #1d2740;color:#eef1f8;font-weight:600;font-size:14px;">Secondary / ghost</span>
+            <span style="padding:9px 15px;border-radius:8px;background:rgba(247,147,60,0.1);color:#f7933c;font-weight:500;font-size:13px;">Nav / tertiary</span>
+          </div>
+        </div>
+        <!-- badges -->
+        <div style="border:1px solid #1d2740;border-radius:14px;background:rgba(14,19,32,0.5);padding:24px;">
+          <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#6f7a93;margin-bottom:16px;">Badges — layer & safety</div>
+          <div style="display:flex;flex-wrap:wrap;gap:9px;">
+            <span style="padding:5px 12px;border-radius:999px;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#67a6f2;background:rgba(79,147,230,0.1);border:1px solid rgba(79,147,230,0.3);">Process</span>
+            <span style="padding:5px 12px;border-radius:999px;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#ff9d4a;background:rgba(247,147,60,0.1);border:1px solid rgba(247,147,60,0.3);">Platform</span>
+            <span style="padding:5px 12px;border-radius:999px;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#3ad17e;background:rgba(47,191,107,0.1);border:1px solid rgba(47,191,107,0.3);">Product</span>
+            <span style="padding:6px 13px;border-radius:8px;font-size:12px;font-weight:600;color:#3ad17e;background:rgba(47,191,107,0.1);border:1px solid rgba(47,191,107,0.35);">READ-ONLY</span>
+            <span style="padding:6px 13px;border-radius:8px;font-size:12px;font-weight:600;color:#67a6f2;background:rgba(79,147,230,0.1);border:1px solid rgba(79,147,230,0.35);">DRY-RUN</span>
+            <span style="padding:6px 13px;border-radius:8px;font-size:12px;font-weight:600;color:#ff5a5f;background:rgba(229,72,77,0.08);border:1px solid rgba(229,72,77,0.3);">LIVE BLOCKED</span>
+          </div>
+        </div>
+        <!-- card anatomy -->
+        <div style="border:1px solid #1d2740;border-radius:14px;background:rgba(14,19,32,0.5);padding:24px;">
+          <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#6f7a93;margin-bottom:16px;">Project card</div>
+          <div style="border:1px solid #1d2740;border-radius:14px;background:linear-gradient(180deg,rgba(14,19,32,0.85),rgba(8,11,19,0.85));padding:20px;box-shadow:0 12px 34px -20px rgba(0,0,0,0.85);">
+            <div style="display:flex;justify-content:space-between;margin-bottom:12px;"><span style="padding:5px 11px;border-radius:999px;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#3ad17e;background:rgba(47,191,107,0.1);border:1px solid rgba(47,191,107,0.3);">Product</span><span style="font-size:11px;color:#6f7a93;">03</span></div>
+            <div style="font-size:18px;font-weight:800;">MellyTrade</div>
+            <div style="font-size:12px;color:#f7933c;margin-top:5px;">Safe AI trading terminal</div>
+            <div style="margin-top:14px;padding-top:12px;border-top:1px solid #161d30;font-size:12px;color:#aab2c6;">View case study →</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMPLEMENTATION NOTES -->
+    <section style="max-width:1080px;margin:0 auto;padding:clamp(16px,3vw,28px) clamp(16px,4vw,40px) clamp(48px,7vw,80px);">
+      <h2 style="margin:0 0 16px;font-size:20px;font-weight:800;">Implementation notes · React / Astro</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
+        <sc-for list="{{ notes }}" as="n" hint-placeholder-count="4">
+          <div style="border:1px solid #1d2740;border-radius:14px;background:rgba(8,11,19,0.6);padding:22px;">
+            <div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;">
+              <span style="display:grid;place-items:center;width:26px;height:26px;border-radius:7px;background:rgba(247,147,60,0.12);color:#f7933c;font-size:12px;font-weight:700;">{{ n.no }}</span>
+              <h3 style="margin:0;font-size:14px;font-weight:700;">{{ n.title }}</h3>
+            </div>
+            <p style="margin:0;font-size:12.5px;line-height:1.65;color:#aab2c6;">{{ n.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    const mono = "font-family:'JetBrains Mono',monospace;color:#eef1f8;";
+    return {
+      colorGroups: [
+        { title:'Surfaces', swatches:[
+          {name:'--bg-void',hex:'#06080f'},{name:'--bg-base',hex:'#0a0e17'},{name:'--bg-panel',hex:'#0e1320'},{name:'--bg-panel-2',hex:'#131a2b'},{name:'--bg-inset',hex:'#080b13'} ] },
+        { title:'Brand — amber / orange', swatches:[
+          {name:'--brand',hex:'#f7933c'},{name:'--brand-bright',hex:'#ff9d4a'},{name:'--brand-deep',hex:'#e8623a'},{name:'--melly-salmon',hex:'#e07a52'} ] },
+        { title:'Semantic safety accents', swatches:[
+          {name:'--safe',hex:'#2fbf6b'},{name:'--info (cyan/blue)',hex:'#4f93e6'},{name:'--warn',hex:'#f5c518'},{name:'--danger',hex:'#e5484d'} ] },
+        { title:'Text', swatches:[
+          {name:'--fg-1',hex:'#eef1f8'},{name:'--fg-2',hex:'#aab2c6'},{name:'--fg-3',hex:'#6f7a93'},{name:'--fg-4',hex:'#44506b'} ] },
+        { title:'Hairlines', swatches:[
+          {name:'--line',hex:'#1d2740'},{name:'--line-soft',hex:'#161d30'} ] },
+      ],
+      typeScale: [
+        { meta:'display · 800 · clamp→58px', sample:'Process → Platform', style: mono+'font-weight:800;font-size:30px;letter-spacing:-0.02em;line-height:1;' },
+        { meta:'h1 · 800 · 30px', sample:'MellyCore AIOS', style: mono+'font-weight:800;font-size:24px;letter-spacing:-0.01em;' },
+        { meta:'h2 · 700 · 22px', sample:'Selected work', style: mono+'font-weight:700;font-size:20px;' },
+        { meta:'body · 400 · 15px', sample:'Safe, read-only, advisory by design.', style: "font-family:'JetBrains Mono',monospace;font-weight:400;font-size:15px;color:#aab2c6;" },
+        { meta:'label · 600 · 12px · tracked', sample:'READ-ONLY · DRY-RUN', style: "font-family:'JetBrains Mono',monospace;font-weight:600;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#6f7a93;" },
+      ],
+      spacing: [
+        {label:'4 · xs', px:'4px'},{label:'8 · sm', px:'8px'},{label:'16 · md', px:'16px'},{label:'24 · lg', px:'24px'},{label:'40 · xl', px:'40px'},{label:'64 · 2xl', px:'64px'},
+      ],
+      radii: [
+        {name:'sm', px:'4px'},{name:'md', px:'8px'},{name:'lg', px:'12px'},{name:'xl / panel', px:'16px'},
+      ],
+      notes: [
+        { no:'1', title:'Stack', body:'Astro for content-driven pages + islands; React + TypeScript for interactive components (nav, graph, terminal previews). FastAPI backend for MellyTrade\u2019s read-only data layer.' },
+        { no:'2', title:'Tokens', body:'Ship the palette as CSS custom properties on :root (see colors_and_type.css). Reference them via var() — never hard-code hex in components so themes stay swappable.' },
+        { no:'3', title:'Layout', body:'Mobile-first. Use CSS grid with repeat(auto-fit, minmax(280px,1fr)) and clamp() type/spacing so pages reflow from 390px to desktop without JS or breakpoints.' },
+        { no:'4', title:'Components', body:'Card, Badge (layer + safety variants), Button (primary/ghost/tertiary) as typed React props. Keep the /aios cinematic route as an isolated Astro page with reduced-motion fallbacks.' },
+        { no:'5', title:'Motion & a11y', body:'Subtle glow/pulse/sweep only; respect prefers-reduced-motion. Maintain AA contrast — the dark surfaces + fg-1/fg-2 text meet it. No WebGL, no heavy 3D.' },
+        { no:'6', title:'Safety copy as data', body:'Store MellyTrade\u2019s safety wording (read-only, dry-run, advisory, no broker execution) as a shared constant so it renders identically everywhere and can\u2019t drift.' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

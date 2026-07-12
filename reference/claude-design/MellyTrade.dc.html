@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;background:#06080f;}
+  a{color:#f7933c;}
+  a:hover{color:#ff9d4a;}
+</style>
+</helmet>
+<div style="position:relative;min-height:100vh;font-family:'JetBrains Mono',ui-monospace,monospace;color:#eef1f8;overflow:hidden;background:radial-gradient(1100px 600px at 80% -12%,rgba(47,191,107,0.10),transparent 58%),radial-gradient(900px 520px at 4% 10%,rgba(247,147,60,0.08),transparent 55%),#06080f;">
+  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(1000px 700px at 50% 0%,#000,transparent 78%);-webkit-mask-image:radial-gradient(1000px 700px at 50% 0%,#000,transparent 78%);pointer-events:none;"></div>
+  <div style="position:relative;z-index:1;">
+    <dc-import name="SiteNav" active="projects" hint-size="100%,64px"></dc-import>
+
+    <!-- breadcrumb -->
+    <div style="max-width:1000px;margin:0 auto;padding:clamp(24px,4vw,44px) clamp(16px,4vw,40px) 0;font-size:12px;color:#6f7a93;">
+      <a href="Projects.dc.html" style="color:#6f7a93;text-decoration:none;" style-hover="color:#f7933c;">Projects</a> / <span style="color:#3ad17e;">MellyTrade · Product</span>
+    </div>
+
+    <!-- hero -->
+    <header style="max-width:1000px;margin:0 auto;padding:clamp(16px,3vw,28px) clamp(16px,4vw,40px) clamp(24px,4vw,40px);">
+      <span style="display:inline-block;padding:5px 12px;border-radius:999px;color:#3ad17e;background:rgba(47,191,107,0.1);border:1px solid rgba(47,191,107,0.3);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;">03 · Product layer</span>
+      <h1 style="margin:16px 0 0;font-size:clamp(32px,5.4vw,56px);font-weight:800;line-height:1.02;letter-spacing:-0.02em;">MellyTrade</h1>
+      <p style="margin:14px 0 0;font-size:clamp(15px,1.8vw,20px);color:#f7933c;font-weight:500;">A safe AI trading terminal — advisory, not automated.</p>
+      <p style="margin:18px 0 0;font-size:clamp(14px,1.6vw,16.5px);line-height:1.65;color:#aab2c6;max-width:60ch;">MellyTrade explores how AI can assist trading decisions responsibly. It reads markets and surfaces signals — it never touches your money. Every layer is built around a strict safety posture.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;">
+        <span style="padding:6px 13px;border-radius:8px;font-size:12px;font-weight:600;color:#3ad17e;background:rgba(47,191,107,0.1);border:1px solid rgba(47,191,107,0.35);">READ-ONLY</span>
+        <span style="padding:6px 13px;border-radius:8px;font-size:12px;font-weight:600;color:#67a6f2;background:rgba(79,147,230,0.1);border:1px solid rgba(79,147,230,0.35);">DRY-RUN</span>
+        <span style="padding:6px 13px;border-radius:8px;font-size:12px;font-weight:600;color:#ffd23f;background:rgba(245,197,24,0.1);border:1px solid rgba(245,197,24,0.35);">ADVISORY</span>
+        <span style="padding:6px 13px;border-radius:8px;font-size:12px;font-weight:600;color:#ff5a5f;background:rgba(229,72,77,0.08);border:1px solid rgba(229,72,77,0.3);">NO BROKER EXECUTION</span>
+        <span style="padding:6px 13px;border-radius:8px;font-size:12px;font-weight:600;color:#ff5a5f;background:rgba(229,72,77,0.08);border:1px solid rgba(229,72,77,0.3);">LIVE ORDERS BLOCKED</span>
+      </div>
+    </header>
+
+    <!-- SAFETY-FIRST BANNER -->
+    <section style="max-width:1000px;margin:0 auto;padding:0 clamp(16px,4vw,40px) clamp(20px,3vw,32px);">
+      <div style="border:1px solid rgba(47,191,107,0.3);border-radius:14px;background:linear-gradient(180deg,rgba(47,191,107,0.06),rgba(8,11,19,0.6));padding:clamp(20px,3vw,28px);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <span style="display:grid;place-items:center;width:26px;height:26px;border-radius:7px;background:rgba(47,191,107,0.15);color:#3ad17e;font-size:14px;">✓</span>
+          <span style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#3ad17e;">Safety posture — non-negotiable</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
+          <sc-for list="{{ safety }}" as="s" hint-placeholder-count="4">
+            <div style="border:1px solid #161d30;border-radius:10px;background:rgba(19,26,43,0.4);padding:14px;">
+              <div style="font-size:13px;font-weight:700;color:#eef1f8;margin-bottom:6px;">{{ s.title }}</div>
+              <div style="font-size:12px;line-height:1.55;color:#aab2c6;">{{ s.body }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT PREVIEW MOCK -->
+    <section style="max-width:1000px;margin:0 auto;padding:clamp(12px,2vw,20px) clamp(16px,4vw,40px) clamp(24px,4vw,36px);">
+      <p style="margin:0 0 10px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#f7933c;">Terminal preview · advisory view</p>
+      <div role="note" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 14px;padding:12px 16px;border-radius:10px;border:1px solid rgba(245,197,24,0.45);background:rgba(245,197,24,0.08);">
+        <span style="width:8px;height:8px;border-radius:50%;background:#f5c518;flex-shrink:0;" aria-hidden="true"></span>
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;color:#ffd23f;">STATIC PORTFOLIO DEMO · FIXTURE DATA · NO LIVE API</span>
+      </div>
+      <div style="border:1px solid #1d2740;border-radius:14px;overflow:hidden;background:rgba(8,11,19,0.85);box-shadow:0 30px 70px -34px rgba(0,0,0,0.9);">
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid #161d30;background:rgba(14,19,32,0.7);">
+          <span style="width:10px;height:10px;border-radius:50%;background:#e5484d;"></span>
+          <span style="width:10px;height:10px;border-radius:50%;background:#f5c518;"></span>
+          <span style="width:10px;height:10px;border-radius:50%;background:#2fbf6b;"></span>
+          <span style="margin-left:6px;font-size:12px;color:#6f7a93;">MellyTrade — advisory terminal</span>
+          <span style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:rgba(47,191,107,0.12);border:1px solid rgba(47,191,107,0.35);font-size:11px;color:#3ad17e;"><span style="width:6px;height:6px;border-radius:50%;background:#3ad17e;"></span>READ-ONLY</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:#161d30;">
+          <div style="background:#0e1320;padding:18px;">
+            <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6f7a93;margin-bottom:12px;">Watchlist · read-only</div>
+            <sc-for list="{{ watch }}" as="w" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #161d30;">
+                <span style="font-size:13px;color:#eef1f8;font-weight:600;">{{ w.sym }}</span>
+                <span style="{{ w.style }}">{{ w.chg }}</span>
+              </div>
+            </sc-for>
+            <div style="margin-top:12px;font-size:10.5px;color:#6f7a93;line-height:1.5;">Data source: static fixture — not a live feed, not a recommendation.</div>
+          </div>
+          <div style="background:#0e1320;padding:18px;">
+            <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6f7a93;margin-bottom:12px;">AI signal · advisory only</div>
+            <div style="border:1px solid rgba(79,147,230,0.3);border-radius:10px;background:rgba(79,147,230,0.06);padding:14px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:12px;color:#67a6f2;font-weight:700;">DRY-RUN INSIGHT</span><span style="margin-left:auto;font-size:10.5px;color:#6f7a93;">confidence · illustrative</span></div>
+              <div style="font-size:12.5px;line-height:1.6;color:#aab2c6;">"Volatility rising on the watchlist. This is an informational note, <span style="color:#eef1f8;">not financial advice</span> and not an order."</div>
+            </div>
+            <div style="margin-top:12px;display:flex;gap:8px;">
+              <span style="flex:1;text-align:center;padding:10px;border-radius:9px;border:1px solid #1d2740;background:rgba(19,26,43,0.6);color:#6f7a93;font-size:11px;">Place order</span>
+              <span style="flex:1;text-align:center;padding:10px;border-radius:9px;border:1px dashed rgba(229,72,77,0.4);background:rgba(229,72,77,0.05);color:#ff5a5f;font-size:11px;">🔒 Disabled by design</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STACK + APPROACH -->
+    <section style="max-width:1000px;margin:0 auto;padding:clamp(16px,3vw,28px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;">
+      <div style="border:1px solid #1d2740;border-radius:14px;background:rgba(14,19,32,0.5);padding:24px;">
+        <h3 style="margin:0 0 14px;font-size:16px;font-weight:700;">Tech stack</h3>
+        <sc-for list="{{ stack }}" as="t" hint-placeholder-count="4">
+          <div style="display:flex;align-items:baseline;gap:12px;padding:9px 0;border-bottom:1px solid #161d30;">
+            <span style="font-size:12px;color:#f7933c;min-width:90px;">{{ t.k }}</span>
+            <span style="font-size:12.5px;color:#aab2c6;">{{ t.v }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="border:1px solid #1d2740;border-radius:14px;background:rgba(14,19,32,0.5);padding:24px;">
+        <h3 style="margin:0 0 14px;font-size:16px;font-weight:700;">Why it's built this way</h3>
+        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;">
+          <sc-for list="{{ why }}" as="w" hint-placeholder-count="3">
+            <li style="display:flex;gap:10px;font-size:13px;line-height:1.55;color:#aab2c6;"><span style="color:#3ad17e;flex-shrink:0;">✓</span>{{ w }}</li>
+          </sc-for>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="max-width:1000px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,40px) clamp(48px,7vw,80px);">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;border-top:1px solid #161d30;padding-top:28px;">
+        <a href="AIWorkspace.dc.html" style="font-size:13px;color:#aab2c6;text-decoration:none;" style-hover="color:#f7933c;">← AI Agent Workspace</a>
+        <a href="Contact.dc.html" style="display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:10px;background:linear-gradient(145deg,#f7933c,#e8623a);color:#0a0e17;text-decoration:none;font-weight:700;font-size:14px;" style-hover="filter:brightness(1.08);">Get in touch →</a>
+        <a href="MellyCoreAIOS.dc.html" style="font-size:13px;color:#aab2c6;text-decoration:none;" style-hover="color:#f7933c;">MellyCore AIOS →</a>
+      </div>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1000,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      safety: [
+        { title:'Read-only access', body:'Connects to market data for reading only. It cannot place, modify or cancel any order.' },
+        { title:'Dry-run by default', body:'Every strategy runs as a simulation. Nothing leaves the sandbox and reaches a broker.' },
+        { title:'Advisory signals', body:'AI output is informational context — never a recommendation to buy or sell, never financial advice.' },
+        { title:'No fake performance', body:'No fabricated PnL, no invented track record, no fake clients or production claims.' },
+      ],
+      watch: [
+        { sym:'BTC · sample', chg:'+1.2%', style:'font-size:12px;color:#3ad17e;' },
+        { sym:'ETH · sample', chg:'-0.6%', style:'font-size:12px;color:#e5484d;' },
+        { sym:'SOL · sample', chg:'+0.4%', style:'font-size:12px;color:#3ad17e;' },
+      ],
+      stack: [
+        { k:'Frontend', v:'React + TypeScript' },
+        { k:'Backend', v:'FastAPI (Python)' },
+        { k:'Packaging', v:'Tauri desktop + PWA' },
+        { k:'Posture', v:'Read-only · dry-run · advisory' },
+      ],
+      why: [
+        'Safety is a feature, not a disclaimer — the read-only boundary is enforced in the architecture, not just the UI.',
+        'FastAPI keeps the data and signal layer typed, fast and easy to reason about.',
+        'A shared TypeScript contract means the same models power the desktop app and the PWA.',
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

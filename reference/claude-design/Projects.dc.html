@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;background:#06080f;}
+  a{color:#f7933c;}
+  a:hover{color:#ff9d4a;}
+</style>
+</helmet>
+<div style="position:relative;min-height:100vh;font-family:'JetBrains Mono',ui-monospace,monospace;color:#eef1f8;overflow:hidden;background:radial-gradient(1100px 600px at 78% -10%,rgba(247,147,60,0.10),transparent 58%),radial-gradient(900px 520px at 4% 12%,rgba(79,147,230,0.09),transparent 55%),#06080f;">
+  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(1000px 700px at 50% 0%,#000,transparent 78%);-webkit-mask-image:radial-gradient(1000px 700px at 50% 0%,#000,transparent 78%);pointer-events:none;"></div>
+  <div style="position:relative;z-index:1;">
+    <dc-import name="SiteNav" active="projects" hint-size="100%,64px"></dc-import>
+
+    <header style="max-width:1160px;margin:0 auto;padding:clamp(36px,6vw,72px) clamp(16px,4vw,40px) clamp(16px,3vw,32px);">
+      <p style="margin:0 0 12px;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#f7933c;">Projects</p>
+      <h1 style="margin:0;font-size:clamp(30px,5vw,50px);font-weight:800;line-height:1.05;letter-spacing:-0.02em;max-width:18ch;">A narrative in three layers</h1>
+      <p style="margin:18px 0 0;font-size:clamp(14px,1.6vw,17px);line-height:1.6;color:#aab2c6;max-width:56ch;">Each project is a step in the same story. Process becomes platform; platform becomes product. Read them in order, or jump to what matters.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;">
+        <span style="padding:7px 14px;border-radius:999px;border:1px solid rgba(79,147,230,0.35);background:rgba(79,147,230,0.1);color:#67a6f2;font-size:12px;">01 Process</span>
+        <span style="color:#44506b;align-self:center;">→</span>
+        <span style="padding:7px 14px;border-radius:999px;border:1px solid rgba(247,147,60,0.35);background:rgba(247,147,60,0.1);color:#ff9d4a;font-size:12px;">02 Platform</span>
+        <span style="color:#44506b;align-self:center;">→</span>
+        <span style="padding:7px 14px;border-radius:999px;border:1px solid rgba(47,191,107,0.35);background:rgba(47,191,107,0.1);color:#3ad17e;font-size:12px;">03 Product</span>
+      </div>
+    </header>
+
+    <section style="max-width:1160px;margin:0 auto;padding:clamp(12px,2vw,24px) clamp(16px,4vw,40px) clamp(48px,7vw,90px);display:flex;flex-direction:column;gap:20px;">
+      <sc-for list="{{ projects }}" as="p" hint-placeholder-count="3">
+        <a href="{{ p.href }}" style="{{ p.wrap }}" style-hover="border-color:rgba(247,147,60,0.5);">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(20px,3vw,40px);align-items:center;">
+            <div>
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                <span style="{{ p.badge }}">{{ p.layer }}</span>
+                <span style="font-size:12px;color:#6f7a93;letter-spacing:0.1em;">{{ p.no }} / 03</span>
+              </div>
+              <h2 style="margin:0;font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-0.01em;">{{ p.title }}</h2>
+              <p style="margin:6px 0 0;font-size:14px;color:#f7933c;font-weight:500;">{{ p.tagline }}</p>
+              <p style="margin:16px 0 0;font-size:13.5px;line-height:1.65;color:#aab2c6;max-width:52ch;">{{ p.body }}</p>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;">
+                <sc-for list="{{ p.chips }}" as="c" hint-placeholder-count="4">
+                  <span style="{{ c.style }}">{{ c.label }}</span>
+                </sc-for>
+              </div>
+              <div style="margin-top:22px;display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#eef1f8;font-weight:600;">Read the case study <span style="color:#f7933c;">→</span></div>
+            </div>
+            <div style="{{ p.visualWrap }}">
+              {{ p.visual }}
+            </div>
+          </div>
+        </a>
+      </sc-for>
+    </section>
+
+    <footer style="border-top:1px solid #161d30;padding:26px clamp(16px,4vw,40px);max-width:1160px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;">
+      <span style="font-size:12px;color:#6f7a93;">© 2026 Mateusz Ozimkiewicz</span>
+      <a href="index.dc.html" style="font-size:12px;color:#aab2c6;text-decoration:none;" style-hover="color:#f7933c;">← Back home</a>
+    </footer>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1160,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    const R = React.createElement;
+    const chip = (label, tone) => {
+      const tones = {
+        neutral: 'border:1px solid #1d2740;background:rgba(19,26,43,0.6);color:#aab2c6;',
+        safe: 'border:1px solid rgba(47,191,107,0.35);background:rgba(47,191,107,0.1);color:#3ad17e;',
+        info: 'border:1px solid rgba(79,147,230,0.35);background:rgba(79,147,230,0.1);color:#67a6f2;',
+        brand: 'border:1px solid rgba(247,147,60,0.35);background:rgba(247,147,60,0.1);color:#ff9d4a;',
+      };
+      return { label, style: 'padding:5px 11px;border-radius:6px;font-size:11px;font-weight:500;' + tones[tone] };
+    };
+    const badge = (tone) => {
+      const t = {
+        info: 'color:#67a6f2;background:rgba(79,147,230,0.1);border:1px solid rgba(79,147,230,0.3);',
+        brand: 'color:#ff9d4a;background:rgba(247,147,60,0.1);border:1px solid rgba(247,147,60,0.3);',
+        safe: 'color:#3ad17e;background:rgba(47,191,107,0.1);border:1px solid rgba(47,191,107,0.3);',
+      }[tone];
+      return 'padding:5px 12px;border-radius:999px;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;' + t;
+    };
+    const wrap = 'display:block;text-decoration:none;border:1px solid #1d2740;border-radius:16px;background:linear-gradient(180deg,rgba(14,19,32,0.7),rgba(8,11,19,0.7));padding:clamp(20px,3vw,32px);transition:border-color .18s;box-shadow:0 16px 40px -24px rgba(0,0,0,0.85);';
+    const visualWrap = 'border:1px solid #161d30;border-radius:12px;background:rgba(8,11,19,0.6);padding:16px;min-height:150px;';
+    const row = (color, label, meta) => R('div', { style: { display:'flex', alignItems:'center', gap:'10px', padding:'9px 11px', borderRadius:'8px', background:'rgba(19,26,43,0.5)', border:'1px solid #161d30', marginBottom:'8px' } },
+      R('span', { style: { width:'8px', height:'8px', borderRadius:'50%', background:color } }),
+      R('span', { style: { fontSize:'12px', color:'#eef1f8' } }, label),
+      R('span', { style: { marginLeft:'auto', fontSize:'11px', color:'#6f7a93' } }, meta));
+
+    return {
+      projects: [
+        { no:'01', layer:'Process', badge: badge('info'), title:'AI Agent Workspace', tagline:'Documented multi-agent workflow', href:'AIWorkspace.dc.html', wrap, visualWrap,
+          body:'The workflow layer. A connected system of AI tools and notes — ChatGPT, Claude Code, Codex, Obsidian, GitHub, ClickUp — orchestrated into agent-based development.',
+          chips:[chip('ChatGPT','neutral'),chip('Claude Code','neutral'),chip('Codex','neutral'),chip('Obsidian','neutral'),chip('GitHub','neutral'),chip('ClickUp','neutral')],
+          visual: R(React.Fragment, null,
+            R('div', { style:{ fontSize:'11px', letterSpacing:'0.14em', textTransform:'uppercase', color:'#6f7a93', marginBottom:'12px' } }, 'Toolchain'),
+            row('#67a6f2','Plan · ChatGPT / Claude','ideate'),
+            row('#f7933c','Build · Codex / Claude Code','implement'),
+            row('#3ad17e','Ship · GitHub / ClickUp','deliver')) },
+        { no:'02', layer:'Platform', badge: badge('brand'), title:'MellyCore AIOS', tagline:'AI command center & context graph', href:'MellyCoreAIOS.dc.html', wrap, visualWrap,
+          body:'The platform layer. A context graph and agent-handoff system that captures how work flows between tools — with a cinematic /aios showcase route.',
+          chips:[chip('Context graph','brand'),chip('Agent handoff','brand'),chip('React','neutral'),chip('TypeScript','neutral')],
+          visual: R(React.Fragment, null,
+            R('div', { style:{ fontSize:'11px', letterSpacing:'0.14em', textTransform:'uppercase', color:'#6f7a93', marginBottom:'12px' } }, 'Context graph'),
+            R('div', { style:{ textAlign:'center', padding:'10px', borderRadius:'9px', border:'1px solid rgba(247,147,60,0.35)', background:'rgba(247,147,60,0.08)', color:'#ff9d4a', fontSize:'12px', fontWeight:700, marginBottom:'10px' } }, 'AIOS core'),
+            R('div', { style:{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'8px' } },
+              R('div', { style:{ textAlign:'center', padding:'8px', borderRadius:'8px', border:'1px solid rgba(79,147,230,0.3)', background:'rgba(79,147,230,0.07)', color:'#67a6f2', fontSize:'11px' } }, 'Agents'),
+              R('div', { style:{ textAlign:'center', padding:'8px', borderRadius:'8px', border:'1px solid #1d2740', background:'rgba(19,26,43,0.5)', color:'#aab2c6', fontSize:'11px' } }, 'Context'),
+              R('div', { style:{ textAlign:'center', padding:'8px', borderRadius:'8px', border:'1px solid #1d2740', background:'rgba(19,26,43,0.5)', color:'#aab2c6', fontSize:'11px' } }, 'Memory'),
+              R('div', { style:{ textAlign:'center', padding:'8px', borderRadius:'8px', border:'1px solid rgba(47,191,107,0.3)', background:'rgba(47,191,107,0.07)', color:'#3ad17e', fontSize:'11px' } }, 'Handoff'))) },
+        { no:'03', layer:'Product', badge: badge('safe'), title:'MellyTrade', tagline:'Safe AI trading terminal', href:'MellyTrade.dc.html', wrap, visualWrap,
+          body:'The product layer. A safety-first AI trading terminal built on FastAPI + React + TypeScript, packaged with Tauri/PWA. Read-only, dry-run and advisory by design.',
+          chips:[chip('FastAPI','neutral'),chip('React','neutral'),chip('TypeScript','neutral'),chip('Tauri/PWA','neutral'),chip('Read-only','safe'),chip('Dry-run','safe')],
+          visual: R(React.Fragment, null,
+            R('div', { style:{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'12px' } },
+              R('span', { style:{ fontSize:'11px', letterSpacing:'0.14em', textTransform:'uppercase', color:'#6f7a93' } }, 'Safety posture'),
+              R('span', { style:{ fontSize:'11px', color:'#e5484d' } }, 'live orders blocked')),
+            row('#3ad17e','READ-ONLY','no execution'),
+            row('#4f93e6','DRY-RUN','simulation'),
+            row('#f5c518','ADVISORY','signals only'),
+            R('div', { style:{ marginTop:'10px', fontSize:'11px', color:'#6f7a93', lineHeight:1.5 } }, 'No broker execution · no live orders · no fake PnL')) },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
