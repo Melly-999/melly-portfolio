@@ -16,18 +16,19 @@
   body{margin:0;background:#06080f;}
   a{color:#f7933c;}
   a:hover{color:#ff9d4a;}
+  a:focus-visible,button:focus-visible{outline:2px solid #f7933c;outline-offset:2px;border-radius:8px;}
 </style>
 </helmet>
-<div style="position:relative;min-height:100vh;font-family:'JetBrains Mono',ui-monospace,monospace;color:#eef1f8;overflow:hidden;background:radial-gradient(1100px 600px at 78% -10%,rgba(247,147,60,0.10),transparent 58%),radial-gradient(900px 520px at 4% 12%,rgba(79,147,230,0.09),transparent 55%),#06080f;">
+<div style="position:relative;min-height:100vh;font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Arial,sans-serif;color:#eef1f8;overflow:hidden;background:radial-gradient(1100px 600px at 78% -10%,rgba(247,147,60,0.10),transparent 58%),radial-gradient(900px 520px at 4% 12%,rgba(79,147,230,0.09),transparent 55%),#06080f;">
   <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(1000px 700px at 50% 0%,#000,transparent 78%);-webkit-mask-image:radial-gradient(1000px 700px at 50% 0%,#000,transparent 78%);pointer-events:none;"></div>
   <div style="position:relative;z-index:1;">
     <dc-import name="SiteNav" active="projects" hint-size="100%,64px"></dc-import>
 
     <header style="max-width:1160px;margin:0 auto;padding:clamp(36px,6vw,72px) clamp(16px,4vw,40px) clamp(16px,3vw,32px);">
-      <p style="margin:0 0 12px;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#f7933c;">Projects</p>
+      <p style="margin:0 0 12px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#f7933c;">Projects</p>
       <h1 style="margin:0;font-size:clamp(30px,5vw,50px);font-weight:800;line-height:1.05;letter-spacing:-0.02em;max-width:18ch;">A narrative in three layers</h1>
       <p style="margin:18px 0 0;font-size:clamp(14px,1.6vw,17px);line-height:1.6;color:#aab2c6;max-width:56ch;">Each project is a step in the same story. Process becomes platform; platform becomes product. Read them in order, or jump to what matters.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;font-family:'JetBrains Mono',ui-monospace,monospace;">
         <span style="padding:7px 14px;border-radius:999px;border:1px solid rgba(79,147,230,0.35);background:rgba(79,147,230,0.1);color:#67a6f2;font-size:12px;">01 Process</span>
         <span style="color:#44506b;align-self:center;">→</span>
         <span style="padding:7px 14px;border-radius:999px;border:1px solid rgba(247,147,60,0.35);background:rgba(247,147,60,0.1);color:#ff9d4a;font-size:12px;">02 Platform</span>
@@ -43,7 +44,7 @@
             <div>
               <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
                 <span style="{{ p.badge }}">{{ p.layer }}</span>
-                <span style="font-size:12px;color:#6f7a93;letter-spacing:0.1em;">{{ p.no }} / 03</span>
+                <span style="font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;color:#6f7a93;letter-spacing:0.1em;">{{ p.no }} / 03</span>
               </div>
               <h2 style="margin:0;font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-0.01em;">{{ p.title }}</h2>
               <p style="margin:6px 0 0;font-size:14px;color:#f7933c;font-weight:500;">{{ p.tagline }}</p>
@@ -63,7 +64,7 @@
       </sc-for>
     </section>
 
-    <footer style="border-top:1px solid #161d30;padding:26px clamp(16px,4vw,40px);max-width:1160px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;">
+    <footer style="border-top:1px solid #161d30;padding:26px clamp(16px,4vw,40px);max-width:1160px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;font-family:'JetBrains Mono',ui-monospace,monospace;">
       <span style="font-size:12px;color:#6f7a93;">© 2026 Mateusz Ozimkiewicz</span>
       <a href="index.dc.html" style="font-size:12px;color:#aab2c6;text-decoration:none;" style-hover="color:#f7933c;">← Back home</a>
     </footer>
@@ -81,7 +82,7 @@ class Component extends DCLogic {
         info: 'border:1px solid rgba(79,147,230,0.35);background:rgba(79,147,230,0.1);color:#67a6f2;',
         brand: 'border:1px solid rgba(247,147,60,0.35);background:rgba(247,147,60,0.1);color:#ff9d4a;',
       };
-      return { label, style: 'padding:5px 11px;border-radius:6px;font-size:11px;font-weight:500;' + tones[tone] };
+      return { label, style: "font-family:'JetBrains Mono',ui-monospace,monospace;padding:5px 11px;border-radius:6px;font-size:11px;font-weight:500;" + tones[tone] };
     };
     const badge = (tone) => {
       const t = {
@@ -89,10 +90,10 @@ class Component extends DCLogic {
         brand: 'color:#ff9d4a;background:rgba(247,147,60,0.1);border:1px solid rgba(247,147,60,0.3);',
         safe: 'color:#3ad17e;background:rgba(47,191,107,0.1);border:1px solid rgba(47,191,107,0.3);',
       }[tone];
-      return 'padding:5px 12px;border-radius:999px;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;' + t;
+      return "font-family:'JetBrains Mono',ui-monospace,monospace;padding:5px 12px;border-radius:999px;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;" + t;
     };
     const wrap = 'display:block;text-decoration:none;border:1px solid #1d2740;border-radius:16px;background:linear-gradient(180deg,rgba(14,19,32,0.7),rgba(8,11,19,0.7));padding:clamp(20px,3vw,32px);transition:border-color .18s;box-shadow:0 16px 40px -24px rgba(0,0,0,0.85);';
-    const visualWrap = 'border:1px solid #161d30;border-radius:12px;background:rgba(8,11,19,0.6);padding:16px;min-height:150px;';
+    const visualWrap = "font-family:'JetBrains Mono',ui-monospace,monospace;border:1px solid #161d30;border-radius:12px;background:rgba(8,11,19,0.6);padding:16px;min-height:150px;";
     const row = (color, label, meta) => R('div', { style: { display:'flex', alignItems:'center', gap:'10px', padding:'9px 11px', borderRadius:'8px', background:'rgba(19,26,43,0.5)', border:'1px solid #161d30', marginBottom:'8px' } },
       R('span', { style: { width:'8px', height:'8px', borderRadius:'50%', background:color } }),
       R('span', { style: { fontSize:'12px', color:'#eef1f8' } }, label),
@@ -129,7 +130,7 @@ class Component extends DCLogic {
             row('#3ad17e','READ-ONLY','no execution'),
             row('#4f93e6','DRY-RUN','simulation'),
             row('#f5c518','ADVISORY','signals only'),
-            R('div', { style:{ marginTop:'10px', fontSize:'11px', color:'#6f7a93', lineHeight:1.5 } }, 'No broker execution · no live orders · no fake PnL')) },
+            R('div', { style:{ marginTop:'10px', fontSize:'11px', color:'#6f7a93', lineHeight:1.5 } }, 'No broker execution · no live orders · no fake performance')) },
       ],
     };
   }

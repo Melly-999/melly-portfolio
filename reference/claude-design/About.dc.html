@@ -16,9 +16,10 @@
   body{margin:0;background:#06080f;}
   a{color:#f7933c;}
   a:hover{color:#ff9d4a;}
+  a:focus-visible,button:focus-visible{outline:2px solid #f7933c;outline-offset:2px;border-radius:8px;}
 </style>
 </helmet>
-<div style="position:relative;min-height:100vh;font-family:'JetBrains Mono',ui-monospace,monospace;color:#eef1f8;overflow:hidden;background:radial-gradient(1100px 600px at 78% -10%,rgba(247,147,60,0.10),transparent 58%),radial-gradient(900px 520px at 4% 12%,rgba(79,147,230,0.09),transparent 55%),#06080f;">
+<div style="position:relative;min-height:100vh;font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Arial,sans-serif;color:#eef1f8;overflow:hidden;background:radial-gradient(1100px 600px at 78% -10%,rgba(247,147,60,0.10),transparent 58%),radial-gradient(900px 520px at 4% 12%,rgba(79,147,230,0.09),transparent 55%),#06080f;">
   <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(1000px 700px at 50% 0%,#000,transparent 78%);-webkit-mask-image:radial-gradient(1000px 700px at 50% 0%,#000,transparent 78%);pointer-events:none;"></div>
   <div style="position:relative;z-index:1;">
     <dc-import name="SiteNav" active="about" hint-size="100%,64px"></dc-import>
@@ -26,12 +27,12 @@
     <header style="max-width:1000px;margin:0 auto;padding:clamp(36px,6vw,72px) clamp(16px,4vw,40px) clamp(20px,3vw,36px);">
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(24px,4vw,48px);align-items:center;">
         <div>
-          <p style="margin:0 0 12px;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#f7933c;">About</p>
+          <p style="margin:0 0 12px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#f7933c;">About</p>
           <h1 style="margin:0;font-size:clamp(30px,5vw,50px);font-weight:800;line-height:1.04;letter-spacing:-0.02em;">Full-stack, built around AI</h1>
-          <p style="margin:18px 0 0;font-size:clamp(14px,1.6vw,16.5px);line-height:1.65;color:#aab2c6;max-width:52ch;">I'm Mateusz — a junior full-stack developer focused on shipping real software with an AI-native workflow. I care about safety, clarity and systems that actually hold together, from the first note to the deployed product.</p>
+          <p style="margin:18px 0 0;font-size:clamp(14px,1.6vw,16.5px);line-height:1.65;color:#aab2c6;max-width:52ch;">I'm Mateusz — a full-stack developer focused on shipping real software with an AI-native workflow. I care about safety, clarity and systems that actually hold together, from the first note to the deployed product.</p>
           <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;">
             <a href="Projects.dc.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;background:linear-gradient(145deg,#f7933c,#e8623a);color:#0a0e17;text-decoration:none;font-weight:700;font-size:13.5px;" style-hover="filter:brightness(1.08);">See the work →</a>
-            <a href="Contact.dc.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;background:rgba(14,19,32,0.7);border:1px solid #1d2740;color:#eef1f8;text-decoration:none;font-weight:600;font-size:13.5px;" style-hover="border-color:#f7933c;">Contact & CV</a>
+            <a href="Contact.dc.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;background:rgba(14,19,32,0.7);border:1px solid #1d2740;color:#eef1f8;text-decoration:none;font-weight:600;font-size:13.5px;" style-hover="border-color:#f7933c;">Contact</a>
           </div>
         </div>
         <div style="border:1px solid #1d2740;border-radius:16px;background:rgba(14,19,32,0.55);padding:22px;">
@@ -39,12 +40,12 @@
             <span style="display:grid;place-items:center;width:56px;height:56px;border-radius:14px;background:linear-gradient(145deg,#f7933c,#e8623a);color:#0a0e17;font-weight:800;font-size:22px;box-shadow:0 0 30px -6px rgba(247,147,60,0.6);">MO</span>
             <div>
               <div style="font-size:16px;font-weight:700;">Mateusz Ozimkiewicz</div>
-              <div style="font-size:12px;color:#6f7a93;margin-top:3px;">Junior Full-Stack Developer</div>
+              <div style="font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;color:#6f7a93;margin-top:3px;">Full-Stack Developer</div>
             </div>
           </div>
           <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
             <div style="display:flex;align-items:baseline;gap:12px;padding:9px 0;border-bottom:1px solid #161d30;">
-              <span style="font-size:11px;color:#6f7a93;min-width:96px;letter-spacing:0.08em;text-transform:uppercase;">{{ f.k }}</span>
+              <span style="font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;color:#6f7a93;min-width:96px;letter-spacing:0.08em;text-transform:uppercase;">{{ f.k }}</span>
               <span style="font-size:12.5px;color:#eef1f8;">{{ f.v }}</span>
             </div>
           </sc-for>
@@ -60,11 +61,11 @@
           <div style="border:1px solid #1d2740;border-radius:14px;background:rgba(14,19,32,0.5);padding:20px;">
             <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;">
               <span style="{{ g.dot }}"></span>
-              <h3 style="margin:0;font-size:14px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#eef1f8;">{{ g.title }}</h3>
+              <h3 style="margin:0;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:14px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#eef1f8;">{{ g.title }}</h3>
             </div>
             <div style="display:flex;flex-wrap:wrap;gap:8px;">
               <sc-for list="{{ g.items }}" as="i" hint-placeholder-count="4">
-                <span style="padding:6px 12px;border-radius:8px;border:1px solid #1d2740;background:rgba(19,26,43,0.6);font-size:12px;color:#aab2c6;">{{ i }}</span>
+                <span style="font-family:'JetBrains Mono',ui-monospace,monospace;padding:6px 12px;border-radius:8px;border:1px solid #1d2740;background:rgba(19,26,43,0.6);font-size:12px;color:#aab2c6;">{{ i }}</span>
               </sc-for>
             </div>
           </div>
@@ -86,9 +87,9 @@
       </div>
     </section>
 
-    <footer style="border-top:1px solid #161d30;margin-top:clamp(24px,4vw,40px);padding:26px clamp(16px,4vw,40px);max-width:1000px;margin-left:auto;margin-right:auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;">
+    <footer style="border-top:1px solid #161d30;margin-top:clamp(24px,4vw,40px);padding:26px clamp(16px,4vw,40px);max-width:1000px;margin-left:auto;margin-right:auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;font-family:'JetBrains Mono',ui-monospace,monospace;">
       <span style="font-size:12px;color:#6f7a93;">© 2026 Mateusz Ozimkiewicz</span>
-      <a href="Contact.dc.html" style="font-size:12px;color:#aab2c6;text-decoration:none;" style-hover="color:#f7933c;">Contact & CV →</a>
+      <a href="Contact.dc.html" style="font-size:12px;color:#aab2c6;text-decoration:none;" style-hover="color:#f7933c;">Contact →</a>
     </footer>
   </div>
 </div>
@@ -99,7 +100,7 @@ class Component extends DCLogic {
     const dot = (c) => 'width:9px;height:9px;border-radius:50%;background:'+c+';box-shadow:0 0 10px '+c+';';
     return {
       facts: [
-        { k:'Role', v:'Junior / mid full-stack' },
+        { k:'Role', v:'Full-stack developer' },
         { k:'Location', v:'Poland · remote worldwide' },
         { k:'Open to', v:'Employment · freelance · B2B · contract' },
         { k:'Focus', v:'AI tools · safe products' },

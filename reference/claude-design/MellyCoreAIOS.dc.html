@@ -16,29 +16,32 @@
   body{margin:0;background:#050710;}
   a{color:#f7933c;}
   a:hover{color:#ff9d4a;}
+  a:focus-visible,button:focus-visible{outline:2px solid #f7933c;outline-offset:2px;border-radius:8px;}
   @keyframes pulse{0%,100%{opacity:0.5;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
   @keyframes sweep{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
   @keyframes orbit{0%{opacity:0.3}50%{opacity:1}100%{opacity:0.3}}
 </style>
 </helmet>
-<div style="position:relative;min-height:100vh;font-family:'JetBrains Mono',ui-monospace,monospace;color:#eef1f8;overflow:hidden;background:radial-gradient(1200px 700px at 50% -10%,rgba(247,147,60,0.18),transparent 55%),radial-gradient(900px 600px at 15% 40%,rgba(79,147,230,0.14),transparent 55%),radial-gradient(800px 600px at 90% 80%,rgba(47,191,107,0.08),transparent 60%),#050710;">
+<div style="position:relative;min-height:100vh;font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Arial,sans-serif;color:#eef1f8;overflow:hidden;background:radial-gradient(1200px 700px at 50% -10%,rgba(247,147,60,0.18),transparent 55%),radial-gradient(900px 600px at 15% 40%,rgba(79,147,230,0.14),transparent 55%),radial-gradient(800px 600px at 90% 80%,rgba(47,191,107,0.08),transparent 60%),#050710;">
   <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(1100px 800px at 50% 10%,#000,transparent 80%);-webkit-mask-image:radial-gradient(1100px 800px at 50% 10%,#000,transparent 80%);pointer-events:none;"></div>
   <div style="position:relative;z-index:1;">
     <dc-import name="SiteNav" active="projects" hint-size="100%,64px"></dc-import>
 
-    <div style="max-width:1080px;margin:0 auto;padding:clamp(24px,4vw,44px) clamp(16px,4vw,40px) 0;font-size:12px;color:#6f7a93;">
+    <div style="max-width:1080px;margin:0 auto;padding:clamp(24px,4vw,44px) clamp(16px,4vw,40px) 0;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;color:#6f7a93;">
       <a href="Projects.dc.html" style="color:#6f7a93;text-decoration:none;" style-hover="color:#f7933c;">Projects</a> / <span style="color:#ff9d4a;">MellyCore AIOS · Platform</span>
     </div>
 
     <!-- CINEMATIC HERO · CommandCore CSS placeholder (swap for g1 master hero render later) -->
     <header style="position:relative;min-height:560px;display:grid;place-items:center;overflow:hidden;">
-      <dc-import name="CommandCore" calm-right="{{ false }}" style="position:absolute;inset:0;opacity:0.95;pointer-events:none;" hint-size="100%,560px"></dc-import>
+      <div aria-hidden="true" style="position:absolute;inset:0;opacity:0.95;pointer-events:none;">
+        <dc-import name="CommandCore" calm-right="{{ false }}" style="position:absolute;inset:0;" hint-size="100%,560px"></dc-import>
+      </div>
       <div style="position:absolute;inset:0;background:radial-gradient(640px 300px at 50% 56%,rgba(5,7,16,0.6),transparent 75%),linear-gradient(180deg,rgba(5,7,16,0.35),transparent 30%,transparent 65%,rgba(5,7,16,0.85));pointer-events:none;"></div>
       <div style="position:relative;max-width:1080px;margin:0 auto;padding:clamp(28px,5vw,64px) clamp(16px,4vw,40px) clamp(24px,4vw,44px);text-align:center;">
-      <span style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;color:#ff9d4a;background:rgba(247,147,60,0.1);border:1px solid rgba(247,147,60,0.35);font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;"><span style="width:7px;height:7px;border-radius:50%;background:#f7933c;box-shadow:0 0 10px #f7933c;animation:pulse 2s ease-in-out infinite;"></span>Cinematic showcase · /aios</span>
+      <span style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;color:#ff9d4a;background:rgba(247,147,60,0.1);border:1px solid rgba(247,147,60,0.35);font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;"><span style="width:7px;height:7px;border-radius:50%;background:#f7933c;box-shadow:0 0 10px #f7933c;animation:pulse 2s ease-in-out infinite;"></span>Cinematic showcase · /aios</span>
       <h1 style="margin:22px auto 0;font-size:clamp(34px,6.5vw,72px);font-weight:800;line-height:1.0;letter-spacing:-0.03em;max-width:16ch;">MellyCore <span style="color:#f7933c;">AIOS</span></h1>
       <p style="margin:18px auto 0;font-size:clamp(15px,1.9vw,21px);color:#eef1f8;font-weight:500;max-width:40ch;">The AI command center where context, agents and handoffs converge.</p>
-      <p style="margin:16px auto 0;font-size:clamp(13.5px,1.5vw,16px);line-height:1.65;color:#aab2c6;max-width:56ch;">The platform layer of the story. AIOS turns a loose collection of AI tools into a coherent operating system for work — a living context graph that agents read, write and hand off across.</p>
+      <p style="margin:16px auto 0;font-size:clamp(13.5px,1.5vw,16px);line-height:1.65;color:#aab2c6;max-width:56ch;">The platform layer of the story. A docs-first prototype of an AI command center — a context graph that agents read, write and hand off across, presented here as a static architecture model.</p>
       </div>
     </header>
 
@@ -46,15 +49,15 @@
     <section style="max-width:1080px;margin:0 auto;padding:0 clamp(16px,4vw,40px) clamp(28px,4vw,44px);">
       <div style="position:relative;border:1px solid rgba(247,147,60,0.25);border-radius:18px;overflow:hidden;background:linear-gradient(180deg,rgba(14,19,32,0.9),rgba(5,7,16,0.95));box-shadow:0 40px 100px -46px rgba(0,0,0,0.95),0 0 60px -20px rgba(247,147,60,0.25);">
         <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#f7933c,transparent);"></div>
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #161d30;">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #161d30;font-family:'JetBrains Mono',ui-monospace,monospace;">
           <span style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#6f7a93;">AIOS · command center</span>
-          <span style="display:inline-flex;align-items:center;gap:7px;font-size:11px;color:#3ad17e;"><span style="width:7px;height:7px;border-radius:50%;background:#3ad17e;animation:pulse 2s ease-in-out infinite;"></span>orchestrating</span>
+          <span style="display:inline-flex;align-items:center;gap:7px;font-size:11px;letter-spacing:0.1em;color:#ffd23f;"><span style="width:7px;height:7px;border-radius:50%;background:#f5c518;"></span>DOCS-FIRST PROTOTYPE</span>
         </div>
         <div style="padding:clamp(20px,3vw,32px);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(18px,3vw,28px);">
           <!-- context graph -->
           <div>
-            <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#6f7a93;margin-bottom:16px;">Context graph</div>
-            <div style="position:relative;border:1px solid #161d30;border-radius:12px;background:rgba(8,11,19,0.6);padding:22px;min-height:230px;display:grid;place-items:center;">
+            <div style="font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#6f7a93;margin-bottom:16px;">Context graph · static model</div>
+            <div style="position:relative;border:1px solid #161d30;border-radius:12px;background:rgba(8,11,19,0.6);padding:22px;min-height:230px;display:grid;place-items:center;font-family:'JetBrains Mono',ui-monospace,monospace;">
               <div style="text-align:center;padding:12px 18px;border-radius:12px;border:1px solid rgba(247,147,60,0.4);background:rgba(247,147,60,0.1);color:#ff9d4a;font-weight:800;font-size:14px;box-shadow:0 0 40px -8px rgba(247,147,60,0.5);">AIOS core</div>
               <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px;">
                 <sc-for list="{{ nodes }}" as="n" hint-placeholder-count="5">
@@ -65,8 +68,8 @@
           </div>
           <!-- agent handoff -->
           <div>
-            <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#6f7a93;margin-bottom:16px;">Agent handoff pipeline</div>
-            <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#6f7a93;margin-bottom:16px;">Agent handoff · illustrative flow</div>
+            <div style="display:flex;flex-direction:column;gap:10px;font-family:'JetBrains Mono',ui-monospace,monospace;">
               <sc-for list="{{ pipeline }}" as="p" hint-placeholder-count="4">
                 <div style="{{ p.wrap }}">
                   <span style="{{ p.dot }}"></span>
@@ -98,12 +101,12 @@
       <div style="border:1px solid rgba(79,147,230,0.25);border-radius:16px;overflow:hidden;background:radial-gradient(700px 300px at 30% 0%,rgba(79,147,230,0.14),transparent 60%),rgba(8,11,19,0.7);padding:clamp(24px,4vw,40px);">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;align-items:center;">
           <div>
-            <p style="margin:0 0 10px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#67a6f2;">The /aios route</p>
+            <p style="margin:0 0 10px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#67a6f2;">The /aios route</p>
             <h2 style="margin:0;font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-0.01em;">A cinematic walkthrough of the platform</h2>
             <p style="margin:14px 0 0;font-size:13.5px;line-height:1.65;color:#aab2c6;max-width:48ch;">A dedicated full-screen route that narrates AIOS end to end — how context enters, how agents pick it up, and how a decision hands off cleanly to the next step. Cinematic, but always readable.</p>
           </div>
-          <div style="border:1px solid #161d30;border-radius:12px;background:rgba(5,7,16,0.8);overflow:hidden;">
-            <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid #161d30;font-size:11px;color:#6f7a93;">melly.dev<span style="color:#f7933c;">/aios</span></div>
+          <div style="border:1px solid #161d30;border-radius:12px;background:rgba(5,7,16,0.8);overflow:hidden;font-family:'JetBrains Mono',ui-monospace,monospace;">
+            <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid #161d30;font-size:11px;color:#6f7a93;">Portfolio preview · <span style="color:#f7933c;">/projects/aios</span></div>
             <div style="position:relative;height:150px;display:grid;place-items:center;overflow:hidden;">
               <div style="position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(247,147,60,0.12),transparent);animation:sweep 3.5s ease-in-out infinite;"></div>
               <span style="position:relative;font-size:13px;color:#aab2c6;letter-spacing:0.1em;">▶ enter the showcase</span>
@@ -150,7 +153,7 @@ class Component extends DCLogic {
       features: [
         { icon:'🗂️', title:'Context graph', body:'A structured map of notes, repos and tasks that agents can traverse — one shared source of truth.' },
         { icon:'🔀', title:'Agent handoff', body:'Work moves between agents with context intact: plan → implement → verify, without losing the thread.' },
-        { icon:'🎛️', title:'Command center', body:'A single surface to launch, watch and steer agent work across every connected tool.' },
+        { icon:'🎛️', title:'Command center', body:'A single-surface concept for launching, watching and steering agent work — shown here as a static architecture model.' },
       ],
     };
   }
