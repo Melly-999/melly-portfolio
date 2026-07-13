@@ -1,0 +1,25 @@
+---
+import ProjectBadge from "./ProjectBadge.astro";
+import type { ProjectTone } from "../data/portfolio";
+
+interface Props {
+  number: string;
+  layer: string;
+  tone: ProjectTone;
+  title: string;
+  tagline: string;
+  description: string;
+}
+
+const { number, layer, tone, title, tagline, description } = Astro.props;
+---
+
+<header class="case-hero content-width content-width--case">
+  <a class="case-hero__back" href="/projects">Projects</a>
+  <span class="case-hero__crumb" aria-hidden="true">/ {title} · {layer}</span>
+  <div class="case-hero__layer"><ProjectBadge variant={tone} label={`${number} · ${layer} layer`} /></div>
+  <h1>{title}</h1>
+  <p class="case-hero__tagline">{tagline}</p>
+  <p class="case-hero__description">{description}</p>
+  <slot name="status" />
+</header>

@@ -19,3 +19,4 @@ __pycache__/
 
 # Astro generated types
 .astro/
+.vercel

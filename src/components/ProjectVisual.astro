@@ -1,0 +1,44 @@
+---
+import type { ProjectTone } from "../data/portfolio";
+
+interface Props {
+  kind: ProjectTone;
+}
+
+const { kind } = Astro.props;
+---
+
+<div class={`project-visual project-visual--${kind}`} aria-hidden="true">
+  {
+    kind === "process" && (
+      <>
+        <p class="project-visual__label">Toolchain</p>
+        <div class="project-visual__row"><i></i><span>Plan · ChatGPT / Claude</span><small>ideate</small></div>
+        <div class="project-visual__row"><i></i><span>Build · Codex / Claude Code</span><small>implement</small></div>
+        <div class="project-visual__row"><i></i><span>Ship · GitHub / ClickUp</span><small>deliver</small></div>
+      </>
+    )
+  }
+  {
+    kind === "platform" && (
+      <>
+        <p class="project-visual__label">Context graph · static model</p>
+        <div class="project-visual__core">AIOS core</div>
+        <div class="project-visual__nodes">
+          <span>Agents</span><span>Context</span><span>Memory</span><span>Handoff</span>
+        </div>
+      </>
+    )
+  }
+  {
+    kind === "product" && (
+      <>
+        <div class="project-visual__heading"><span>Safety posture</span><strong>live orders blocked</strong></div>
+        <div class="project-visual__row"><i></i><span>READ-ONLY</span><small>no execution</small></div>
+        <div class="project-visual__row"><i></i><span>DRY-RUN</span><small>simulation</small></div>
+        <div class="project-visual__row"><i></i><span>ADVISORY</span><small>research only</small></div>
+        <p class="project-visual__note">No broker execution · no live orders · no fake performance</p>
+      </>
+    )
+  }
+</div>

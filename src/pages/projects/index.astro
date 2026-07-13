@@ -1,60 +1,30 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import ProjectBadge from "../../components/ProjectBadge.astro";
-
-const projects = [
-  {
-    variant: "process" as const,
-    badge: "Process",
-    title: "AI Agent Workspace",
-    tagline: "Documented multi-agent development workflow",
-    href: "/projects/workspace",
-  },
-  {
-    variant: "platform" as const,
-    badge: "Platform",
-    title: "MellyCore AIOS",
-    tagline: "Docs-first AI command center and context architecture prototype",
-    href: "/projects/aios",
-  },
-  {
-    variant: "product" as const,
-    badge: "Product",
-    title: "MellyTrade",
-    tagline: "Read-only, dry-run AI trading terminal case study",
-    href: "/projects/mellytrade",
-  },
-];
+import ProjectCard from "../../components/ProjectCard.astro";
+import { projects } from "../../data/portfolio";
 ---
 
 <BaseLayout
   title="Projects — Mateusz Ozimkiewicz"
-  description="Selected projects by Mateusz Ozimkiewicz: an AI agent workflow, a docs-first AI command center, and a read-only, dry-run AI trading terminal."
+  description="A process-to-platform-to-product portfolio: AI Agent Workspace, MellyCore AIOS and the safety-first MellyTrade research dashboard."
 >
-  <section class="section content-width">
-    <h1 style="font-size:var(--text-h1);">Projects</h1>
-    <p class="reading-width" style="margin-top:var(--space-8);color:var(--color-text-secondary);">
-      Three chapters of one system: the workflow, the platform, and the
-      product it builds.
+  <header class="page-intro content-width">
+    <p class="section-kicker">Projects</p>
+    <h1>A narrative in three layers</h1>
+    <p class="page-intro__copy">
+      Each project is a step in the same story. Process becomes platform; platform becomes
+      product. Read them in order, or jump to what matters.
     </p>
+    <div class="story-rail" aria-label="Project sequence">
+      <span>01 Process</span><span aria-hidden="true">→</span>
+      <span>02 Platform</span><span aria-hidden="true">→</span>
+      <span>03 Product</span>
+    </div>
+  </header>
 
-    <div class="grid-auto" style="margin-top:var(--space-32);">
-      {
-        projects.map((project) => (
-          <a href={project.href} class="panel panel--elevated" style="display:block;padding:var(--space-24);">
-            <ProjectBadge variant={project.variant} label={project.badge} />
-            <p style="margin-top:var(--space-12);font-weight:800;font-size:var(--text-h3);">
-              {project.title}
-            </p>
-            <p style="margin-top:var(--space-8);color:var(--color-text-secondary);">
-              {project.tagline}
-            </p>
-            <p class="mono" style="margin-top:var(--space-16);color:var(--color-accent-amber);font-size:var(--text-label);">
-              View case study →
-            </p>
-          </a>
-        ))
-      }
+  <section class="section section--last content-width" aria-label="Portfolio projects">
+    <div class="project-list">
+      {projects.map((project) => <ProjectCard project={project} detailed />)}
     </div>
   </section>
 </BaseLayout>

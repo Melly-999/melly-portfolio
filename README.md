@@ -1,79 +1,66 @@
 # Melly Portfolio
 
-Owner: Mateusz Ozimkiewicz
+Mateusz Ozimkiewicz’s static portfolio for full-stack development, AI tooling and safety-first product work. The site connects three parts of one story:
 
-Positioning: Junior Full-Stack Developer | React · TypeScript · FastAPI · AI Tools
+- AI Agent Workspace — process
+- MellyCore AIOS — platform
+- MellyTrade — product
 
-Narrative: **Process → Platform → Product**
+Public positioning: **Full-Stack Developer | React · TypeScript · FastAPI · AI Tools**.
 
-## Featured Projects
+## Stack and boundaries
 
-- **AI Agent Workspace** — Process
-- **MellyCore AIOS** — Platform
-- **MellyTrade** — Product
+- Astro 7 with strict TypeScript
+- Plain CSS and custom properties
+- Static output with minimal client JavaScript
+- System font stacks; no external font request
+- No UI framework, Tailwind, database, authentication, analytics or external API
+- Stable static production deployment on Vercel
 
-## Current Status
+The production `site` value is `https://mateusz-ozimkiewicz-portfolio.vercel.app`. Canonical and Open Graph URLs are generated from that stable domain; preview deployment URLs are never published as the portfolio URL.
 
-- Docs-first planning complete
-- Claude Design prototype preserved ([`reference/claude-design/`](reference/claude-design/))
-- Production scaffold in place: Astro + TypeScript, base layout, navigation,
-  footer, dark design tokens, and route skeletons for all 7 pages
-- Full homepage and case-study content not yet implemented
+## Local setup
 
-## Production Stack
+Requires Node.js 22.12 or newer.
 
-- **Framework:** [Astro](https://astro.build) (static output, TypeScript strict)
-- **Styling:** plain CSS with CSS custom properties (`src/styles/tokens.css`) — no Tailwind, no CSS-in-JS
-- No React/Vue/Svelte integration and no animation library added yet — see [`docs/portfolio/implementation_backlog_001.md`](docs/portfolio/implementation_backlog_001.md) for when (if ever) an island is justified
-
-### Local development
-
-```
-npm install       # first time / after dependency changes
-npm run dev        # local dev server (default: http://localhost:4321)
-npm run build       # static production build → dist/
-npm run preview      # preview the production build locally
-npm run check       # astro check (TypeScript + template diagnostics)
+```powershell
+npm ci
+npm run dev
 ```
 
-### Routes
+Production validation:
 
-| Route | Status |
+```powershell
+npm run build
+npm run check
+git diff --check
+```
+
+The repository does not currently define separate lint or format-check scripts.
+
+## Routes
+
+| Route | Purpose |
 |---|---|
-| `/` | Walking skeleton (hero, Process → Platform → Product strip, projects placeholder, contact CTA) |
-| `/projects` | Project index with 3 cards |
-| `/projects/mellytrade` | Placeholder case study — safety label visible |
-| `/projects/aios` | Placeholder case study |
-| `/projects/workspace` | Placeholder case study |
-| `/about` | Placeholder |
-| `/contact` | Email (mailto) + GitHub; CV link intentionally omitted (no approved CV asset yet) |
+| `/` | Terminal-first home page and project narrative |
+| `/projects` | Project index |
+| `/projects/workspace` | AI Agent Workspace case study |
+| `/projects/aios` | MellyCore AIOS static architecture showcase |
+| `/projects/mellytrade` | MellyTrade safety-first research dashboard case study |
+| `/about` | Profile, skills and working principles |
+| `/contact` | Direct email, GitHub and CV-request links |
 
-## Safety And Honesty Principles
+## Safety and honesty
 
-- No fake clients
-- No fake awards
-- No fake metrics
-- No fake production claims
-- MellyTrade is read-only, dry-run and advisory
-- No broker execution
-- Fixture/static data must be clearly labeled as such wherever shown
+- MellyTrade is read-only, dry-run and advisory.
+- Live orders and broker execution remain blocked.
+- Fixture content is labelled as static and illustrative.
+- No fabricated performance, clients, users, testimonials or production claims.
+- MellyCore AIOS is described as a docs-first prototype and static architecture model.
+- The terminal is an illustrative portfolio element, not live monitoring.
 
-## Documentation Index
+## Design source
 
-- [Portfolio Hub Spec 001](docs/portfolio/portfolio_hub_spec_001.md)
-- [Project Positioning 001](docs/portfolio/project_positioning_001.md)
-- [Homepage Copy 001](docs/portfolio/homepage_copy_001.md)
-- [Case Study Structure 001](docs/portfolio/case_study_structure_001.md)
-- [Implementation Backlog 001](docs/portfolio/implementation_backlog_001.md)
-- [Higgsfield Prompt Pack 001](docs/portfolio/higgsfield_prompt_pack_001.md)
+The selected Terminal First prototype is the visual and content reference. Design-tool HTML, runtime scripts and boards are internal reference material only; the production site is implemented as maintainable Astro components and plain CSS.
 
-## Design Reference
-
-[`reference/claude-design/`](reference/claude-design/) contains the original
-Claude Design prototype (`.dc.html` files and design-system bundle). It is a
-**design reference only** — not the production application. The production
-implementation will reproduce the approved design using the chosen framework.
-
-## Next Recommended Task
-
-PF-020 — Home page full implementation per [`docs/portfolio/homepage_copy_001.md`](docs/portfolio/homepage_copy_001.md), followed by the project content model and the three case studies.
+Deployment uses the stable Vercel project `mateusz-ozimkiewicz-portfolio`. GitHub profile linking is performed only after merged-main production QA passes.

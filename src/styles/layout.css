@@ -1,9 +1,8 @@
-/* Shared page-shell / layout primitives. */
-
 .page-shell {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  overflow: clip;
 }
 
 .page-shell__main {
@@ -11,46 +10,80 @@
 }
 
 .content-width {
-  max-width: var(--content-max-width);
+  width: min(100%, var(--content-width));
   margin-inline: auto;
-  padding-inline: var(--gutter-mobile);
+  padding-inline: var(--gutter);
 }
 
-@media (min-width: 768px) {
-  .content-width {
-    padding-inline: var(--gutter-desktop);
-  }
-}
-
-.reading-width {
-  max-width: var(--reading-max-width);
+.content-width--case {
+  max-width: var(--case-width);
 }
 
 .section {
-  padding-block: var(--section-spacing);
+  padding-block: clamp(24px, 4vw, 52px);
 }
 
-.stack {
+.section--tight {
+  padding-block: clamp(16px, 3vw, 32px);
+}
+
+.section--last {
+  padding-bottom: clamp(48px, 7vw, 80px);
+}
+
+.section-heading {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-24);
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
-.cluster {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-12);
+.section-heading h2 {
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 800;
 }
 
-.grid-auto {
+.section-kicker,
+.eyebrow {
+  color: var(--brand);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.section-kicker {
+  margin-bottom: 6px;
+}
+
+.reading-width {
+  max-width: 66ch;
+}
+
+.grid-2,
+.grid-3,
+.grid-4 {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: var(--space-24);
+  gap: 16px;
 }
 
-/* Prevent any accidental horizontal scroll from wide children. */
-html,
-body {
-  overflow-x: hidden;
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+
+.grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+}
+
+.grid-4 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+}
+
+@media (max-width: 620px) {
+  .section-heading {
+    align-items: start;
+    flex-direction: column;
+  }
 }

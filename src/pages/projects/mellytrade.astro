@@ -1,22 +1,125 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import ProjectBadge from "../../components/ProjectBadge.astro";
+import CaseStudyHero from "../../components/CaseStudyHero.astro";
+import FeatureIcon from "../../components/FeatureIcon.astro";
+
+const safety = [
+  {
+    title: "Read-only access",
+    body: "Market and broker surfaces are for reading only. The product cannot submit, modify or cancel trades.",
+  },
+  {
+    title: "Dry-run by default",
+    body: "Every strategy remains a simulation. Nothing leaves the research workspace or reaches a broker.",
+  },
+  {
+    title: "Advisory signals",
+    body: "AI output is informational context — never a trade recommendation and never financial advice.",
+  },
+  {
+    title: "No fake performance",
+    body: "No invented track record, performance figures, clients, users or production claims.",
+  },
+];
+
+const stack = [
+  ["Frontend", "React + TypeScript"],
+  ["Backend", "FastAPI (Python)"],
+  ["Packaging", "Tauri desktop + PWA"],
+  ["Posture", "Read-only · dry-run · advisory"],
+];
+
+const principles = [
+  "Safety is a feature, not a disclaimer — the read-only boundary belongs in the architecture, not just the UI.",
+  "FastAPI keeps the data and signal layer typed, testable and easy to reason about.",
+  "Shared TypeScript contracts keep desktop and PWA representations aligned.",
+];
 ---
 
 <BaseLayout
-  title="MellyTrade — Mateusz Ozimkiewicz"
-  description="MellyTrade: a read-only, dry-run AI trading terminal case study. No broker execution, no live orders."
+  title="MellyTrade — Safety-First AI Trading Research Dashboard"
+  description="MellyTrade is a read-only, dry-run AI trading research dashboard case study with advisory signals and broker execution blocked."
 >
-  <section class="section content-width">
-    <ProjectBadge variant="product" label="Product" />
-    <h1 style="margin-top:var(--space-16);font-size:var(--text-h1);">MellyTrade</h1>
-    <p class="badge badge--safety" style="margin-top:var(--space-16);">
-      STATIC CASE STUDY · READ-ONLY · DRY-RUN · NO BROKER EXECUTION
-    </p>
-    <p class="reading-width" style="margin-top:var(--space-16);color:var(--color-text-secondary);">
-      Read-only, dry-run AI trading terminal case study. The full write-up —
-      architecture, safety posture, and screenshots — is coming in a later
-      implementation pass.
-    </p>
+  <CaseStudyHero
+    number="03"
+    layer="Product"
+    tone="product"
+    title="MellyTrade"
+    tagline="A safe AI trading terminal — advisory, not automated."
+    description="MellyTrade explores how AI can assist trading research responsibly. It reads market context and surfaces advisory signals while every public surface remains read-only, dry-run and blocked from broker execution."
+  >
+    <div slot="status" class="case-status" aria-label="MellyTrade safety status">
+      <span class="status-chip status-chip--safe">READ-ONLY</span>
+      <span class="status-chip status-chip--info">DRY-RUN</span>
+      <span class="status-chip">ADVISORY</span>
+      <span class="status-chip status-chip--blocked">LIVE ORDERS BLOCKED</span>
+    </div>
+  </CaseStudyHero>
+
+  <section class="section section--tight content-width content-width--case" aria-labelledby="safety-heading">
+    <p class="section-kicker">Safety posture</p>
+    <h2 id="safety-heading" class="case-section-title">Non-negotiable boundaries</h2>
+    <div class="grid-2">
+      {
+        safety.map((item) => (
+          <article class="info-card safety-card">
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </article>
+        ))
+      }
+    </div>
   </section>
+
+  <section class="section content-width content-width--case" aria-labelledby="preview-heading">
+    <p class="section-kicker">Terminal preview · advisory view</p>
+    <h2 id="preview-heading" class="case-section-title">Static research interface</h2>
+    <div class="terminal-preview">
+      <div class="terminal-preview__bar">
+        <span>MellyTrade — advisory terminal</span><span>READ-ONLY</span>
+      </div>
+      <p class="terminal-preview__notice">Static portfolio demo · fixture labels · no live API</p>
+      <div class="terminal-preview__grid">
+        <div class="terminal-pane">
+          <p class="terminal-pane__label">Watchlist · read-only</p>
+          <div class="fixture-row"><span>BTC · sample</span><span>fixture symbol</span></div>
+          <div class="fixture-row"><span>ETH · sample</span><span>fixture symbol</span></div>
+          <div class="fixture-row"><span>SOL · sample</span><span>fixture symbol</span></div>
+          <p class="terminal-pane__note">Static labels only — not a live feed and not a recommendation.</p>
+        </div>
+        <div class="terminal-pane">
+          <p class="terminal-pane__label">AI signal · advisory only</p>
+          <span class="status-chip status-chip--info">DRY-RUN INSIGHT · ILLUSTRATIVE</span>
+          <p class="advisory-copy">
+            “Volatility is rising across the sample watchlist. This is an informational note,
+            not financial advice and not an order.”
+          </p>
+          <p class="blocked-note">No trade controls — broker execution blocked by design</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section content-width content-width--case">
+    <div class="grid-2">
+      <div>
+        <p class="section-kicker">Tech stack</p>
+        <h2 class="case-section-title">Typed across the stack</h2>
+        <dl class="key-value-list">
+          {stack.map(([key, value]) => <div><dt>{key}</dt><dd>{value}</dd></div>)}
+        </dl>
+      </div>
+      <div class="info-card">
+        <FeatureIcon name="safety" />
+        <h2>Why it is built this way</h2>
+        <ul class="check-list">{principles.map((item) => <li>{item}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <nav class="case-nav section section--last content-width content-width--case" aria-label="MellyTrade case study navigation">
+    <a href="/projects/workspace">← AI Agent Workspace</a>
+    <a class="button button--secondary" href="https://github.com/Melly-999/alpha_data_scraper_ai" target="_blank" rel="noopener noreferrer">View GitHub repository</a>
+    <a href="/projects/aios">MellyCore AIOS →</a>
+  </nav>
 </BaseLayout>
