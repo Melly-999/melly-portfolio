@@ -15,9 +15,9 @@ Public positioning: **Full-Stack Developer | React · TypeScript · FastAPI · A
 - Static output with minimal client JavaScript
 - System font stacks; no external font request
 - No UI framework, Tailwind, database, authentication, analytics or external API
-- No deployment in this milestone
+- Stable static production deployment on Vercel
 
-The production `site` value remains intentionally unset until a final domain is approved. Canonical URLs are emitted automatically once that value is configured; no temporary domain is hard-coded.
+The production `site` value is `https://mateusz-ozimkiewicz-portfolio.vercel.app`. Canonical and Open Graph URLs are generated from that stable domain; preview deployment URLs are never published as the portfolio URL.
 
 ## Local setup
 
@@ -63,4 +63,4 @@ The repository does not currently define separate lint or format-check scripts.
 
 The selected Terminal First prototype is the visual and content reference. Design-tool HTML, runtime scripts and boards are internal reference material only; the production site is implemented as maintainable Astro components and plain CSS.
 
-Deployment and GitHub profile linking are intentionally deferred to the next milestone.
+Deployment uses the stable Vercel project `mateusz-ozimkiewicz-portfolio`. GitHub profile linking is performed only after merged-main production QA passes.
