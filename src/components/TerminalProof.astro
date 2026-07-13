@@ -1,0 +1,83 @@
+---
+// Static, non-interactive terminal-style summary card. Readable and
+// selectable without JavaScript — this is presentational text, not a
+// simulated live process.
+---
+
+<figure class="terminal-proof" aria-describedby="terminal-proof-caption">
+  <figcaption id="terminal-proof-caption" class="terminal-proof__caption">
+    Static portfolio summary, shown as a terminal window — not a live system.
+  </figcaption>
+  <div class="terminal-proof__chrome" aria-hidden="true">
+    <span class="terminal-proof__dot"></span>
+    <span class="terminal-proof__dot"></span>
+    <span class="terminal-proof__dot"></span>
+  </div>
+  <pre class="terminal-proof__body mono"><code>{"$ "}<span class="terminal-proof__cmd">portfolio.status</span>{"\n\n"}<span class="terminal-proof__key">process</span>     AI Agent Workspace
+<span class="terminal-proof__key">platform</span>    MellyCore AIOS
+<span class="terminal-proof__key">product</span>     MellyTrade
+
+{"$ "}<span class="terminal-proof__cmd">safety.check</span>{"\n\n"}<span class="terminal-proof__key">read_only</span>              <span class="terminal-proof__ok">true</span>
+<span class="terminal-proof__key">dry_run</span>                <span class="terminal-proof__ok">true</span>
+<span class="terminal-proof__key">broker_execution</span>       <span class="terminal-proof__ok">blocked</span>
+<span class="terminal-proof__key">fake_metrics</span>           <span class="terminal-proof__ok">prohibited</span></code></pre>
+</figure>
+
+<style>
+  .terminal-proof {
+    margin: 0;
+    max-width: 480px;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--color-panel-muted);
+    box-shadow: var(--shadow-panel);
+    overflow: hidden;
+  }
+
+  .terminal-proof__caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .terminal-proof__chrome {
+    display: flex;
+    gap: var(--space-8);
+    padding: var(--space-12) var(--space-16);
+    border-bottom: 1px solid var(--color-border-soft);
+    background: var(--color-panel-elevated);
+  }
+
+  .terminal-proof__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-border-subtle);
+  }
+
+  .terminal-proof__body {
+    margin: 0;
+    padding: var(--space-16);
+    overflow-x: auto;
+    font-size: var(--text-label);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    user-select: text;
+  }
+
+  .terminal-proof__cmd {
+    color: var(--color-text-primary);
+    font-weight: 700;
+  }
+
+  .terminal-proof__key {
+    color: var(--color-accent-cyan-bright);
+  }
+
+  .terminal-proof__ok {
+    color: var(--color-status-success-bright);
+  }
+</style>

@@ -1,0 +1,97 @@
+---
+import ProjectBadge from "./ProjectBadge.astro";
+
+interface Props {
+  variant: "process" | "platform" | "product";
+  label: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  stack: string;
+  href: string;
+  safetyBadge?: string;
+  honestyBadge?: string;
+  disclaimer?: string;
+}
+
+const {
+  variant,
+  label,
+  title,
+  subtitle,
+  description,
+  stack,
+  href,
+  safetyBadge,
+  honestyBadge,
+  disclaimer,
+} = Astro.props;
+---
+
+<article class="panel panel--elevated project-card">
+  <ProjectBadge variant={variant} label={label} />
+  <h3 class="project-card__title">{title}</h3>
+  <p class="project-card__subtitle">{subtitle}</p>
+  <p class="project-card__description">{description}</p>
+  <p class="mono project-card__stack">{stack}</p>
+
+  {
+    (safetyBadge || honestyBadge) && (
+      <p class={`badge ${safetyBadge ? "badge--safety" : "badge--platform"} project-card__badge`}>
+        {safetyBadge ?? honestyBadge}
+      </p>
+    )
+  }
+
+  {disclaimer && <p class="project-card__disclaimer">{disclaimer}</p>}
+
+  <a href={href} class="button button--secondary project-card__cta">
+    View project
+  </a>
+</article>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-24);
+  }
+
+  .project-card__title {
+    margin-top: var(--space-16);
+    font-size: var(--text-h3);
+  }
+
+  .project-card__subtitle {
+    margin-top: var(--space-4);
+    color: var(--color-text-secondary);
+    font-weight: 600;
+  }
+
+  .project-card__description {
+    margin-top: var(--space-12);
+    color: var(--color-text-secondary);
+  }
+
+  .project-card__stack {
+    margin-top: var(--space-16);
+    color: var(--color-text-muted);
+    font-size: var(--text-label);
+  }
+
+  .project-card__badge {
+    margin-top: var(--space-12);
+  }
+
+  .project-card__disclaimer {
+    margin-top: var(--space-12);
+    color: var(--color-text-muted);
+    font-size: var(--text-micro);
+    font-style: italic;
+  }
+
+  .project-card__cta {
+    margin-top: var(--space-24);
+    align-self: flex-start;
+  }
+</style>

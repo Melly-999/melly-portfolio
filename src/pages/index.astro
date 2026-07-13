@@ -1,42 +1,164 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import CommandCore from "../components/CommandCore.astro";
+import TerminalProof from "../components/TerminalProof.astro";
 import ProjectBadge from "../components/ProjectBadge.astro";
+import ProjectCard from "../components/ProjectCard.astro";
 
 const narrative = [
-  { variant: "process" as const, label: "Process", name: "AI Agent Workspace" },
-  { variant: "platform" as const, label: "Platform", name: "MellyCore AIOS" },
-  { variant: "product" as const, label: "Product", name: "MellyTrade" },
+  {
+    variant: "process" as const,
+    label: "Process",
+    title: "AI Agent Workspace",
+    description:
+      "A documented workflow connecting ChatGPT, Claude Code, Codex, Obsidian and GitHub through reusable context, task contracts and review gates.",
+    href: "/projects/workspace",
+  },
+  {
+    variant: "platform" as const,
+    label: "Platform",
+    title: "MellyCore AIOS",
+    description:
+      "A docs-first AI command-center and context-architecture prototype built around agent handoffs, knowledge graphs and explicit safety contracts.",
+    href: "/projects/aios",
+  },
+  {
+    variant: "product" as const,
+    label: "Product",
+    title: "MellyTrade",
+    description:
+      "A read-only, dry-run AI trading-terminal case study built with React, TypeScript and FastAPI, with broker execution blocked.",
+    href: "/projects/mellytrade",
+  },
 ];
+
+const credibility = [
+  "Static-first portfolio",
+  "Documented architecture",
+  "Tested responsive foundation",
+  "Safety-first product design",
+];
+
+const projects = [
+  {
+    variant: "process" as const,
+    label: "Process",
+    title: "AI Agent Workspace",
+    subtitle: "Documented multi-agent development workflow",
+    description:
+      "A documented workflow connecting ChatGPT, Claude Code, Codex, Obsidian and GitHub through reusable context, task contracts and review gates.",
+    stack: "Claude Code · Codex · Obsidian · GitHub · Documentation",
+    href: "/projects/workspace",
+  },
+  {
+    variant: "platform" as const,
+    label: "Platform",
+    title: "MellyCore AIOS",
+    subtitle: "AI command center and living context architecture",
+    description:
+      "A docs-first AI command-center and context-architecture prototype built around agent handoffs, knowledge graphs and explicit safety contracts.",
+    honestyBadge: "Docs-first prototype",
+    stack: "Context Graph · Agent Handoffs · Safety Contracts · Product Architecture",
+    href: "/projects/aios",
+  },
+  {
+    variant: "product" as const,
+    label: "Product",
+    title: "MellyTrade",
+    subtitle: "Safety-first AI trading terminal",
+    description:
+      "A read-only, dry-run AI trading-terminal case study built with React, TypeScript and FastAPI, with broker execution blocked.",
+    safetyBadge: "Read-only · Dry-run · No broker execution",
+    stack: "React · TypeScript · FastAPI · Tauri/PWA",
+    disclaimer: "Static portfolio case study. No live market data or order placement.",
+    href: "/projects/mellytrade",
+  },
+];
+
+const evidence = [
+  "Architecture documentation",
+  "Tests and validation",
+  "Responsive visual QA",
+  "Safety contracts and review gates",
+];
+
+const skillGroups = [
+  { label: "Frontend", items: "React · TypeScript · Astro · Responsive CSS" },
+  { label: "Backend", items: "Python · FastAPI · API design" },
+  { label: "Quality", items: "pytest · Playwright · GitHub Actions · Documentation" },
+  { label: "AI workflow", items: "Claude Code · Codex · Structured context · Review gates" },
+];
+
+const email = "mateusz.ozimkiewicz9@gmail.com";
 ---
 
-<BaseLayout>
-  <section class="section content-width">
-    <p class="mono" style="color:var(--color-accent-amber);font-size:var(--text-label);letter-spacing:0.14em;text-transform:uppercase;">
-      Junior Full-Stack Developer
-    </p>
-    <h1 style="font-size:var(--text-display);max-width:16ch;margin-top:var(--space-16);">
-      I build safety-first AI applications and developer tools.
-    </h1>
-    <p class="reading-width" style="margin-top:var(--space-16);color:var(--color-text-secondary);font-size:var(--text-body-lg);">
-      React · TypeScript · FastAPI · AI Tools
-    </p>
-    <p class="mono" style="margin-top:var(--space-12);color:var(--color-text-muted);font-size:var(--text-label);">
-      Available now · Poland / Remote · B2B · Freelance · Contract
-    </p>
-    <div class="cluster" style="margin-top:var(--space-32);">
-      <a href="/projects" class="button button--primary">View Projects</a>
-      <a
-        href="https://github.com/Melly-999"
-        class="button button--secondary"
-        target="_blank"
-        rel="noopener noreferrer"
+<BaseLayout
+  title="Mateusz Ozimkiewicz — Full-Stack Developer"
+  description="Portfolio Mateusza Ozimkiewicza — React, TypeScript, FastAPI and safety-first AI applications."
+>
+  <section id="hero" class="section content-width" style="position:relative;">
+    <CommandCore />
+    <div style="position:relative;z-index:1;">
+      <p
+        class="mono"
+        style="color:var(--color-accent-amber);font-size:var(--text-label);letter-spacing:0.14em;text-transform:uppercase;"
       >
-        GitHub
-      </a>
+        Full-Stack Developer
+      </p>
+      <h1 style="font-size:var(--text-display);max-width:18ch;margin-top:var(--space-16);">
+        I build safety-first AI applications and developer tools.
+      </h1>
+      <p
+        class="reading-width"
+        style="margin-top:var(--space-16);color:var(--color-text-secondary);font-size:var(--text-body-lg);"
+      >
+        I use React, TypeScript, FastAPI and an AI-native development workflow
+        to turn documented ideas into clear, testable products.
+      </p>
+      <p class="mono" style="margin-top:var(--space-16);color:var(--color-text-secondary);font-size:var(--text-label);">
+        React · TypeScript · FastAPI · Astro · AI Tools
+      </p>
+      <p class="mono" style="margin-top:var(--space-8);color:var(--color-text-muted);font-size:var(--text-label);">
+        Available now · Poland / Remote · B2B · Freelance · Contract
+      </p>
+      <div class="cluster" style="margin-top:var(--space-32);">
+        <a href="/projects" class="button button--primary">View Projects</a>
+        <a
+          href="https://github.com/Melly-999"
+          class="button button--secondary"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+      </div>
+
+      <div style="margin-top:var(--space-32);">
+        <TerminalProof />
+      </div>
     </div>
   </section>
 
-  <section class="section content-width" aria-labelledby="narrative-heading">
+  <section id="credibility" class="section content-width" aria-labelledby="credibility-heading">
+    <h2
+      id="credibility-heading"
+      class="mono"
+      style="font-size:var(--text-label);letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text-muted);"
+    >
+      Credibility
+    </h2>
+    <ul class="grid-auto" style="margin-top:var(--space-16);">
+      {
+        credibility.map((item) => (
+          <li class="panel" style="padding:var(--space-16) var(--space-24);display:flex;align-items:center;">
+            <p style="font-weight:600;">{item}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section id="system" class="section content-width" aria-labelledby="narrative-heading">
     <h2 id="narrative-heading" style="font-size:var(--text-h2);">
       Process → Platform → Product
     </h2>
@@ -46,10 +168,55 @@ const narrative = [
     <div class="grid-auto" style="margin-top:var(--space-24);">
       {
         narrative.map((item) => (
-          <div class="panel" style="padding:var(--space-24);">
+          <a href={item.href} class="panel panel--elevated" style="display:block;padding:var(--space-24);">
             <ProjectBadge variant={item.variant} label={item.label} />
             <p style="margin-top:var(--space-12);font-weight:700;font-size:var(--text-h3);">
-              {item.name}
+              {item.title}
+            </p>
+            <p style="margin-top:var(--space-8);color:var(--color-text-secondary);">
+              {item.description}
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section id="projects" class="section content-width" aria-labelledby="projects-heading">
+    <h2 id="projects-heading" style="font-size:var(--text-h2);">Selected Projects</h2>
+    <p class="reading-width" style="margin-top:var(--space-8);color:var(--color-text-secondary);">
+      Three chapters of one system: the workflow, the platform, and the
+      product it builds.
+    </p>
+    <div class="grid-auto" style="margin-top:var(--space-24);">
+      {
+        projects.map((project) => (
+          <ProjectCard
+            variant={project.variant}
+            label={project.label}
+            title={project.title}
+            subtitle={project.subtitle}
+            description={project.description}
+            stack={project.stack}
+            href={project.href}
+            safetyBadge={project.safetyBadge}
+            honestyBadge={project.honestyBadge}
+            disclaimer={project.disclaimer}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <section id="evidence" class="section content-width" aria-labelledby="evidence-heading">
+    <h2 id="evidence-heading" style="font-size:var(--text-h2);">Evidence, not just claims</h2>
+    <div class="grid-auto" style="margin-top:var(--space-24);">
+      {
+        evidence.map((item) => (
+          <div class="panel" style="padding:var(--space-24);">
+            <p style="font-weight:700;">{item}</p>
+            <p class="mono" style="margin-top:var(--space-12);color:var(--color-text-muted);font-size:var(--text-micro);">
+              Public evidence link pending artifact review.
             </p>
           </div>
         ))
@@ -57,26 +224,51 @@ const narrative = [
     </div>
   </section>
 
-  <section class="section content-width" aria-labelledby="projects-heading">
-    <h2 id="projects-heading" style="font-size:var(--text-h2);">Selected Projects</h2>
-    <p class="reading-width" style="margin-top:var(--space-8);color:var(--color-text-secondary);">
-      Full project cards are coming in the next implementation pass. For now,
-      browse the project index.
-    </p>
-    <div style="margin-top:var(--space-24);">
-      <a href="/projects" class="button button--secondary">Browse projects</a>
+  <section id="skills" class="section content-width" aria-labelledby="skills-heading">
+    <h2 id="skills-heading" style="font-size:var(--text-h2);">Skills and working style</h2>
+    <div class="grid-auto" style="margin-top:var(--space-24);">
+      {
+        skillGroups.map((group) => (
+          <div class="panel" style="padding:var(--space-24);">
+            <p
+              class="mono"
+              style="font-size:var(--text-label);letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent-amber);"
+            >
+              {group.label}
+            </p>
+            <p style="margin-top:var(--space-12);color:var(--color-text-secondary);">{group.items}</p>
+          </div>
+        ))
+      }
     </div>
   </section>
 
-  <section class="section content-width panel" style="padding:var(--space-32);" aria-labelledby="contact-cta-heading">
+  <section
+    id="contact-cta"
+    class="section content-width panel"
+    style="padding:var(--space-32);"
+    aria-labelledby="contact-cta-heading"
+  >
     <h2 id="contact-cta-heading" style="font-size:var(--text-h2);">
-      Looking for a junior developer who ships with AI leverage?
+      Let's build something clear, useful and testable.
     </h2>
     <p class="reading-width" style="margin-top:var(--space-8);color:var(--color-text-secondary);">
-      The fastest way to reach me is email.
+      I am available for full-stack development, AI-tooling, freelance, B2B
+      and contract opportunities.
     </p>
-    <div style="margin-top:var(--space-24);">
-      <a href="/contact" class="button button--primary">Contact</a>
+    <div class="cluster" style="margin-top:var(--space-24);">
+      <a href="/contact" class="button button--primary">Contact me</a>
+      <a
+        href="https://github.com/Melly-999"
+        class="button button--secondary"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
     </div>
+    <p style="margin-top:var(--space-16);overflow-wrap:anywhere;">
+      <a href={`mailto:${email}`}>{email}</a>
+    </p>
   </section>
 </BaseLayout>
