@@ -1,0 +1,136 @@
+---
+import MobileMenu from "./MobileMenu.astro";
+
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/projects", label: "Projects" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
+
+const githubItem = {
+  href: "https://github.com/Melly-999",
+  label: "GitHub",
+  external: true,
+};
+
+function isCurrent(href: string) {
+  if (href === "/") return currentPath === "/";
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="site-header">
+  <a href="/" class="site-identity">
+    <span class="site-identity__mark" aria-hidden="true">MO</span>
+    <span>
+      <span class="site-identity__name">
+        <span class="site-header__full-name">Mateusz Ozimkiewicz</span>
+        <span class="site-header__short-name">Mateusz</span>
+      </span>
+      <span class="site-identity__role">Full-Stack · AI Tools</span>
+    </span>
+  </a>
+
+  <nav class="site-nav" aria-label="Main">
+    {
+      navItems.map((item) => (
+        <a
+          href={item.href}
+          class="site-nav__link"
+          aria-current={isCurrent(item.href) ? "page" : undefined}
+        >
+          {item.label}
+        </a>
+      ))
+    }
+    <a
+      href={githubItem.href}
+      class="site-nav__link site-nav__link--external"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {githubItem.label}
+    </a>
+  </nav>
+
+  <button
+    id="menu-toggle"
+    class="menu-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="mobile-menu"
+    aria-label="Open menu"
+  >
+    <span class="menu-toggle__bar" aria-hidden="true"></span>
+  </button>
+</header>
+
+<MobileMenu items={[...navItems, githubItem]} currentPath={currentPath} />
+
+<style>
+  /* Compact identity on mobile: "[MO] Mateusz" — hide surname + role line. */
+  .site-header__full-name {
+    display: none;
+  }
+
+  .site-identity__role {
+    display: none;
+  }
+
+  @media (min-width: 560px) {
+    .site-header__full-name {
+      display: inline;
+    }
+    .site-header__short-name {
+      display: none;
+    }
+    .site-identity__role {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+
+  if (toggle && menu) {
+    const closeMenu = () => {
+      menu.setAttribute("data-open", "false");
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-label", "Open menu");
+    };
+
+    const openMenu = () => {
+      menu.setAttribute("data-open", "true");
+      toggle.setAttribute("aria-expanded", "true");
+      toggle.setAttribute("aria-label", "Close menu");
+    };
+
+    toggle.addEventListener("click", () => {
+      const isOpen = menu.getAttribute("data-open") === "true";
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    menu.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement;
+      if (target.closest("a")) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menu.getAttribute("data-open") === "true") {
+        closeMenu();
+        toggle.focus();
+      }
+    });
+  }
+</script>

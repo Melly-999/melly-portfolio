@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectBadge from "../../components/ProjectBadge.astro";
+---
+
+<BaseLayout
+  title="MellyTrade — Mateusz Ozimkiewicz"
+  description="MellyTrade: a read-only, dry-run AI trading terminal case study. No broker execution, no live orders."
+>
+  <section class="section content-width">
+    <ProjectBadge variant="product" label="Product" />
+    <h1 style="margin-top:var(--space-16);font-size:var(--text-h1);">MellyTrade</h1>
+    <p class="badge badge--safety" style="margin-top:var(--space-16);">
+      STATIC CASE STUDY · READ-ONLY · DRY-RUN · NO BROKER EXECUTION
+    </p>
+    <p class="reading-width" style="margin-top:var(--space-16);color:var(--color-text-secondary);">
+      Read-only, dry-run AI trading terminal case study. The full write-up —
+      architecture, safety posture, and screenshots — is coming in a later
+      implementation pass.
+    </p>
+  </section>
+</BaseLayout>

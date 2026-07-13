@@ -1,0 +1,56 @@
+/* Shared page-shell / layout primitives. */
+
+.page-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-shell__main {
+  flex: 1;
+}
+
+.content-width {
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter-mobile);
+}
+
+@media (min-width: 768px) {
+  .content-width {
+    padding-inline: var(--gutter-desktop);
+  }
+}
+
+.reading-width {
+  max-width: var(--reading-max-width);
+}
+
+.section {
+  padding-block: var(--section-spacing);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-24);
+}
+
+/* Prevent any accidental horizontal scroll from wide children. */
+html,
+body {
+  overflow-x: hidden;
+}

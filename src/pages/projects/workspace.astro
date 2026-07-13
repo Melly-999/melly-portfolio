@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectBadge from "../../components/ProjectBadge.astro";
+---
+
+<BaseLayout
+  title="AI Agent Workspace — Mateusz Ozimkiewicz"
+  description="AI Agent Workspace: a documented multi-agent development workflow."
+>
+  <section class="section content-width">
+    <ProjectBadge variant="process" label="Process" />
+    <h1 style="margin-top:var(--space-16);font-size:var(--text-h1);">AI Agent Workspace</h1>
+    <p class="reading-width" style="margin-top:var(--space-16);color:var(--color-text-secondary);">
+      Documented multi-agent development workflow. The full case study —
+      the workflow docs and task-to-PR examples — is coming in a later
+      implementation pass.
+    </p>
+  </section>
+</BaseLayout>

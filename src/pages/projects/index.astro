@@ -1,0 +1,60 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectBadge from "../../components/ProjectBadge.astro";
+
+const projects = [
+  {
+    variant: "process" as const,
+    badge: "Process",
+    title: "AI Agent Workspace",
+    tagline: "Documented multi-agent development workflow",
+    href: "/projects/workspace",
+  },
+  {
+    variant: "platform" as const,
+    badge: "Platform",
+    title: "MellyCore AIOS",
+    tagline: "Docs-first AI command center and context architecture prototype",
+    href: "/projects/aios",
+  },
+  {
+    variant: "product" as const,
+    badge: "Product",
+    title: "MellyTrade",
+    tagline: "Read-only, dry-run AI trading terminal case study",
+    href: "/projects/mellytrade",
+  },
+];
+---
+
+<BaseLayout
+  title="Projects — Mateusz Ozimkiewicz"
+  description="Selected projects by Mateusz Ozimkiewicz: an AI agent workflow, a docs-first AI command center, and a read-only, dry-run AI trading terminal."
+>
+  <section class="section content-width">
+    <h1 style="font-size:var(--text-h1);">Projects</h1>
+    <p class="reading-width" style="margin-top:var(--space-8);color:var(--color-text-secondary);">
+      Three chapters of one system: the workflow, the platform, and the
+      product it builds.
+    </p>
+
+    <div class="grid-auto" style="margin-top:var(--space-32);">
+      {
+        projects.map((project) => (
+          <a href={project.href} class="panel panel--elevated" style="display:block;padding:var(--space-24);">
+            <ProjectBadge variant={project.variant} label={project.badge} />
+            <p style="margin-top:var(--space-12);font-weight:800;font-size:var(--text-h3);">
+              {project.title}
+            </p>
+            <p style="margin-top:var(--space-8);color:var(--color-text-secondary);">
+              {project.tagline}
+            </p>
+            <p class="mono" style="margin-top:var(--space-16);color:var(--color-accent-amber);font-size:var(--text-label);">
+              View case study →
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

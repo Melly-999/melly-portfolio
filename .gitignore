@@ -1,0 +1,21 @@
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.vs/
+.claude/
+
+# Local environment
+.env
+.env.*
+*.local
+
+# Build/dependency output
+node_modules/
+dist/
+build/
+__pycache__/
+*.py[cod]
+
+# Astro generated types
+.astro/
