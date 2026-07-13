@@ -1,34 +1,130 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { email, githubProfile } from "../data/portfolio";
 
-const email = "mateusz.ozimkiewicz9@gmail.com";
+const contactCards = [
+  { icon: "@", label: "Email", value: email, action: "Send an email →", href: `mailto:${email}` },
+  { icon: "⌘", label: "GitHub", value: "github.com/Melly-999", action: "View repositories →", href: githubProfile, external: true },
+  { icon: "⌖", label: "Location", value: "Poland · Remote worldwide · CET", action: "About & skills →", href: "/about" },
+];
+
+const summaryProjects = [
+  ["AI Agent Workspace", "documented multi-agent workflow (process)"],
+  ["MellyCore AIOS", "docs-first context graph showcase (platform)"],
+  ["MellyTrade", "safe, read-only AI trading research dashboard (product)"],
+];
 ---
 
 <BaseLayout
-  title="Contact — Mateusz Ozimkiewicz"
-  description="Get in touch with Mateusz Ozimkiewicz by email or on GitHub."
+  title="Contact Mateusz Ozimkiewicz"
+  description="Contact Mateusz Ozimkiewicz for full-stack development, AI tooling, freelance, B2B, contract or remote opportunities."
 >
-  <section class="section content-width">
-    <h1 style="font-size:var(--text-h1);">Contact</h1>
-    <p class="reading-width" style="margin-top:var(--space-16);color:var(--color-text-secondary);">
-      I'm open to junior full-stack roles (remote or Poland-based). The
-      fastest way to reach me is email.
+  <header class="contact-hero content-width">
+    <p class="section-kicker">Available for new roles & freelance</p>
+    <h1>Let’s build something safe & real</h1>
+    <p class="contact-hero__copy">
+      Available for full-stack development, AI tooling, freelance, B2B and contract
+      opportunities. Remote — based in Poland, working worldwide.
     </p>
-    <div class="cluster" style="margin-top:var(--space-24);">
-      <a href={`mailto:${email}`} class="button button--primary" style="overflow-wrap:anywhere;">
-        {email}
-      </a>
-      <a
-        href="https://github.com/Melly-999"
-        class="button button--secondary"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        GitHub
-      </a>
+  </header>
+
+  <section class="section section--tight content-width content-width--case" aria-label="Contact options">
+    <div class="contact-grid">
+      {
+        contactCards.map((card) => (
+          <a
+            class="contact-card"
+            href={card.href}
+            target={card.external ? "_blank" : undefined}
+            rel={card.external ? "noopener noreferrer" : undefined}
+          >
+            <span class="contact-card__icon" aria-hidden="true">{card.icon}</span>
+            <p class="contact-card__label">{card.label}</p>
+            <p class="contact-card__value">{card.value}</p>
+            <span class="contact-card__action">{card.action}</span>
+          </a>
+        ))
+      }
     </div>
-    <p class="mono" style="margin-top:var(--space-24);color:var(--color-text-muted);font-size:var(--text-label);">
-      CV link coming soon.
-    </p>
+    <div class="copy-email">
+      <button class="button button--secondary" type="button" data-copy-email={email} hidden>Copy email</button>
+      <span class="copy-status" role="status" aria-live="polite" data-copy-status></span>
+    </div>
   </section>
+
+  <section class="section section--last content-width content-width--case" aria-labelledby="profile-heading">
+    <div class="profile-summary">
+      <div class="profile-summary__head">
+        <div>
+          <h2 id="profile-heading">Profile</h2>
+          <p>One-page summary · full CV available on request by email.</p>
+        </div>
+        <a class="button button--primary" href={`mailto:${email}?subject=CV%20request`}>Request full CV <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="profile-summary__body">
+        <div>
+          <p class="profile-summary__label">Summary</p>
+          <p>
+            Full-stack developer building AI-native software with React, TypeScript and
+            FastAPI. Comfortable across the stack and inside an agent-driven workflow,
+            focused on safe, honest and shippable products.
+          </p>
+          <p class="profile-summary__label profile-summary__label--spaced">Core stack</p>
+          <ul class="chip-list" aria-label="Core technology stack">
+            {['React', 'TypeScript', 'FastAPI', 'Python', 'Tauri / PWA', 'Astro', 'GitHub', 'Agentic AI'].map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div>
+          <p class="profile-summary__label">Highlighted projects</p>
+          <ul class="profile-projects">
+            {summaryProjects.map(([name, description]) => <li><strong>{name}</strong> — {description}</li>)}
+          </ul>
+          <p class="profile-summary__label profile-summary__label--spaced">Availability</p>
+          <p>Employment · Freelance · B2B<br />Contract · Remote · Poland<br />Available now</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const button = document.querySelector<HTMLButtonElement>("[data-copy-email]");
+    const status = document.querySelector("[data-copy-status]");
+    if (button) {
+      button.hidden = false;
+      button.addEventListener("click", async () => {
+        const address = button.dataset.copyEmail ?? "";
+        const fallbackCopy = () => {
+          const field = document.createElement("textarea");
+          field.value = address;
+          field.setAttribute("readonly", "");
+          field.style.position = "fixed";
+          field.style.opacity = "0";
+          document.body.append(field);
+          field.select();
+          const { execCommand } = document as unknown as {
+            execCommand: (command: string) => boolean;
+          };
+          const copied = execCommand.call(document, "copy");
+          field.remove();
+          return copied;
+        };
+
+        if (status) status.textContent = "Copying email…";
+        try {
+          if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
+          await Promise.race([
+            navigator.clipboard.writeText(address),
+            new Promise((_, reject) => setTimeout(() => reject(new Error("Clipboard timed out")), 600)),
+          ]);
+          if (status) status.textContent = "Email copied.";
+        } catch {
+          if (status) {
+            status.textContent = fallbackCopy()
+              ? "Email copied."
+              : "Copy unavailable — use the email link above.";
+          }
+        }
+      });
+    }
+  </script>
 </BaseLayout>

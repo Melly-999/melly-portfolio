@@ -1,18 +1,82 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import FeatureIcon from "../components/FeatureIcon.astro";
+
+const facts = [
+  ["Role", "Full-stack developer"],
+  ["Location", "Poland · remote worldwide"],
+  ["Open to", "Employment · freelance · B2B · contract"],
+  ["Focus", "AI tools · safe products"],
+];
+
+const skills = [
+  ["Frontend", ["React", "TypeScript", "Vite / Astro", "PWA", "Responsive UI"]],
+  ["Backend", ["FastAPI", "Python", "REST APIs", "Typed contracts"]],
+  ["AI & Agents", ["Claude Code", "Codex", "ChatGPT", "Agentic workflows", "Context design"]],
+  ["Tooling", ["GitHub", "Obsidian", "ClickUp", "Tauri", "Git"]],
+] as const;
+
+const values = [
+  { icon: "safety" as const, title: "Safety-first", body: "Constraints belong in the architecture. If something should not happen, make the boundary structural rather than relying on a warning." },
+  { icon: "clarity" as const, title: "Clarity over cleverness", body: "Readable systems, honest copy and no fake metrics. Recruiters and developers should both understand the work." },
+  { icon: "human" as const, title: "Human-in-the-loop", body: "Agents accelerate the middle of the work. Judgement, review and the final call stay with me." },
+];
 ---
 
 <BaseLayout
-  title="About — Mateusz Ozimkiewicz"
-  description="About Mateusz Ozimkiewicz, a junior full-stack developer building safety-first AI tooling."
+  title="About Mateusz Ozimkiewicz — Full-Stack Developer"
+  description="About Mateusz Ozimkiewicz, a full-stack developer building safety-first AI applications with React, TypeScript and FastAPI."
 >
-  <section class="section content-width">
-    <h1 style="font-size:var(--text-h1);">About</h1>
-    <p class="reading-width" style="margin-top:var(--space-16);color:var(--color-text-secondary);">
-      Junior full-stack developer working across React, TypeScript, and
-      FastAPI, with an AI-assisted workflow built around engineering
-      discipline: dry-run defaults, read-only modes, and honest limits. The
-      full story is coming in a later implementation pass.
-    </p>
+  <header class="about-hero content-width content-width--case">
+    <div>
+      <p class="section-kicker">About</p>
+      <h1>Full-stack, built around AI</h1>
+      <p class="about-hero__copy">
+        I am Mateusz — a full-stack developer focused on shipping real software with an
+        AI-native workflow. I care about safety, clarity and systems that hold together,
+        from the first note to the deployed product.
+      </p>
+      <div class="action-row">
+        <a href="/projects" class="button button--primary">See the work <span aria-hidden="true">→</span></a>
+        <a href="/contact" class="button button--secondary">Contact</a>
+      </div>
+    </div>
+    <aside class="profile-card" aria-label="Profile summary">
+      <div class="profile-card__mark" aria-hidden="true">MO</div>
+      <h2>Mateusz Ozimkiewicz</h2>
+      <p>Full-Stack Developer</p>
+      <dl class="profile-facts">
+        {facts.map(([key, value]) => <div><dt>{key}</dt><dd>{value}</dd></div>)}
+      </dl>
+    </aside>
+  </header>
+
+  <section class="section content-width content-width--case" aria-labelledby="skills-heading">
+    <h2 id="skills-heading" class="case-section-title">Skills</h2>
+    <div class="grid-2">
+      {
+        skills.map(([title, items]) => (
+          <article class="info-card skill-card">
+            <h3>{title}</h3>
+            <ul>{items.map((item) => <li>{item}</li>)}</ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section section--last content-width content-width--case" aria-labelledby="values-heading">
+    <h2 id="values-heading" class="case-section-title">How I work</h2>
+    <div class="grid-3">
+      {
+        values.map((value) => (
+          <article class="info-card">
+            <FeatureIcon name={value.icon} />
+            <h3>{value.title}</h3>
+            <p>{value.body}</p>
+          </article>
+        ))
+      }
+    </div>
   </section>
 </BaseLayout>

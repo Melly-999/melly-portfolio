@@ -1,19 +1,111 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import ProjectBadge from "../../components/ProjectBadge.astro";
+import CaseStudyHero from "../../components/CaseStudyHero.astro";
+import CommandCore from "../../components/CommandCore.astro";
+import FeatureIcon from "../../components/FeatureIcon.astro";
+
+const features = [
+  {
+    icon: "context" as const,
+    title: "Context graph",
+    body: "A structured map of notes, repos and tasks that agents can traverse — one shared source of truth.",
+  },
+  {
+    icon: "handoff" as const,
+    title: "Agent handoff",
+    body: "Work moves between agents with context intact: plan, implement and verify without losing the thread.",
+  },
+  {
+    icon: "command" as const,
+    title: "Command center",
+    body: "A single-surface concept for understanding agent work, shown here only as a static architecture model.",
+  },
+];
 ---
 
 <BaseLayout
-  title="MellyCore AIOS — Mateusz Ozimkiewicz"
-  description="MellyCore AIOS: a docs-first AI command center and context architecture prototype."
+  title="MellyCore AIOS — Static AI Architecture Showcase"
+  description="MellyCore AIOS is a docs-first prototype and static architecture showcase for a Living Context Graph and structured multi-agent context handoff."
 >
-  <section class="section content-width">
-    <ProjectBadge variant="platform" label="Platform" />
-    <h1 style="margin-top:var(--space-16);font-size:var(--text-h1);">MellyCore AIOS</h1>
-    <p class="reading-width" style="margin-top:var(--space-16);color:var(--color-text-secondary);">
-      Docs-first AI command center and context architecture prototype. The
-      full case study — the Living Context Graph, agent handoff, and the
-      cinematic showcase — is coming in a later implementation pass.
-    </p>
+  <CaseStudyHero
+    number="02"
+    layer="Platform"
+    tone="platform"
+    title="MellyCore AIOS"
+    tagline="The AI command center where context, agents and handoffs converge."
+    description="The platform layer of the story: a docs-first prototype of an AI command center and Living Context Graph, presented as a static architecture model without live ingestion or production orchestration claims."
+  >
+    <div slot="status" class="case-status">
+      <span class="status-chip">DOCS-FIRST PROTOTYPE</span>
+      <span class="status-chip status-chip--info">STATIC ARCHITECTURE MODEL</span>
+    </div>
+  </CaseStudyHero>
+
+  <section class="section content-width" aria-labelledby="architecture-heading">
+    <h2 id="architecture-heading" class="case-section-title">AIOS · command center</h2>
+    <div class="architecture-panel">
+      <div class="architecture-panel__head">
+        <span>Architecture showcase</span><span>Docs-first prototype</span>
+      </div>
+      <div class="architecture-panel__body">
+        <div>
+          <p class="terminal-pane__label">Context graph · static model</p>
+          <div class="graph-model" aria-label="Illustrative static Living Context Graph">
+            <div class="graph-model__core">AIOS core</div>
+            <span class="graph-node">Obsidian</span>
+            <span class="graph-node">Agents</span>
+            <span class="graph-node">GitHub</span>
+            <span class="graph-node">Memory</span>
+          </div>
+        </div>
+        <div>
+          <p class="terminal-pane__label">Agent handoff · illustrative flow</p>
+          <div class="pipeline-model">
+            <div class="pipeline-model__steps">
+              <div class="pipeline-step"><span>Claude Code</span><small>plan</small></div>
+              <div class="pipeline-step"><span>Codex</span><small>implement</small></div>
+              <div class="pipeline-step"><span>ChatGPT</span><small>reason</small></div>
+              <div class="pipeline-step"><span>Review + ship</span><small>handoff</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
+
+  <section class="section section--tight content-width" aria-label="MellyCore AIOS concepts">
+    <div class="grid-3">
+      {
+        features.map((feature) => (
+          <article class="info-card">
+            <FeatureIcon name={feature.icon} />
+            <h2>{feature.title}</h2>
+            <p>{feature.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section content-width">
+    <div class="showcase-route">
+      <div class="showcase-route__grid">
+        <div>
+          <p class="section-kicker">The /aios portfolio route</p>
+          <h2>A cinematic walkthrough of the platform</h2>
+          <p>
+            A readable story of how context enters, how agents receive it and how a decision
+            hands off cleanly to the next step. Cinematic in presentation, static in operation.
+          </p>
+        </div>
+        <div class="showcase-route__core" aria-hidden="true"><CommandCore /></div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="case-nav section section--last content-width" aria-label="MellyCore AIOS case study navigation">
+    <a href="/projects/mellytrade">← MellyTrade</a>
+    <a class="button button--secondary" href="https://github.com/Melly-999/mellycore-aios-core" target="_blank" rel="noopener noreferrer">View GitHub repository</a>
+    <a href="/projects/workspace">AI Agent Workspace →</a>
+  </nav>
 </BaseLayout>

@@ -1,19 +1,95 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import ProjectBadge from "../../components/ProjectBadge.astro";
+import CaseStudyHero from "../../components/CaseStudyHero.astro";
+
+const loop = [
+  { number: "01", title: "Capture", body: "Ideas, specs and research land in one place before anything is built.", tools: "Obsidian · ChatGPT" },
+  { number: "02", title: "Plan", body: "Break work into agent-runnable steps with clear context and intent.", tools: "Claude Code · ClickUp" },
+  { number: "03", title: "Build", body: "Agents implement against the plan; I steer, review and correct.", tools: "Codex · Claude Code" },
+  { number: "04", title: "Ship", body: "Code, notes and tasks stay in sync as work is committed and closed.", tools: "GitHub · ClickUp" },
+];
+
+const tools = [
+  ["ChatGPT", "Reasoning, research, quick drafts"],
+  ["Claude Code", "Planning and agentic implementation"],
+  ["Codex", "Focused implementation and review"],
+  ["Obsidian", "Second brain and linked notes"],
+  ["GitHub", "Source of truth and version control"],
+  ["ClickUp", "Tasks, scope and delivery"],
+];
+
+const principles = [
+  "Context first — agents only do good work when they inherit the right notes and intent.",
+  "Human in the loop — I plan, review and make the call; agents accelerate the middle.",
+  "Small, verifiable steps — each handoff is reviewable, reversible and traceable.",
+];
 ---
 
 <BaseLayout
-  title="AI Agent Workspace — Mateusz Ozimkiewicz"
-  description="AI Agent Workspace: a documented multi-agent development workflow."
+  title="AI Agent Workspace — Documented Development Process"
+  description="AI Agent Workspace is a documented multi-agent development workflow for preserving context from capture through planning, implementation and review."
 >
-  <section class="section content-width">
-    <ProjectBadge variant="process" label="Process" />
-    <h1 style="margin-top:var(--space-16);font-size:var(--text-h1);">AI Agent Workspace</h1>
-    <p class="reading-width" style="margin-top:var(--space-16);color:var(--color-text-secondary);">
-      Documented multi-agent development workflow. The full case study —
-      the workflow docs and task-to-PR examples — is coming in a later
-      implementation pass.
-    </p>
+  <CaseStudyHero
+    number="01"
+    layer="Process"
+    tone="process"
+    title="AI Agent Workspace"
+    tagline="The agent workspace that powers everything else."
+    description="Before the platform and the product, there is a way of working. This agent-based development workflow connects AI tools and notes so ideas move from thought to shipped code with context preserved at every step."
+  />
+
+  <section class="section section--tight content-width content-width--case" aria-labelledby="loop-heading">
+    <p class="section-kicker">The loop</p>
+    <h2 id="loop-heading" class="case-section-title">Capture → plan → build → ship</h2>
+    <div class="grid-4">
+      {
+        loop.map((step) => (
+          <article class="info-card loop-card">
+            <p class="loop-card__number">{step.number}</p>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+            <p class="loop-card__tools">{step.tools}</p>
+          </article>
+        ))
+      }
+    </div>
   </section>
+
+  <section class="section content-width content-width--case" aria-labelledby="toolchain-heading">
+    <div class="section-heading">
+      <div>
+        <p class="section-kicker">The toolchain</p>
+        <h2 id="toolchain-heading">Connected, not scattered</h2>
+      </div>
+    </div>
+    <div class="tool-grid">
+      {tools.map(([name, role]) => <article class="tool-card"><h3>{name}</h3><p>{role}</p></article>)}
+    </div>
+  </section>
+
+  <section class="section content-width content-width--case">
+    <div class="grid-2">
+      <article class="info-card">
+        <p class="section-kicker">How agents fit in</p>
+        <ul class="check-list">{principles.map((principle) => <li>{principle}</li>)}</ul>
+      </article>
+      <article class="info-card">
+        <p class="section-kicker">Why it matters for the work</p>
+        <h2>Where the system starts</h2>
+        <p>
+          This process is the reason the other two projects exist. MellyCore AIOS makes it
+          a platform; MellyTrade proves it can ship a real, safety-first product.
+        </p>
+        <div class="story-links">
+          <a class="text-link" href="/projects/aios">Becomes the platform →</a>
+          <a class="text-link" href="/projects/mellytrade">Becomes the product →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <nav class="case-nav section section--last content-width content-width--case" aria-label="AI Agent Workspace case study navigation">
+    <a href="/projects">← All projects</a>
+    <a href="/projects/aios">MellyCore AIOS →</a>
+  </nav>
 </BaseLayout>

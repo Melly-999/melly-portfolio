@@ -12,22 +12,22 @@ interface Props {
 
 const { items, currentPath } = Astro.props;
 
-function isCurrent(href: string, currentPath: string) {
+function isCurrent(href: string) {
   if (href === "/") return currentPath === "/";
-  return currentPath.startsWith(href);
+  return !href.startsWith("http") && currentPath.startsWith(href);
 }
 ---
 
-<div id="mobile-menu" class="mobile-menu" data-open="false">
-  <nav aria-label="Mobile">
-    <ul class="stack" style="gap: var(--space-4);">
+<div id="mobile-menu" class="mobile-menu" hidden>
+  <nav aria-label="Mobile navigation">
+    <ul>
       {
         items.map((item) => (
           <li>
             <a
               href={item.href}
               class="mobile-menu__link"
-              aria-current={isCurrent(item.href, currentPath) ? "page" : undefined}
+              aria-current={isCurrent(item.href) ? "page" : undefined}
               target={item.external ? "_blank" : undefined}
               rel={item.external ? "noopener noreferrer" : undefined}
             >

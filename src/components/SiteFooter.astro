@@ -1,21 +1,12 @@
 ---
-const email = "mateusz.ozimkiewicz9@gmail.com";
+import { email, githubProfile } from "../data/portfolio";
 ---
 
-<footer class="site-footer">
-  <div class="content-width stack" style="gap: var(--space-16);">
-    <div>
-      <p style="font-weight:700;">Mateusz Ozimkiewicz</p>
-      <p class="site-footer__note">Junior Full-Stack Developer · Poland / Remote</p>
-    </div>
-
-    <nav class="site-footer__links" aria-label="Footer">
-      <a href="https://github.com/Melly-999" target="_blank" rel="noopener noreferrer">
-        GitHub
-      </a>
-      <a href={`mailto:${email}`} class="site-footer__email">{email}</a>
-    </nav>
-
-    <p class="site-footer__note">Portfolio implementation in progress.</p>
-  </div>
+<footer class="site-footer content-width">
+  <p>© 2026 Mateusz Ozimkiewicz · Built with an AI-native workflow</p>
+  <nav aria-label="Footer navigation">
+    <a href={githubProfile} target="_blank" rel="noopener noreferrer">github.com/Melly-999</a>
+    <a href={`mailto:${email}`} class="site-footer__email">{email}</a>
+    <a href="/contact">Contact</a>
+  </nav>
 </footer>

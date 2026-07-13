@@ -4,25 +4,18 @@ import "../styles/tokens.css";
 import "../styles/global.css";
 import "../styles/layout.css";
 import "../styles/components.css";
+import "../styles/pages.css";
 
 interface Props {
   title?: string;
   description?: string;
-  ogImage?: string;
 }
 
-const DEFAULT_TITLE = "Mateusz Ozimkiewicz — Junior Full-Stack Developer";
+const DEFAULT_TITLE = "Mateusz Ozimkiewicz — Full-Stack Developer";
 const DEFAULT_DESCRIPTION =
-  "Portfolio Mateusza Ozimkiewicza — React, TypeScript, FastAPI and safety-first AI applications.";
-
-const { title = DEFAULT_TITLE, description = DEFAULT_DESCRIPTION, ogImage } =
-  Astro.props;
-
-// Canonical URL is only emitted once a production `site` is configured in
-// astro.config.mjs (no domain has been approved yet — see PF-050).
-const canonicalURL = Astro.site
-  ? new URL(Astro.url.pathname, Astro.site).toString()
-  : undefined;
+  "Portfolio of Mateusz Ozimkiewicz — React, TypeScript, FastAPI and safety-first AI applications.";
+const { title = DEFAULT_TITLE, description = DEFAULT_DESCRIPTION } = Astro.props;
+const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
 ---
 
 <!doctype html>
@@ -31,6 +24,7 @@ const canonicalURL = Astro.site
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#06080f" />
+    <meta name="color-scheme" content="dark" />
     <title>{title}</title>
     <meta name="description" content={description} />
     {canonicalURL && <link rel="canonical" href={canonicalURL} />}
@@ -39,13 +33,9 @@ const canonicalURL = Astro.site
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     {canonicalURL && <meta property="og:url" content={canonicalURL} />}
-    {ogImage && <meta property="og:image" content={ogImage} />}
-
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    {ogImage && <meta name="twitter:image" content={ogImage} />}
-
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>

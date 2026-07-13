@@ -1,0 +1,33 @@
+---
+import type { PortfolioProject } from "../data/portfolio";
+import ProjectBadge from "./ProjectBadge.astro";
+import ProjectVisual from "./ProjectVisual.astro";
+
+interface Props {
+  project: PortfolioProject;
+  detailed?: boolean;
+}
+
+const { project, detailed = false } = Astro.props;
+---
+
+<a
+  href={project.href}
+  class:list={["project-card", detailed && "project-card--detailed"]}
+  aria-label={`View ${project.title} case study`}
+>
+  <div class="project-card__content">
+    <div class="project-card__meta">
+      <ProjectBadge variant={project.tone} label={project.layer} />
+      <span>{project.number}</span>
+    </div>
+    <h3>{project.title}</h3>
+    <p class="project-card__tagline">{project.tagline}</p>
+    <p class="project-card__description">{project.description}</p>
+    <ul class="chip-list" aria-label={`${project.title} technologies and attributes`}>
+      {project.chips.map((chip) => <li>{chip}</li>)}
+    </ul>
+    <span class="project-card__link">View case study <span aria-hidden="true">→</span></span>
+  </div>
+  {detailed && <ProjectVisual kind={project.visual} />}
+</a>

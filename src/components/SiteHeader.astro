@@ -1,20 +1,15 @@
 ---
 import MobileMenu from "./MobileMenu.astro";
+import { githubProfile } from "../data/portfolio";
 
 const currentPath = Astro.url.pathname;
-
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/projects", label: "Projects" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
-
-const githubItem = {
-  href: "https://github.com/Melly-999",
-  label: "GitHub",
-  external: true,
-};
+const githubItem = { href: githubProfile, label: "GitHub ↗", external: true };
 
 function isCurrent(href: string) {
   if (href === "/") return currentPath === "/";
@@ -22,115 +17,87 @@ function isCurrent(href: string) {
 }
 ---
 
-<header class="site-header">
-  <a href="/" class="site-identity">
-    <span class="site-identity__mark" aria-hidden="true">MO</span>
-    <span>
-      <span class="site-identity__name">
-        <span class="site-header__full-name">Mateusz Ozimkiewicz</span>
-        <span class="site-header__short-name">Mateusz</span>
+<div class="site-chrome" data-site-chrome>
+  <header class="site-header content-width">
+    <a href="/" class="site-identity" aria-label="Mateusz Ozimkiewicz, home">
+      <span class="site-identity__mark" aria-hidden="true">MO</span>
+      <span class="site-identity__copy">
+        <span class="site-identity__name">
+          <span class="site-identity__full-name">Mateusz Ozimkiewicz</span>
+          <span class="site-identity__short-name">Mateusz</span>
+        </span>
+        <span class="site-identity__role">Full-Stack Developer</span>
       </span>
-      <span class="site-identity__role">Full-Stack · AI Tools</span>
-    </span>
-  </a>
-
-  <nav class="site-nav" aria-label="Main">
-    {
-      navItems.map((item) => (
-        <a
-          href={item.href}
-          class="site-nav__link"
-          aria-current={isCurrent(item.href) ? "page" : undefined}
-        >
-          {item.label}
-        </a>
-      ))
-    }
-    <a
-      href={githubItem.href}
-      class="site-nav__link site-nav__link--external"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {githubItem.label}
     </a>
-  </nav>
 
-  <button
-    id="menu-toggle"
-    class="menu-toggle"
-    type="button"
-    aria-expanded="false"
-    aria-controls="mobile-menu"
-    aria-label="Open menu"
-  >
-    <span class="menu-toggle__bar" aria-hidden="true"></span>
-  </button>
-</header>
+    <nav class="site-nav" aria-label="Main navigation">
+      {
+        navItems.map((item) => (
+          <a href={item.href} class="site-nav__link" aria-current={isCurrent(item.href) ? "page" : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+      <a href={githubItem.href} class="site-nav__link" target="_blank" rel="noopener noreferrer">
+        {githubItem.label}
+      </a>
+    </nav>
 
-<MobileMenu items={[...navItems, githubItem]} currentPath={currentPath} />
+    <button
+      id="menu-toggle"
+      class="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span>Menu</span>
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" /></svg>
+    </button>
+  </header>
 
-<style>
-  /* Compact identity on mobile: "[MO] Mateusz" — hide surname + role line. */
-  .site-header__full-name {
-    display: none;
-  }
-
-  .site-identity__role {
-    display: none;
-  }
-
-  @media (min-width: 560px) {
-    .site-header__full-name {
-      display: inline;
-    }
-    .site-header__short-name {
-      display: none;
-    }
-    .site-identity__role {
-      display: block;
-    }
-  }
-</style>
+  <MobileMenu items={[...navItems, githubItem]} currentPath={currentPath} />
+  <noscript>
+    <nav class="noscript-nav" aria-label="Navigation without JavaScript">
+      {navItems.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+  </noscript>
+</div>
 
 <script>
-  const toggle = document.getElementById("menu-toggle");
-  const menu = document.getElementById("mobile-menu");
+  const chrome = document.querySelector<HTMLElement>("[data-site-chrome]");
+  const toggle = chrome?.querySelector<HTMLButtonElement>("#menu-toggle");
+  const menu = chrome?.querySelector<HTMLElement>("#mobile-menu");
+  const desktop = window.matchMedia("(min-width: 760px)");
 
   if (toggle && menu) {
-    const closeMenu = () => {
-      menu.setAttribute("data-open", "false");
+    const closeMenu = (returnFocus = false) => {
+      menu.hidden = true;
       toggle.setAttribute("aria-expanded", "false");
-      toggle.setAttribute("aria-label", "Open menu");
+      if (returnFocus) toggle.focus();
     };
 
     const openMenu = () => {
-      menu.setAttribute("data-open", "true");
+      menu.hidden = false;
       toggle.setAttribute("aria-expanded", "true");
-      toggle.setAttribute("aria-label", "Close menu");
+      requestAnimationFrame(() => menu.querySelector<HTMLAnchorElement>("a")?.focus());
     };
 
     toggle.addEventListener("click", () => {
-      const isOpen = menu.getAttribute("data-open") === "true";
-      if (isOpen) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
+      toggle.getAttribute("aria-expanded") === "true" ? closeMenu() : openMenu();
     });
 
     menu.addEventListener("click", (event) => {
-      const target = event.target as HTMLElement;
-      if (target.closest("a")) {
-        closeMenu();
-      }
+      if ((event.target as HTMLElement).closest("a")) closeMenu();
     });
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && menu.getAttribute("data-open") === "true") {
-        closeMenu();
-        toggle.focus();
+      if (event.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+        closeMenu(true);
       }
+    });
+
+    desktop.addEventListener("change", (event) => {
+      if (event.matches) closeMenu();
     });
   }
 </script>
