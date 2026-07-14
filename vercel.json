@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/aios",
+      "destination": "/projects/aios",
+      "permanent": true
+    }
+  ]
+}

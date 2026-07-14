@@ -2,7 +2,7 @@
 
 Owner: Mateusz Ozimkiewicz
 
-Positioning: Junior Full-Stack Developer | React · TypeScript · FastAPI · AI Tools
+Positioning: Full-Stack Developer | React · TypeScript · FastAPI · AI Tools
 
 Narrative: **Process → Platform → Product**
 
@@ -18,7 +18,14 @@ Narrative: **Process → Platform → Product**
 - Claude Design prototype preserved ([`reference/claude-design/`](reference/claude-design/))
 - Production scaffold in place: Astro + TypeScript, base layout, navigation,
   footer, dark design tokens, and route skeletons for all 7 pages
-- Full homepage and case-study content not yet implemented
+- Full homepage implemented; detailed case-study expansions remain separate work
+- PF-036 completed locally:
+  - canonical route wording fixed
+  - project navigation order fixed
+  - About claim tightened
+  - CV/contact behavior finalized
+  - canonical production URL configured
+  - release link audit completed
 
 ## Production Stack
 
@@ -46,7 +53,7 @@ npm run check       # astro check (TypeScript + template diagnostics)
 | `/projects/aios` | Placeholder case study |
 | `/projects/workspace` | Placeholder case study |
 | `/about` | Placeholder |
-| `/contact` | Email (mailto) + GitHub; CV link intentionally omitted (no approved CV asset yet) |
+| `/contact` | Email + GitHub + request-full-CV mailto; no approved PDF asset exists |
 
 ## Safety And Honesty Principles
 
@@ -76,4 +83,4 @@ implementation will reproduce the approved design using the chosen framework.
 
 ## Next Recommended Task
 
-PF-020 — Home page full implementation per [`docs/portfolio/homepage_copy_001.md`](docs/portfolio/homepage_copy_001.md), followed by the project content model and the three case studies.
+Review and release the validated PF-036 commit, then continue the detailed case-study content passes.

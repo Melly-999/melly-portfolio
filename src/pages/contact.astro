@@ -2,6 +2,8 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const email = "mateusz.ozimkiewicz9@gmail.com";
+const cvRequestHref =
+  `mailto:${email}?subject=CV%20request%20%E2%80%94%20Mateusz%20Ozimkiewicz`;
 ---
 
 <BaseLayout
@@ -27,8 +29,16 @@ const email = "mateusz.ozimkiewicz9@gmail.com";
         GitHub
       </a>
     </div>
-    <p class="mono" style="margin-top:var(--space-24);color:var(--color-text-muted);font-size:var(--text-label);">
-      CV link coming soon.
-    </p>
+    <div style="margin-top:var(--space-24);">
+      <p style="color:var(--color-text-secondary);">Full CV available by email.</p>
+      <a
+        href={cvRequestHref}
+        class="button button--text"
+        style="margin-top:var(--space-8);"
+        aria-label="Request Mateusz Ozimkiewicz's full CV by email"
+      >
+        Request full CV
+      </a>
+    </div>
   </section>
 </BaseLayout>
