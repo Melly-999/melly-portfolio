@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import CaseStudyHero from "../../components/CaseStudyHero.astro";
 import CommandCore from "../../components/CommandCore.astro";
 import FeatureIcon from "../../components/FeatureIcon.astro";
+import ProjectNavigation from "../../components/ProjectNavigation.astro";
 
 const features = [
   {
@@ -91,7 +92,7 @@ const features = [
     <div class="showcase-route">
       <div class="showcase-route__grid">
         <div>
-          <p class="section-kicker">The /aios portfolio route</p>
+          <p class="section-kicker">The /projects/aios portfolio route</p>
           <h2>A cinematic walkthrough of the platform</h2>
           <p>
             A readable story of how context enters, how agents receive it and how a decision
@@ -103,9 +104,9 @@ const features = [
     </div>
   </section>
 
-  <nav class="case-nav section section--last content-width" aria-label="MellyCore AIOS case study navigation">
-    <a href="/projects/mellytrade">← MellyTrade</a>
-    <a class="button button--secondary" href="https://github.com/Melly-999/mellycore-aios-core" target="_blank" rel="noopener noreferrer">View GitHub repository</a>
-    <a href="/projects/workspace">AI Agent Workspace →</a>
-  </nav>
+  <ProjectNavigation
+    currentHref="/projects/aios"
+    ariaLabel="MellyCore AIOS case study navigation"
+    repositoryHref="https://github.com/Melly-999/mellycore-aios-core"
+  />
 </BaseLayout>
