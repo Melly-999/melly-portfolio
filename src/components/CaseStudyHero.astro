@@ -15,8 +15,13 @@ const { number, layer, tone, title, tagline, description } = Astro.props;
 ---
 
 <header class="case-hero content-width content-width--case">
-  <a class="case-hero__back" href="/projects">Projects</a>
-  <span class="case-hero__crumb" aria-hidden="true">/ {title} · {layer}</span>
+  <nav class="case-hero__breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a class="case-hero__back" href="/projects">Projects</a></li>
+      <li aria-hidden="true">/</li>
+      <li><span class="case-hero__crumb" aria-current="page">{title} · {layer}</span></li>
+    </ol>
+  </nav>
   <div class="case-hero__layer"><ProjectBadge variant={tone} label={`${number} · ${layer} layer`} /></div>
   <h1>{title}</h1>
   <p class="case-hero__tagline">{tagline}</p>

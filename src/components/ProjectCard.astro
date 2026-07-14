@@ -9,6 +9,7 @@ interface Props {
 }
 
 const { project, detailed = false } = Astro.props;
+const Heading = detailed ? "h2" : "h3";
 ---
 
 <a
@@ -21,7 +22,7 @@ const { project, detailed = false } = Astro.props;
       <ProjectBadge variant={project.tone} label={project.layer} />
       <span>{project.number}</span>
     </div>
-    <h3>{project.title}</h3>
+    <Heading>{project.title}</Heading>
     <p class="project-card__tagline">{project.tagline}</p>
     <p class="project-card__description">{project.description}</p>
     <ul class="chip-list" aria-label={`${project.title} technologies and attributes`}>

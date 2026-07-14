@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import CaseStudyHero from "../../components/CaseStudyHero.astro";
+import ProjectNavigation from "../../components/ProjectNavigation.astro";
 
 const loop = [
   { number: "01", title: "Capture", body: "Ideas, specs and research land in one place before anything is built.", tools: "Obsidian · ChatGPT" },
@@ -88,8 +89,9 @@ const principles = [
     </div>
   </section>
 
-  <nav class="case-nav section section--last content-width content-width--case" aria-label="AI Agent Workspace case study navigation">
-    <a href="/projects">← All projects</a>
-    <a href="/projects/aios">MellyCore AIOS →</a>
-  </nav>
+  <ProjectNavigation
+    currentHref="/projects/workspace"
+    ariaLabel="AI Agent Workspace case study navigation"
+    narrow
+  />
 </BaseLayout>

@@ -489,6 +489,7 @@
   font-size: 0.7rem;
 }
 
+.project-card h2,
 .project-card h3 {
   font-size: 1.25rem;
   font-weight: 800;

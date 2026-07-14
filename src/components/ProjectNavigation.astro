@@ -1,0 +1,64 @@
+---
+import { projects } from "../data/portfolio";
+
+interface Props {
+  currentHref: string;
+  ariaLabel: string;
+  repositoryHref?: string;
+  repositoryLabel?: string;
+  narrow?: boolean;
+}
+
+const {
+  currentHref,
+  ariaLabel,
+  repositoryHref,
+  repositoryLabel = "View GitHub repository",
+  narrow = false,
+} = Astro.props;
+
+const currentIndex = projects.findIndex((project) => project.href === currentHref);
+
+if (currentIndex === -1) {
+  throw new Error(`Unknown project route: ${currentHref}`);
+}
+
+const previousProject = currentIndex > 0 ? projects[currentIndex - 1] : undefined;
+const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : undefined;
+const previousHref = previousProject?.href ?? "/projects";
+const previousTitle = previousProject?.title ?? "All projects";
+const nextHref = nextProject?.href ?? "/projects";
+const nextTitle = nextProject?.title ?? "All projects";
+---
+
+<nav
+  class:list={["case-nav", "section", "section--last", "content-width", { "content-width--case": narrow }]}
+  aria-label={ariaLabel}
+>
+  <a
+    href={previousHref}
+    rel={previousProject ? "prev" : undefined}
+    aria-label={previousProject ? `Previous project: ${previousTitle}` : "Back to all projects"}
+  >
+    ← {previousTitle}
+  </a>
+  {
+    repositoryHref && (
+      <a
+        class="button button--secondary"
+        href={repositoryHref}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {repositoryLabel}
+      </a>
+    )
+  }
+  <a
+    href={nextHref}
+    rel={nextProject ? "next" : undefined}
+    aria-label={nextProject ? `Next project: ${nextTitle}` : "Next: All projects"}
+  >
+    {nextTitle} →
+  </a>
+</nav>
