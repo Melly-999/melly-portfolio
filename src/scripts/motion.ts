@@ -216,4 +216,10 @@ document.addEventListener("focusin", (event) => {
     ?.classList.add("is-in");
 });
 
-initEntrances();
+// While the MELLY999 intro covers the page, hold the entrances until it dissolves
+// so the hero headline plays as the intro lifts rather than beneath it.
+if (root.classList.contains("intro-on")) {
+  window.setTimeout(initEntrances, 780);
+} else {
+  initEntrances();
+}

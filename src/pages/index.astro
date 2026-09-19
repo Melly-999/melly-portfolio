@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HeroPlate from "../components/HeroPlate.astro";
+import MellyIntro from "../components/MellyIntro.astro";
 import EvidenceTrace from "../components/EvidenceTrace.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import StatusChip from "../components/StatusChip.astro";
@@ -17,7 +18,7 @@ import { YUZUKI_SOURCE_HREF } from "../data/social";
  * (canvas ↔ surface). The one engineered peak lives on /projects/yuzuki; the
  * hero is the greet, not a second peak.
  */
-const [yuzuki, mellycore] = projects;
+const [yuzuki, klaus, mellycore, rag, mellytrade, workspace] = projects;
 const [automation] = concepts;
 
 const buildStages = [
@@ -64,6 +65,7 @@ const email = "mateusz.ozimkiewicz9@gmail.com";
   title="Mateusz Ozimkiewicz — Full-Stack Developer"
   description="Portfolio Mateusza Ozimkiewicza — React, TypeScript, FastAPI and safety-first AI applications."
 >
+  <MellyIntro />
   <HeroPlate />
 
   <EvidenceTrace page="home" />
@@ -87,16 +89,43 @@ const email = "mateusz.ozimkiewicz9@gmail.com";
         threshold
       />
 
-      <div class="secondary">
+      <ProjectCard
+        weight="major"
+        title={klaus.title}
+        subtitle={klaus.tagline}
+        description={klaus.description}
+        stack={klaus.stack}
+        href={klaus.href}
+        chips={klaus.chips}
+      />
+
+      <div class="trio">
+        {
+          [mellycore, rag, mellytrade].map((p) => (
+            <ProjectCard
+              title={p.title}
+              subtitle={p.tagline}
+              description={p.description}
+              stack={p.stack}
+              href={p.href}
+              chips={p.chips}
+            />
+          ))
+        }
+      </div>
+
+      <div class="other">
+        <h3 class="other__label mono">Other work</h3>
         <ProjectCard
-          title={mellycore.title}
-          subtitle={mellycore.tagline}
-          description={mellycore.description}
-          stack={mellycore.stack}
-          href="#mellycore"
-          chips={mellycore.chips}
+          weight="supporting"
+          title={workspace.title}
+          subtitle={workspace.tagline}
+          description={workspace.description}
+          stack={workspace.stack}
+          href={workspace.href}
         />
         <ProjectCard
+          weight="supporting"
           title={automation.title}
           subtitle={automation.tagline}
           description={automation.statement}
@@ -292,17 +321,29 @@ const email = "mateusz.ozimkiewicz9@gmail.com";
     gap: var(--space-8);
   }
 
-  /* Selected systems: MellyCore (7 cols) and Automation (5 cols) — unequal. */
-  .secondary {
+  /* Third tier: three distinct narratives in deliberately unequal measures. */
+  .trio {
     display: grid;
     gap: 0 var(--space-48);
   }
 
-  @media (min-width: 768px) {
-    .secondary {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  @media (min-width: 1024px) {
+    .trio {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 4fr);
       align-items: start;
     }
+  }
+
+  .other {
+    margin-top: var(--space-32);
+  }
+
+  .other__label {
+    color: var(--color-ink-muted);
+    font-size: var(--text-micro);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
 
   /* Intertitle: near-empty plate, chapter title only. Silence before the peak. */

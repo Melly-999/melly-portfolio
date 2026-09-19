@@ -1,0 +1,131 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCaseStudyShell from "../../components/ProjectCaseStudyShell.astro";
+import Chapter from "../../components/Chapter.astro";
+import StatusChip from "../../components/StatusChip.astro";
+import ProcessSpine from "../../components/ProcessSpine.astro";
+import KlausOrchestrationDiagram from "../../components/KlausOrchestrationDiagram.astro";
+
+/**
+ * /projects/klaus — AI orchestration + coding agent.
+ *
+ * EVIDENCE: no Klaus repository, document or run record was found in the local
+ * planning and workspace files. The role and architecture below are owner-defined,
+ * so every capability is classified CONCEPTUAL. Nothing is presented as
+ * implemented, validated, shipped, or connected to a live provider or model.
+ */
+const stages = [
+  { label: "Intent" },
+  { label: "Context" },
+  { label: "Orchestration", key: true },
+  { label: "Implementation" },
+  { label: "Review" },
+  { label: "Validation", key: true },
+  { label: "Handoff" },
+] as const;
+
+const capability = [
+  ["Intent capture", "CONCEPTUAL"],
+  ["Project context", "CONCEPTUAL"],
+  ["Agent / model orchestration", "CONCEPTUAL"],
+  ["Coding lane", "CONCEPTUAL"],
+  ["Review lane", "CONCEPTUAL"],
+  ["Validation gate", "CONCEPTUAL"],
+  ["Handoff record", "CONCEPTUAL"],
+] as const;
+---
+
+<BaseLayout
+  title="Klaus — AI orchestration and coding agent"
+  description="Klaus: a concept for a personal AI engineering operator that orchestrates agents and coding work through context, implementation, review and validation."
+>
+  <ProjectCaseStudyShell current="klaus" bare>
+    <section class="phero ground-surface" aria-labelledby="klaus-title">
+      <div class="content-width stack">
+        <p class="chip-row">
+          <StatusChip variant="concept" label="CONCEPT · OWNER-DEFINED ARCHITECTURE" />
+          <span class="badge">Orchestration + coding agent</span>
+        </p>
+        <h1 id="klaus-title" class="phero__title">Klaus</h1>
+        <p class="phero__tag">
+          AI orchestration and coding agent for coordinating development workflows,
+          agent and model handoffs, implementation tasks, and verification.
+        </p>
+      </div>
+    </section>
+
+    <Chapter id="intent" title="01 · Intent" ground="canvas">
+      <p class="pchapter__body">
+        Work starts from a stated intent, not a prompt pile: what should exist, what
+        must not change, and how it will be judged done. Klaus is designed to keep that
+        intent as the fixed point every later step is checked against.
+      </p>
+    </Chapter>
+
+    <Chapter id="context" title="02 · Context" ground="surface">
+      <p class="pchapter__body">
+        A coding agent is only as good as the context it carries. Klaus is designed to
+        hold project context — repository state, rules, prior decisions — and hand the
+        relevant slice to each agent, instead of asking every agent to rediscover it.
+      </p>
+    </Chapter>
+
+    <Chapter id="orchestration" title="03 · Orchestration" ground="canvas" eyebrow="The core of the concept">
+      <p class="pchapter__body">
+        Klaus sits between intent and execution. It splits work across roles — an
+        architect, an implementer, a reviewer — and routes each to whichever agent or
+        model is configured for that role.
+      </p>
+      <KlausOrchestrationDiagram />
+    </Chapter>
+
+    <Chapter id="implementation" title="04 · Implementation" ground="surface">
+      <p class="pchapter__body">
+        The coding lane turns an approved plan into changes, in bounded steps. It is
+        meant to work against the same context and rules the plan was written under.
+      </p>
+    </Chapter>
+
+    <Chapter id="review" title="05 · Review" ground="canvas">
+      <p class="pchapter__body">
+        Implementation is never its own judge. A separate review lane inspects the
+        result against the intent and the project rules before anything moves on.
+      </p>
+    </Chapter>
+
+    <Chapter id="validation" title="06 · Validation" ground="surface">
+      <p class="pchapter__body">
+        Validation is a gate, not a summary: checks run, results are read, and a step
+        that cannot be verified is reported as unverified rather than assumed to pass.
+      </p>
+    </Chapter>
+
+    <Chapter id="handoff" title="07 · Handoff" ground="canvas">
+      <p class="pchapter__body">
+        Each cycle ends with a record: what was asked, what changed, what was
+        verified, and what remains — so the next session, or the next agent, starts
+        from facts.
+      </p>
+      <ProcessSpine label="Klaus workflow" steps={stages} />
+    </Chapter>
+
+    <Chapter id="status" title="Current status" ground="surface">
+      <p><StatusChip variant="concept" label="CONCEPTUAL · NOT IMPLEMENTED HERE" /></p>
+      <p class="pchapter__body">
+        Klaus is presented as an owner-defined role and architecture. No public
+        repository, verified run, or live provider or model integration is claimed on
+        this page.
+      </p>
+      <dl class="facts">
+        {
+          capability.map(([name, state]) => (
+            <div class="facts__row">
+              <dt>{name}</dt>
+              <dd class="mono">{state}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </Chapter>
+  </ProjectCaseStudyShell>
+</BaseLayout>

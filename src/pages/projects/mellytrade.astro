@@ -1,23 +1,124 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProjectCaseStudyShell from "../../components/ProjectCaseStudyShell.astro";
-import ProjectBadge from "../../components/ProjectBadge.astro";
+import Chapter from "../../components/Chapter.astro";
+import StatusChip from "../../components/StatusChip.astro";
+import ScreenshotFrame from "../../components/ScreenshotFrame.astro";
+import ProcessSpine from "../../components/ProcessSpine.astro";
+
+/**
+ * /projects/mellytrade — a trading analytics and monitoring interface study.
+ * The screenshot is a concept interface render (assets pack ASSET_MANIFEST.md:
+ * "not a claim of an active production trading system"). Every number in it is a
+ * sample value. Nothing here claims trades, PnL, broker execution, users, or live
+ * market connectivity, and no sample figure is quoted in the copy.
+ */
+const workflow = [
+  { label: "Data ingestion" },
+  { label: "Data validation" },
+  { label: "Analytics engine" },
+  { label: "Monitoring & alerts", key: true },
+] as const;
+
+const alt =
+  "MellyTrade concept dashboard: summary metrics, a market overview chart, a live signals list with confidence, recent alerts, trade volume, PnL and risk exposure charts, system health tiles, a data and analytics workflow, and a market correlation network.";
 ---
 
 <BaseLayout
-  title="MellyTrade — Mateusz Ozimkiewicz"
-  description="MellyTrade: a read-only, dry-run AI trading terminal case study. No broker execution, no live orders."
+  title="MellyTrade — trading analytics and monitoring cockpit"
+  description="MellyTrade: a trading analytics and monitoring interface concept for signals, risk and system health. Read-only, dry-run; no broker execution."
 >
-  <ProjectCaseStudyShell current="mellytrade">
-    <ProjectBadge variant="product" label="Product" />
-    <h1 style="margin-top:var(--space-16);font-size:var(--text-h1);">MellyTrade</h1>
-    <p class="badge badge--safety" style="margin-top:var(--space-16);">
-      STATIC CASE STUDY · READ-ONLY · DRY-RUN · NO BROKER EXECUTION
-    </p>
-    <p class="reading-width" style="margin-top:var(--space-16);color:var(--color-text-secondary);">
-      Read-only, dry-run AI trading terminal case study. The full write-up —
-      architecture, safety posture, and screenshots — is coming in a later
-      implementation pass.
-    </p>
+  <ProjectCaseStudyShell current="mellytrade" bare>
+    <section class="phero ground-surface" aria-labelledby="mt-title">
+      <div class="content-width stack">
+        <p class="chip-row">
+          <StatusChip variant="concept" label="CONCEPT INTERFACE · SAMPLE VALUES" />
+          <span class="badge">Analytics</span>
+        </p>
+        <h1 id="mt-title" class="phero__title">MellyTrade</h1>
+        <p class="phero__tag">
+          Trading analytics and monitoring cockpit for signals, risk, and system health.
+        </p>
+        <p class="badge badge--safety" style="align-self:flex-start;">
+          STATIC CASE STUDY · READ-ONLY · DRY-RUN · NO BROKER EXECUTION
+        </p>
+      </div>
+      <div class="cinematic-width" style="margin-top:var(--space-32);">
+        <ScreenshotFrame
+          src="/assets/mellytrade/mellytrade-analytics-monitoring-concept-1672x941.png"
+          alt={alt}
+          caption="MellyTrade — concept interface render. All figures are sample values for the design: no live market data, trades, broker execution or PnL."
+          srcWidth={1672}
+          srcHeight={941}
+          scrollable
+          scrollWidth={940}
+          eager
+        />
+        <p class="pan-hint">Swipe or use arrow keys to inspect the full interface.</p>
+      </div>
+    </section>
+
+    <Chapter id="premise" title="01 · Product premise" ground="canvas" eyebrow="Clarity under density">
+      <p class="pchapter__body">
+        MellyTrade explores a high-density trading-intelligence interface: analytics,
+        signal surfaces, risk visibility, alerting and system health brought into one
+        operational dashboard — dense, but never noisy.
+      </p>
+    </Chapter>
+
+    <Chapter id="dashboard" title="02 · Main dashboard" ground="surface">
+      <p class="pchapter__body">
+        One overview screen answers the first questions an operator asks: what is
+        happening, what needs attention, and is the system itself healthy.
+      </p>
+    </Chapter>
+
+    <Chapter id="hierarchy" title="03 · Information hierarchy" ground="canvas">
+      <p class="pchapter__body">
+        Summary metrics sit on top, primary charts in the middle, and lists of
+        signals and alerts beside them, with system health and workflow beneath.
+        Reading order follows urgency, and type scale carries the rest.
+      </p>
+    </Chapter>
+
+    <Chapter id="signals" title="04 · Signal / risk presentation" ground="surface">
+      <p class="pchapter__body">
+        Signals are shown with direction, strength and a confidence indicator; risk
+        exposure gets its own chart with a threshold. Each carries a text label, so
+        meaning never depends on colour alone.
+      </p>
+    </Chapter>
+
+    <Chapter id="alerts" title="05 · Alerting / health presentation" ground="canvas">
+      <p class="pchapter__body">
+        Alerts are ranked and timestamped, with the reason stated in a sentence.
+        System-health tiles show pipeline components at a glance, so a data problem
+        is visible before it becomes a signal problem.
+      </p>
+    </Chapter>
+
+    <Chapter id="workflow" title="06 · Data / system workflow" ground="surface">
+      <p class="pchapter__body">
+        Four stages, one direction: data comes in, is validated, is analysed, and is
+        monitored — with alerting as the visible end of the chain.
+      </p>
+      <ProcessSpine label="Data and analytics workflow" steps={workflow} />
+    </Chapter>
+
+    <Chapter id="design" title="07 · Design language" ground="canvas">
+      <p class="pchapter__body">
+        A dark, quiet canvas so that data — not chrome — carries the colour. The
+        screenshot uses its own palette; the portfolio around it stays neutral.
+      </p>
+    </Chapter>
+
+    <Chapter id="status" title="08 · Project status" ground="surface">
+      <p><StatusChip variant="concept" label="CONCEPT INTERFACE · NOT CONNECTED TO MARKETS" /></p>
+      <p class="pchapter__body">
+        A case-study visual, not an active production system. No trades, profit and
+        loss, users, live market connectivity or broker execution are claimed. The
+        wider project is read-only and dry-run.
+      </p>
+    </Chapter>
   </ProjectCaseStudyShell>
 </BaseLayout>

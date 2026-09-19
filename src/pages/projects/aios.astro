@@ -1,29 +1,132 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProjectCaseStudyShell from "../../components/ProjectCaseStudyShell.astro";
-import ProjectBadge from "../../components/ProjectBadge.astro";
+import Chapter from "../../components/Chapter.astro";
 import StatusChip from "../../components/StatusChip.astro";
+import ScreenshotFrame from "../../components/ScreenshotFrame.astro";
 import CycleDiagram from "../../components/CycleDiagram.astro";
+
+/**
+ * /projects/aios — MellyCore AIOS. The screenshot is a real STATIC-PREVIEW
+ * snapshot (dashboard snapshot 2026-07-17). Its boundary labels — STATIC PREVIEW,
+ * EXECUTION LOCKED, NO LIVE PROVIDERS — are kept in frame and repeated in text.
+ * Snapshot figures are quoted as snapshot values, never as live runtime state.
+ */
+const alt =
+  "MellyCore AIOS command center static preview: context management counts, model routing roles, a repository-derived knowledge and operations graph, an AI agents and loop registry, an architecture snapshot, an attention queue, and a seven-stage AI operations workflow with execution locked.";
 ---
 
 <BaseLayout
-  title="MellyCore AIOS — Mateusz Ozimkiewicz"
-  description="MellyCore AIOS: a docs-first AI command center and context architecture prototype."
+  title="MellyCore AIOS — command-center architecture"
+  description="MellyCore AIOS: a static-preview command center for shared context, a repository-derived topology and supervised agent coordination. Execution locked, no live providers."
 >
-  <ProjectCaseStudyShell current="aios">
-    <div class="cluster">
-      <ProjectBadge variant="platform" label="Platform" />
-      <StatusChip variant="partial" label="PARTIAL · DOCS + STATIC SLICE" />
-    </div>
-    <h1 style="margin-top:var(--space-16);font-size:var(--text-h1);">MellyCore AIOS</h1>
-    <p class="reading-width" style="margin-top:var(--space-16);color:var(--color-ink-secondary);">
-      Docs-first AI command center and context architecture prototype. The
-      operating loop below is the architecture: a human approves before anything is
-      implemented. It is not a shipped public product; the full case study — the
-      Living Context Graph and agent handoff — is coming in a later pass.
-    </p>
-    <div style="margin-top:var(--space-32);">
+  <ProjectCaseStudyShell current="aios" bare>
+    <section class="phero ground-surface" aria-labelledby="aios-title">
+      <div class="content-width stack">
+        <p class="chip-row">
+          <StatusChip variant="partial" label="PARTIAL · DOCS + STATIC SLICE" />
+          <span class="badge">Platform</span>
+        </p>
+        <h1 id="aios-title" class="phero__title">MellyCore AIOS</h1>
+        <p class="phero__tag">
+          A command-center architecture for shared context and supervised agent
+          coordination.
+        </p>
+        <p class="boundary" aria-label="Boundaries shown in the preview">
+          <span class="badge">STATIC PREVIEW</span>
+          <span class="badge">EXECUTION LOCKED</span>
+          <span class="badge">NO LIVE PROVIDERS</span>
+        </p>
+      </div>
+      <div class="cinematic-width" style="margin-top:var(--space-32);">
+        <ScreenshotFrame
+          src="/assets/mellycore/mellycore-aios-command-center-1600x900.png"
+          alt={alt}
+          caption="MellyCore AIOS command center — static preview snapshot (2026-07-17). Repository-derived topology, not a live runtime. Execution locked; no live providers."
+          srcWidth={1600}
+          srcHeight={900}
+          scrollable
+          scrollWidth={940}
+          eager
+        />
+        <p class="pan-hint">Swipe or use arrow keys to inspect the full interface.</p>
+      </div>
+    </section>
+
+    <Chapter id="premise" title="01 · Command-center premise" ground="canvas">
+      <p class="pchapter__body">
+        One place to see the shared context, the agents, the models and the safety
+        state of a body of work — supervised, and read-only for now. The preview
+        above is the current form of that idea.
+      </p>
+    </Chapter>
+
+    <Chapter id="context" title="02 · Shared context" ground="surface">
+      <p class="pchapter__body">
+        Context is treated as records that are admitted, rejected or expiring, with a
+        frozen audit. In the preview snapshot: 7 valid records and 0 findings, from a
+        frozen audit dated 2026-07-17 — snapshot values, not a live corpus count.
+      </p>
+    </Chapter>
+
+    <Chapter id="topology" title="03 · Agent, model and tool topology" ground="canvas">
+      <p class="pchapter__body">
+        A graph of 45 nodes and 66 relationships, derived from the repository — a
+        static topology, not a live runtime. Model roles (strategy, architecture,
+        implementation, iteration) are configured intent, not measured traffic.
+      </p>
       <CycleDiagram />
-    </div>
+    </Chapter>
+
+    <Chapter id="governance" title="04 · Governance and safety" ground="surface">
+      <p class="pchapter__body">
+        Execution is locked and there are no live providers. The attention queue
+        keeps execution capability blocked: no runtime or execution-capable agent is
+        authorized in this build. The boundary is a feature, and it stays visible.
+      </p>
+      <p class="boundary">
+        <span class="badge">EXECUTION LOCKED</span>
+        <span class="badge">NO LIVE PROVIDERS</span>
+        <span class="badge">STATIC PREVIEW</span>
+      </p>
+    </Chapter>
+
+    <Chapter id="evidence" title="05 · Repository-derived evidence" ground="canvas">
+      <p class="pchapter__body">
+        The registry snapshot lists 9 defined loops, 1 exercised, and none
+        production-enabled. Roles are defined in the repository; no agent is running
+        and no run state is claimed.
+      </p>
+    </Chapter>
+
+    <Chapter id="status" title="06 · Current status" ground="surface">
+      <div class="cols3">
+        <div>
+          <p class="mini-label">Implemented</p>
+          <ul class="pchapter__body">
+            <li>Repository documentation and static homepage</li>
+            <li>Loop Operations Foundation (9 registered loops, report-only)</li>
+            <li>Context Gate through iteration 4</li>
+            <li>Static Holographic Source Arena slice</li>
+          </ul>
+        </div>
+        <div>
+          <p class="mini-label">Prototype</p>
+          <ul class="pchapter__body"><li>The legacy Live Cockpit V2</li></ul>
+        </div>
+        <div>
+          <p class="mini-label">Planned</p>
+          <ul class="pchapter__body">
+            <li>The full Observatory</li>
+            <li>Real provider adapters</li>
+            <li>The 3D/WebGL renderer</li>
+          </ul>
+        </div>
+      </div>
+      <p class="pchapter__body">
+        Simulated: model-comparison copy is deterministic local text, not live model
+        responses. MellyCore is not a shipped public product.
+      </p>
+    </Chapter>
   </ProjectCaseStudyShell>
 </BaseLayout>

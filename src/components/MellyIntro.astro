@@ -1,0 +1,68 @@
+---
+/**
+ * MELLY999 brand-entry intro. Homepage only, once per browser session.
+ *
+ * First frame: full obsidian, the wordmark, nothing else — no spinner, tagline,
+ * social links, terminal text, ENTER button or HUD. ~1200ms in total:
+ *   0–150ms   black field
+ *   150–550   wordmark resolves (opacity + a 3px blur that clears)
+ *   550–800   hold
+ *   800–1200  dissolves into the hero
+ *
+ * Progressive enhancement: the real homepage is in the DOM underneath. This layer
+ * is display:none unless the inline <head> script arms it (`html.intro-on`), and
+ * its exit is a pure CSS animation, so even if JS dies mid-way the layer removes
+ * itself and never gates the page. It is aria-hidden, non-interactive and cannot
+ * trap focus. Reduced motion: never armed (skipped).
+ */
+---
+
+<div class="intro" aria-hidden="true">
+  <p class="intro__word">MELLY999</p>
+</div>
+
+<style is:global>
+  .intro {
+    display: none;
+  }
+
+  html.intro-on .intro {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: grid;
+    place-items: center;
+    background: var(--color-canvas);
+    pointer-events: none;
+    animation: intro-out 400ms var(--ease-standard) 800ms forwards;
+  }
+
+  .intro__word {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: clamp(1.75rem, 1.2rem + 2.6vw, 3rem);
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    padding-left: 0.22em; /* optically re-centres the tracked wordmark */
+    color: var(--color-ink);
+    animation: intro-word 400ms var(--ease-out-expo) 150ms both;
+  }
+
+  @keyframes intro-word {
+    from {
+      opacity: 0;
+      filter: blur(3px);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+
+  @keyframes intro-out {
+    to {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+</style>

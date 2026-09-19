@@ -24,6 +24,8 @@ interface Props {
   crop?: Crop;
   mobileCrop?: Crop;
   scrollable?: boolean;
+  /** Width (px) of the bounded, pannable frame on phones; dense UIs need more. */
+  scrollWidth?: number;
   eager?: boolean;
   srcWidth?: number;
   srcHeight?: number;
@@ -33,16 +35,19 @@ const {
   src,
   alt,
   caption,
-  crop = { x: 0, y: 0, w: 1440, h: 900 },
+  crop: cropProp,
   mobileCrop,
+  scrollWidth = 720,
   scrollable = false,
   eager = false,
   srcWidth = 1440,
   srcHeight = 900,
 } = Astro.props;
 
+const crop = cropProp ?? { x: 0, y: 0, w: srcWidth, h: srcHeight };
 const m = mobileCrop ?? crop;
 const vars = [
+  `--scroll-w:${scrollWidth}px`,
   `--src-w:${srcWidth}`,
   `--cw:${crop.w}`,
   `--ch:${crop.h}`,
@@ -137,7 +142,7 @@ const vars = [
     }
 
     .shot--scroll .shot__mat {
-      width: 720px;
+      width: var(--scroll-w, 720px);
     }
   }
 

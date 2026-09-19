@@ -2,11 +2,17 @@ import type { StatusVariant } from "./claims";
 import { YUZUKI_SOURCE_HREF } from "./social";
 
 /**
- * Project registry. Order is the hierarchy: Yuzuki (flagship) → MellyCore →
- * the rest. Order is identical at every breakpoint and never re-sorted by CSS.
+ * Project registry. Order is the hierarchy and is identical at every breakpoint:
+ * Yuzuki (flagship) → Klaus (major) → MellyCore → RAG Document Assistant →
+ * MellyTrade → supporting work. Prev/next sequencing reads this order.
  *
- * Only entries with a real route live here (prev/next sequencing reads this).
- * OpsPilot is a concept with no route, so it lives in `concepts` below.
+ * Truth notes:
+ *  - Klaus: owner-defined role and architecture only. No repository or run
+ *    evidence was located, so it is CONCEPT — no implemented capability is claimed.
+ *  - RAG Document Assistant and MellyTrade: interface concept renders used as
+ *    portfolio/case-study visuals, not evidence of a live deployment, production
+ *    scale or trading system (assets pack ASSET_MANIFEST.md).
+ *  - MellyCore: partial; its screenshot is a real static-preview snapshot.
  */
 export interface ProjectChip {
   variant: StatusVariant;
@@ -38,23 +44,68 @@ export const projects = [
     ] satisfies ProjectChip[],
   },
   {
+    slug: "klaus",
+    weight: "major",
+    variant: "platform",
+    badge: "Agent",
+    title: "Klaus",
+    tagline: "AI orchestration and coding agent",
+    description:
+      "A personal AI engineering operator that coordinates agents and models, carries project context, and routes work through implementation, review and validation.",
+    stack: "Orchestration · Coding agent · Project context · Review gates",
+    href: "/projects/klaus",
+    chips: [
+      { variant: "concept", label: "CONCEPT · OWNER-DEFINED ARCHITECTURE" },
+    ] satisfies ProjectChip[],
+  },
+  {
     slug: "aios",
     weight: "standard",
     variant: "platform",
     badge: "Platform",
     title: "MellyCore AIOS",
-    tagline: "Docs-first AI command center and context architecture prototype",
+    tagline: "Command-center architecture for shared context and agent coordination",
     description:
-      "An architecture for agent handoffs, knowledge graphs and explicit safety contracts. Partly implemented; the full Observatory is planned.",
-    stack: "Context Graph · Agent Handoffs · Safety Contracts · Product Architecture",
+      "A supervised, static-preview command center: shared context, a repository-derived topology, and explicit safety boundaries.",
+    stack: "Context Graph · Agent Handoffs · Safety Contracts · Static preview",
     href: "/projects/aios",
     chips: [
       { variant: "partial", label: "PARTIAL · DOCS + STATIC SLICE" },
     ] satisfies ProjectChip[],
   },
   {
-    slug: "workspace",
+    slug: "rag-assistant",
     weight: "standard",
+    variant: "product",
+    badge: "RAG system",
+    title: "RAG Document Assistant",
+    tagline: "RAG-powered document search with source-grounded answers",
+    description:
+      "Document intelligence built around retrieval: natural-language questions answered from your own documents, each answer shown with its sources.",
+    stack: "Retrieval · Embeddings · Indexing · Citations",
+    href: "/projects/rag-assistant",
+    chips: [
+      { variant: "concept", label: "CONCEPT INTERFACE" },
+    ] satisfies ProjectChip[],
+  },
+  {
+    slug: "mellytrade",
+    weight: "standard",
+    variant: "product",
+    badge: "Analytics",
+    title: "MellyTrade",
+    tagline: "Trading analytics and monitoring cockpit for signals, risk and system health",
+    description:
+      "A high-density interface study: clarity under density, with signals, risk, alerts and pipeline health in one operational view. Read-only, dry-run.",
+    stack: "React · TypeScript · FastAPI · Analytics UI",
+    href: "/projects/mellytrade",
+    chips: [
+      { variant: "concept", label: "CONCEPT INTERFACE · SAMPLE VALUES" },
+    ] satisfies ProjectChip[],
+  },
+  {
+    slug: "workspace",
+    weight: "supporting",
     variant: "process",
     badge: "Process",
     title: "AI Agent Workspace",
@@ -63,19 +114,6 @@ export const projects = [
       "A documented workflow connecting ChatGPT, Claude Code, Codex, Obsidian and GitHub through reusable context, task contracts and review gates.",
     stack: "Claude Code · Codex · Obsidian · GitHub · Documentation",
     href: "/projects/workspace",
-    chips: [] satisfies ProjectChip[],
-  },
-  {
-    slug: "mellytrade",
-    weight: "standard",
-    variant: "product",
-    badge: "Product",
-    title: "MellyTrade",
-    tagline: "Read-only, dry-run AI trading terminal case study",
-    description:
-      "A read-only, dry-run AI trading-terminal case study built with React, TypeScript and FastAPI, with broker execution blocked.",
-    stack: "React · TypeScript · FastAPI · Tauri/PWA",
-    href: "/projects/mellytrade",
     chips: [] satisfies ProjectChip[],
   },
 ] as const;

@@ -22,7 +22,7 @@ interface Chip {
 }
 
 interface Props {
-  weight?: "flagship" | "standard";
+  weight?: "flagship" | "major" | "standard" | "supporting";
   label?: string;
   title: string;
   subtitle: string;
@@ -67,7 +67,7 @@ const Heading = `h${headingLevel}` as "h2" | "h3";
 const flagship = weight === "flagship";
 ---
 
-<article class:list={["entry", { "entry--flagship": flagship }, `entry--${measure}`]}>
+<article class:list={["entry", { "entry--flagship": flagship, "entry--major": weight === "major", "entry--supporting": weight === "supporting" }, `entry--${measure}`]}>
   <div class="entry__body">
     {label && <p class="entry__label mono">{label}</p>}
     <Heading class="entry__title">
@@ -182,6 +182,31 @@ const flagship = weight === "flagship";
   .entry__disclaimer {
     color: var(--color-ink-muted);
     font-size: var(--text-label);
+  }
+
+  /* ---- Major (second tier): larger than standard, quieter than flagship ---- */
+  .entry--major {
+    padding-block: var(--space-48);
+  }
+
+  .entry--major .entry__title {
+    font-size: var(--text-h2);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  .entry--major .entry__subtitle {
+    font-size: var(--text-body-lg);
+  }
+
+  /* ---- Supporting: smallest, plainest ---- */
+  .entry--supporting {
+    padding-block: var(--space-16);
+  }
+
+  .entry--supporting .entry__description,
+  .entry--supporting .entry__stack {
+    display: none;
   }
 
   /* ---- Flagship ---- */

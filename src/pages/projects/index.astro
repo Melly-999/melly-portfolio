@@ -9,13 +9,13 @@ const [automation] = concepts;
 
 <BaseLayout
   title="Projects — Mateusz Ozimkiewicz"
-  description="Selected projects by Mateusz Ozimkiewicz: Yuzuki, a local-first AI desktop with a fail-closed private mode; MellyCore, an agent-orchestration architecture; and supporting work."
+  description="Selected projects by Mateusz Ozimkiewicz: Yuzuki, a local-first AI desktop; Klaus, an AI orchestration and coding agent; MellyCore, a command-center architecture; a RAG document assistant; and MellyTrade, an analytics interface."
 >
   <section class="section content-width">
     <h1 style="font-size:var(--text-h1);">Projects</h1>
     <p class="reading-width" style="margin-top:var(--space-8);color:var(--color-ink-secondary);">
-      One flagship, one architecture, and supporting work — each labelled with how
-      well it is proven.
+      One flagship, then the systems around it — each labelled with how well it is
+      proven.
     </p>
 
     <div style="margin-top:var(--space-32);">
@@ -36,6 +36,7 @@ const [automation] = concepts;
       {
         rest.map((project) => (
           <ProjectCard
+            weight={project.weight}
             headingLevel={2}
             label={project.badge}
             title={project.title}
@@ -48,6 +49,7 @@ const [automation] = concepts;
         ))
       }
       <ProjectCard
+        weight="supporting"
         headingLevel={2}
         label="Concept"
         title={automation.title}

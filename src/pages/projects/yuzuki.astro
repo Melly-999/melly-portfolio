@@ -9,6 +9,8 @@ import ProcessSpine from "../../components/ProcessSpine.astro";
 import ArchitectureDiagram from "../../components/ArchitectureDiagram.astro";
 import RoutingOrbit from "../../components/RoutingOrbit.astro";
 import ValidationMatrix from "../../components/ValidationMatrix.astro";
+import PromptSuggestions from "../../components/PromptSuggestions.astro";
+import SyntheticConversation from "../../components/SyntheticConversation.astro";
 import { YUZUKI_SOURCE_HREF, YUZUKI_SOURCE_PUBLIC } from "../../data/social";
 
 /**
@@ -192,6 +194,10 @@ const ladder = [
             caption="Yuzuki desktop workspace — synthetic public fixture, empty state. Shown uncropped."
             scrollable
           />
+        </div>
+        <div class="demo-block">
+          <PromptSuggestions />
+          <SyntheticConversation />
         </div>
         <div class="split">
           <div>
@@ -577,6 +583,20 @@ const ladder = [
   .resolve__note {
     margin-top: var(--space-24);
     color: var(--color-ink-secondary);
+  }
+
+  /* ---- 05: portfolio-only demo (compact; never competes with the peak) ---- */
+  .demo-block {
+    display: grid;
+    gap: var(--space-32);
+    padding-block: var(--space-16);
+  }
+
+  @media (min-width: 1024px) {
+    .demo-block {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      align-items: start;
+    }
   }
 
   /* ---- 05 / 07 ---- */

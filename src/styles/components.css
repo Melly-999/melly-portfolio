@@ -467,3 +467,110 @@ a.dock__hit:focus-visible .dock__arrow {
   opacity: 0.6;
   cursor: default;
 }
+
+/* ---- Project pages (Klaus / RAG / MellyCore / MellyTrade) ---- */
+.pchapter {
+  padding-block: var(--section-spacing-lg);
+}
+
+.pchapter__title {
+  font-size: var(--text-h1);
+  letter-spacing: -0.015em;
+}
+
+.pchapter__body {
+  color: var(--color-ink-secondary);
+  max-width: var(--reading-max-width);
+}
+
+.phero {
+  padding-block: var(--space-32) var(--section-spacing);
+}
+
+.phero__title {
+  font-size: var(--text-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.phero__tag {
+  color: var(--color-ink-secondary);
+  font-size: var(--text-body-lg);
+  max-width: 52ch;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+/* Text-only boundary labels: truth by words, never by colour. */
+.boundary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+/* Dense-UI hint, phones only: the frame pans, the page never does. */
+.pan-hint {
+  display: none;
+  margin-top: var(--space-8);
+  color: var(--color-ink-muted);
+  font-size: var(--text-label);
+}
+
+@media (max-width: 767px) {
+  .pan-hint {
+    display: block;
+  }
+}
+
+.facts {
+  display: grid;
+  max-width: 760px;
+  border-top: 1px solid var(--color-line);
+}
+
+.facts__row {
+  display: grid;
+  gap: var(--space-4) var(--space-24);
+  padding-block: var(--space-12);
+  border-bottom: 1px solid var(--color-line);
+}
+
+@media (min-width: 768px) {
+  .facts__row {
+    grid-template-columns: 200px minmax(0, 1fr);
+  }
+}
+
+.facts dt {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.facts dd {
+  color: var(--color-ink-secondary);
+}
+
+.cols3 {
+  display: grid;
+  gap: var(--space-24);
+}
+
+@media (min-width: 768px) {
+  .cols3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.mini-label {
+  margin-bottom: var(--space-8);
+  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
