@@ -219,7 +219,9 @@ document.addEventListener("focusin", (event) => {
 // While the MELLY999 intro covers the page, hold the entrances until it dissolves
 // so the hero headline plays as the intro lifts rather than beneath it.
 if (root.classList.contains("intro-on")) {
-  window.setTimeout(initEntrances, 780);
+  // The construction lifts at ~1950ms; the reduced-motion version is ~200ms.
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.setTimeout(initEntrances, reduce ? 200 : 1950);
 } else {
   initEntrances();
 }
