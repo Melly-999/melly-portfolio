@@ -20,8 +20,20 @@ const workflow = [
   { label: "Monitoring & alerts", key: true },
 ] as const;
 
+/**
+ * Controlled crops of the same concept render (source 1672×941). The lower-right
+ * system-health tiles carry visibly malformed generated text, so they are kept out
+ * of frame: the overview crop stops above them, and the workflow crop is the
+ * clean lower-left panel. No pixels are edited or painted over.
+ */
+const overviewCrop = { x: 0, y: 0, w: 1672, h: 442 };
+const workflowCrop = { x: 226, y: 660, w: 900, h: 240 };
+
 const alt =
-  "MellyTrade concept dashboard: summary metrics, a market overview chart, a live signals list with confidence, recent alerts, trade volume, PnL and risk exposure charts, system health tiles, a data and analytics workflow, and a market correlation network.";
+  "MellyTrade concept dashboard overview: summary metrics for trades, volume, signals, win rate, latency and risk exposure; a market overview price chart; a live signals list with direction, strength and confidence; and a ranked list of recent alerts.";
+
+const workflowAlt =
+  "MellyTrade concept data and analytics workflow in four stages: data ingestion, data validation, analytics engine, and monitoring and alerts.";
 ---
 
 <BaseLayout
@@ -47,7 +59,8 @@ const alt =
         <ScreenshotFrame
           src="/assets/mellytrade/mellytrade-analytics-monitoring-concept-1672x941.webp"
           alt={alt}
-          caption="MellyTrade — concept interface render. All figures are sample values for the design: no live market data, trades, broker execution or PnL."
+          caption="MellyTrade — concept interface render, dashboard overview."
+          crop={overviewCrop}
           srcWidth={1672}
           srcHeight={941}
           scrollable
@@ -55,6 +68,10 @@ const alt =
           eager
         />
         <p class="pan-hint">Swipe or use arrow keys to inspect the full interface.</p>
+        <p class="concept-note">
+          Interface concept. Figures shown are placeholder values; no live data source,
+          market connection or production deployment is connected.
+        </p>
       </div>
     </section>
 
@@ -80,24 +97,24 @@ const alt =
 
     <Chapter id="hierarchy" title="03 · Information hierarchy" ground="canvas">
       <p class="pchapter__body">
-        Summary metrics sit on top, primary charts in the middle, and lists of
-        signals and alerts beside them, with system health and workflow beneath.
-        Reading order follows urgency, and type scale carries the rest.
+        Summary metrics sit on top, the primary chart in the middle, and lists of
+        signals and alerts beside it, with the data workflow beneath. Reading order
+        follows urgency, and type scale carries the rest.
       </p>
     </Chapter>
 
     <Chapter id="signals" title="04 · Signal / risk presentation" ground="surface">
       <p class="pchapter__body">
         Signals are shown with direction, strength and a confidence indicator; risk
-        exposure gets its own chart with a threshold. Each carries a text label, so
-        meaning never depends on colour alone.
+        exposure is a headline metric, and a threshold breach becomes a ranked alert.
+        Each carries a text label, so meaning never depends on colour alone.
       </p>
     </Chapter>
 
     <Chapter id="alerts" title="05 · Alerting / health presentation" ground="canvas">
       <p class="pchapter__body">
-        Alerts are ranked and timestamped, with the reason stated in a sentence.
-        System-health tiles show pipeline components at a glance, so a data problem
+        Alerts are ranked and timestamped, with the reason stated in a sentence — a
+        data-quality warning sits in the same list as a risk alert, so a data problem
         is visible before it becomes a signal problem.
       </p>
     </Chapter>
@@ -108,6 +125,18 @@ const alt =
         monitored — with alerting as the visible end of the chain.
       </p>
       <ProcessSpine label="Data and analytics workflow" steps={workflow} />
+      <div style="margin-top:var(--space-32);width:100%;">
+        <ScreenshotFrame
+          src="/assets/mellytrade/mellytrade-analytics-monitoring-concept-1672x941.webp"
+          alt={workflowAlt}
+          caption="MellyTrade — the data and analytics workflow panel from the same concept render."
+          crop={workflowCrop}
+          srcWidth={1672}
+          srcHeight={941}
+          scrollable
+          scrollWidth={700}
+        />
+      </div>
     </Chapter>
 
     <Chapter id="design" title="07 · Design language" ground="canvas">

@@ -204,6 +204,15 @@
   color: var(--color-canvas);
 }
 
+/* The commercial CTA ("Discuss your workflow") sits one size step above the
+   rest: ~48px tall, 15px label, wider padding. Secondary/text buttons keep the
+   base scale so they read as quieter. */
+.button--lead {
+  min-height: 48px;
+  padding-inline: var(--space-32);
+  font-size: 0.9375rem;
+}
+
 .button--primary:hover {
   background: var(--color-violet-bright);
   color: var(--color-canvas);
@@ -525,6 +534,15 @@ a.dock__hit:focus-visible .dock__arrow {
   .pan-hint {
     display: block;
   }
+}
+
+/* Calm, body-size truth note beside a concept render (sample values, not live). */
+.concept-note {
+  margin-top: var(--space-16);
+  max-width: 68ch;
+  color: var(--color-ink-secondary);
+  font-size: var(--text-body);
+  line-height: 1.55;
 }
 
 .facts {

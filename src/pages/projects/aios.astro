@@ -5,6 +5,22 @@ import Chapter from "../../components/Chapter.astro";
 import StatusChip from "../../components/StatusChip.astro";
 import ScreenshotFrame from "../../components/ScreenshotFrame.astro";
 import CycleDiagram from "../../components/CycleDiagram.astro";
+import ProcessSpine from "../../components/ProcessSpine.astro";
+
+/**
+ * The seven-stage workflow as it appears in the snapshot's "AI operations
+ * workflow" strip. Sub-labels are the statuses shown there — configured intent
+ * and required gates, never live run state. Stage 5 is locked in this build.
+ */
+const workflow = [
+  { label: "Context Ingestion", sub: "Guarded" },
+  { label: "Intent & Routing", sub: "Configured" },
+  { label: "Tool Orchestration", sub: "Planned" },
+  { label: "Approval & Guardrails", sub: "Required" },
+  { label: "Execution · LOCKED", key: true, sub: "Blocked in this build" },
+  { label: "Validation", sub: "Evidence" },
+  { label: "Audit Trail", sub: "Recorded" },
+] as const;
 
 /**
  * /projects/aios — MellyCore AIOS. The screenshot is a real STATIC-PREVIEW
@@ -38,11 +54,22 @@ const alt =
           <span class="badge">NO LIVE PROVIDERS</span>
         </p>
       </div>
+      <div class="content-width" style="margin-top:var(--space-48);">
+        <p class="mini-label">Designed workflow · static architecture</p>
+        <div style="margin-top:var(--space-16);">
+          <ProcessSpine label="MellyCore guarded AI operations workflow" steps={workflow} />
+        </div>
+        <p class="concept-note">
+          Every step is gated before anything can run, and execution stays locked in this
+          build. This is the designed pipeline, not a live run — the snapshot below is the
+          evidence.
+        </p>
+      </div>
       <div class="cinematic-width" style="margin-top:var(--space-32);">
         <ScreenshotFrame
           src="/assets/mellycore/mellycore-aios-command-center-1600x900.webp"
           alt={alt}
-          caption="MellyCore AIOS command center — static preview snapshot (2026-07-17). Repository-derived topology, not a live runtime. Execution locked; no live providers."
+          caption="Supporting evidence: MellyCore AIOS command center, static preview snapshot (2026-07-17). The topology graph is repository-derived architecture, not a live runtime. Execution locked; no live providers."
           srcWidth={1600}
           srcHeight={900}
           scrollable
