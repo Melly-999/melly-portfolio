@@ -55,17 +55,19 @@ const canonicalURL = Astro.site
         var d = document.documentElement;
         d.classList.add("js");
         try {
-          // MELLY999 intro: homepage only, once per browser session, never under
-          // reduced motion. sessionStorage only — no cookies, no tracking. If this
-          // script never runs, the class is never added and the page is unaffected.
+          // MELLY999 intro: homepage only, once per browser session. sessionStorage
+          // only — no cookies, no tracking. This script ONLY arms the intro; the
+          // "seen" key is written by MellyIntro once it has actually played, so a
+          // reload before the first paint settles (e.g. the dev server's automatic
+          // reload) cannot use the session up. Reduced motion still plays a short
+          // opacity-only version (see MellyIntro). If this script never runs, the
+          // class is never added and the page is unaffected.
           if (location.pathname.replace(/\/+$/, "") === "") {
-            var introSeen = sessionStorage.getItem("melly999_intro_seen");
-            var introReduce = window.matchMedia(
-              "(prefers-reduced-motion: reduce)",
-            ).matches;
-            if (!introSeen) {
-              sessionStorage.setItem("melly999_intro_seen", "1");
-              if (!introReduce) d.classList.add("intro-on");
+            // `?intro=1` replays it on local hosts only, for testing.
+            var local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+            var force = local && /[?&]intro=(1|force)(&|$)/.test(location.search);
+            if (force || !sessionStorage.getItem("melly999_intro_seen")) {
+              d.classList.add("intro-on");
             }
           }
         } catch (e) {}

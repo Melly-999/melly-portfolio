@@ -13,13 +13,67 @@
  * is display:none unless the inline <head> script arms it (`html.intro-on`), and
  * its exit is a pure CSS animation, so even if JS dies mid-way the layer removes
  * itself and never gates the page. It is aria-hidden, non-interactive and cannot
- * trap focus. Reduced motion: never armed (skipped).
+ * trap focus. Reduced motion: a ~200ms opacity-only version (no blur, no motion).
+ *
+ * Session lifecycle: the <head> script arms the layer; the script below writes the
+ * session key only after the intro has actually played (animationend, or a
+ * fallback timer) while the tab is visible. Writing it at arm time let anything
+ * that reloads the page early — the Vite dev server does, ~200ms into the very
+ * first load — use the session up before a frame of it was seen. A tab opened in
+ * the background holds the timeline until it becomes visible.
  */
 ---
 
 <div class="intro" aria-hidden="true">
   <p class="intro__word">MELLY999</p>
 </div>
+
+<script is:inline>
+  (function () {
+    var d = document.documentElement;
+    if (!d.classList.contains("intro-on")) return;
+    var el = document.querySelector(".intro");
+    var marked = false;
+    var timer;
+
+    function mark() {
+      if (marked || document.visibilityState !== "visible") return;
+      marked = true;
+      try {
+        sessionStorage.setItem("melly999_intro_seen", "1");
+      } catch (e) {}
+    }
+
+    // Restart the CSS timeline (class off/on) and schedule the "seen" mark.
+    function run() {
+      d.classList.remove("intro-on");
+      void d.offsetWidth;
+      d.classList.add("intro-on");
+      clearTimeout(timer);
+      timer = setTimeout(mark, 1600);
+    }
+
+    if (el) {
+      el.addEventListener("animationend", function (e) {
+        if (e.animationName === "intro-out") mark();
+      });
+    }
+    // Leaving after the wordmark has shown counts as seen; an early reload does not.
+    window.addEventListener("pagehide", function () {
+      if (performance.now() > 500) mark();
+    });
+
+    if (document.visibilityState === "visible") {
+      timer = setTimeout(mark, 1600);
+    } else {
+      document.addEventListener("visibilitychange", function wait() {
+        if (document.visibilityState !== "visible") return;
+        document.removeEventListener("visibilitychange", wait);
+        run();
+      });
+    }
+  })();
+</script>
 
 <style is:global>
   .intro {
@@ -63,6 +117,26 @@
     to {
       opacity: 0;
       visibility: hidden;
+    }
+  }
+
+  /* Reduced motion: the identity moment stays, as opacity only (~200ms total). */
+  @keyframes intro-word-flat {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.intro-on .intro {
+      animation: intro-out 80ms linear 120ms forwards;
+    }
+
+    .intro__word {
+      animation: intro-word-flat 80ms linear 0s both;
     }
   }
 </style>
