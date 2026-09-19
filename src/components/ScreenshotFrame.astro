@@ -113,7 +113,8 @@ const vars = [
     height: auto;
     width: calc(var(--src-w) / var(--mcw) * 100%);
     left: calc(var(--mcx) / var(--mcw) * -100%);
-    top: calc(var(--mcy) / var(--mcw) * -100%);
+    /* `top` % resolves against the container HEIGHT (mch), not its width. */
+    top: calc(var(--mcy) / var(--mch) * -100%);
   }
 
   @media (min-width: 768px) {
@@ -124,7 +125,7 @@ const vars = [
     .shot__img {
       width: calc(var(--src-w) / var(--cw) * 100%);
       left: calc(var(--cx) / var(--cw) * -100%);
-      top: calc(var(--cy) / var(--cw) * -100%);
+      top: calc(var(--cy) / var(--ch) * -100%);
     }
   }
 

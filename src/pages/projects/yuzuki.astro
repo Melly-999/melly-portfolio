@@ -222,7 +222,7 @@ const ladder = [
           alt={altConstellation}
           caption="Knowledge Constellation (prototype) illustrates conceptual data relationships using synthetic fixture data."
           crop={{ x: 232, y: 56, w: 888, h: 760 }}
-          mobileCrop={{ x: 340, y: 56, w: 500, h: 684 }}
+          mobileCrop={{ x: 232, y: 56, w: 620, h: 684 }}
         />
         <p class="reading-width">
           The prototype was built with a full keyboard grammar — select, focus, inspect,
@@ -377,7 +377,13 @@ const ladder = [
   .premise__media {
     grid-column: 1 / -1;
     min-width: 0;
-    order: -1;
+  }
+
+  /* Phones: capture first (handoff §7-01). At tablet width the <h1> leads. */
+  @media (max-width: 639px) {
+    .premise__media {
+      order: -1;
+    }
   }
 
   .truth-line {
@@ -396,7 +402,6 @@ const ladder = [
     }
     .premise__media {
       grid-column: 7 / span 6;
-      order: 0;
     }
   }
 

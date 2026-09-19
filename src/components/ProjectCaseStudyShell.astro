@@ -26,15 +26,9 @@ const nextProject =
 const previousHref = previousProject?.href ?? "/projects";
 const previousTitle = previousProject?.title ?? "All projects";
 const previousDirection = previousProject ? "Previous" : "Back";
-const previousLabel = previousProject
-  ? `Previous project: ${previousProject.title}`
-  : "Back to all projects";
 
 const nextHref = nextProject?.href ?? "/projects";
 const nextTitle = nextProject?.title ?? "All projects";
-const nextLabel = nextProject
-  ? `Next project: ${nextProject.title}`
-  : "Next: All projects";
 ---
 
 <section class:list={[bare ? "case-bare" : "section content-width"]}>
@@ -57,7 +51,6 @@ const nextLabel = nextProject
           class="panel project-sequence__link"
           href={previousHref}
           rel={previousProject ? "prev" : undefined}
-          aria-label={previousLabel}
         >
           <span class="project-sequence__direction">← {previousDirection}</span>
           <strong>{previousTitle}</strong>
@@ -66,7 +59,6 @@ const nextLabel = nextProject
           class="panel project-sequence__link project-sequence__link--next"
           href={nextHref}
           rel={nextProject ? "next" : undefined}
-          aria-label={nextLabel}
         >
           <span class="project-sequence__direction">Next →</span>
           <strong>{nextTitle}</strong>
@@ -97,6 +89,7 @@ const nextLabel = nextProject
     display: inline-flex;
     align-items: center;
     min-height: 44px;
+    min-width: 44px;
     color: var(--color-ink-secondary);
   }
 

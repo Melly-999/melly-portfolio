@@ -206,4 +206,14 @@ if (threshold) {
   }
 }
 
+// Keyboard safety: focus can scroll an element to the viewport edge, inside the
+// observer's bottom margin, where it would never intersect. Anything focused (or
+// containing focus) is revealed immediately so focus is never on an invisible node.
+document.addEventListener("focusin", (event) => {
+  const target = event.target as Element | null;
+  target
+    ?.closest<HTMLElement>("[data-flow], [data-reveal], [data-draw]")
+    ?.classList.add("is-in");
+});
+
 initEntrances();

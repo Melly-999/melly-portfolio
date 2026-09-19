@@ -58,7 +58,10 @@ import SocialDock from "./SocialDock.astro";
         <span class="hero__line" data-reveal style="--i:1">AI PRODUCTS<span class="hero__mark" aria-hidden="true"></span></span>
       </h1>
 
-      <p class="hero__sub">AI Automation · Agentic Systems · Full-Stack</p>
+      <p class="hero__sub">
+        <span class="nw">AI Automation ·</span> <span class="nw">Agentic Systems ·</span>{" "}
+        <span class="nw">Full-Stack</span>
+      </p>
 
       <div class="hero__actions">
         <a class="button button--primary button--block-mobile" href="#systems">Explore systems</a>
@@ -191,6 +194,10 @@ import SocialDock from "./SocialDock.astro";
     border-radius: 50%;
     background: var(--color-violet);
     vertical-align: baseline;
+  }
+
+  .nw {
+    white-space: nowrap;
   }
 
   .hero__sub {

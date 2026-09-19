@@ -119,6 +119,9 @@ const items = record ? [...claims] : claimsFor(page);
   }
 
   .trace__link {
+    /* Containing block for the visually-hidden label, so it can never escape the
+       scroller and widen the page (caused 27px overflow at 320px). */
+    position: relative;
     display: grid;
     place-items: center;
     flex: none;
@@ -168,7 +171,8 @@ const items = record ? [...claims] : claimsFor(page);
     }
 
     /* Nothing is drawn until the first claim is stamped. */
-    .js .trace:not(.has-stamps) {
+    /* …but never while a keyboard user is inside it: focus must be visible. */
+    .js .trace:not(.has-stamps):not(:focus-within) {
       opacity: 0;
       pointer-events: none;
     }
