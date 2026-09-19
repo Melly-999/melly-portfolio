@@ -28,7 +28,7 @@ export const projects = [
     title: "Yuzuki Desktop",
     tagline: "Local-first AI desktop with fail-closed private mode",
     description:
-      "A Tauri desktop application with a live-verified local chat path, seven named routing modes, and Hermes Agent integration. Public source only.",
+      "A complete AI product, not a UI mockup: a Tauri desktop application with a live-verified local chat path, seven named routing modes, and Hermes Agent integration. Public source only.",
     stack: "Tauri · React · TypeScript · Python · Hermes Agent · Ollama",
     href: "/projects/yuzuki",
     sourceHref: YUZUKI_SOURCE_HREF,
@@ -81,7 +81,7 @@ export const projects = [
     title: "RAG Document Assistant",
     tagline: "RAG-powered document search with source-grounded answers",
     description:
-      "Document intelligence built around retrieval: natural-language questions answered from your own documents, each answer shown with its sources.",
+      "Document intelligence for knowledge bases, procedures and support documentation: questions answered from a company's own documents, each answer shown with its sources.",
     stack: "Retrieval · Embeddings · Indexing · Citations",
     href: "/projects/rag-assistant",
     chips: [
@@ -94,9 +94,9 @@ export const projects = [
     variant: "product",
     badge: "Analytics",
     title: "MellyTrade",
-    tagline: "Trading analytics and monitoring cockpit for signals, risk and system health",
+    tagline: "Data-dense analytics and monitoring dashboard for signals, risk and system health",
     description:
-      "A high-density interface study: clarity under density, with signals, risk, alerts and pipeline health in one operational view. Read-only, dry-run.",
+      "Complex operational data — signals, risk, alerts and pipeline health — made readable in one view. A dashboard case study; read-only, dry-run.",
     stack: "React · TypeScript · FastAPI · Analytics UI",
     href: "/projects/mellytrade",
     chips: [

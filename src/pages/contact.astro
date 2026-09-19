@@ -2,22 +2,30 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const email = "mateusz.ozimkiewicz9@gmail.com";
+const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow discussion")}`;
 const cvRequestHref =
   `mailto:${email}?subject=CV%20request%20%E2%80%94%20Mateusz%20Ozimkiewicz`;
 ---
 
 <BaseLayout
   title="Contact — Mateusz Ozimkiewicz"
-  description="Get in touch with Mateusz Ozimkiewicz by email or on GitHub."
+  description="Discuss an AI automation or full-stack project with Mateusz Ozimkiewicz — by email or on GitHub."
 >
   <section class="section content-width">
     <h1 style="font-size:var(--text-h1);">Contact</h1>
     <p class="reading-width" style="margin-top:var(--space-16);color:var(--color-text-secondary);">
-      I'm open to full-stack roles (remote or Poland-based). The
-      fastest way to reach me is email.
+      Have a workflow that still depends on repetitive manual work? I build AI
+      automation, internal tools and full-stack AI applications for businesses.
+      Send a short description of the process — what happens today and what should
+      happen instead — and I will reply by email.
+    </p>
+    <p class="reading-width" style="margin-top:var(--space-12);color:var(--color-text-secondary);">
+      I'm also open to full-stack roles (remote or Poland-based), and to B2B,
+      freelance and contract work.
     </p>
     <div class="cluster" style="margin-top:var(--space-24);">
-      <a href={`mailto:${email}`} class="button button--primary" style="overflow-wrap:anywhere;">
+      <a href={workflowHref} class="button button--primary">Discuss your workflow</a>
+      <a href={`mailto:${email}`} class="button button--secondary" style="overflow-wrap:anywhere;">
         {email}
       </a>
       <a

@@ -31,39 +31,47 @@ const buildStages = [
   { label: "Ship" },
 ] as const;
 
+/** Work a client can commission, each tied to a project on this site. */
 const capabilities = [
   {
-    name: "Frontend",
-    stack: "React · TypeScript · Astro · Responsive CSS",
-    evidence: "The Yuzuki desktop UI",
+    name: "AI automation & agents",
+    stack: "Agent workflows · Task routing · Human review · Context handoff",
+    evidence: "Yuzuki's routing and fail-closed provider check",
+    href: "/projects/yuzuki#routing",
+  },
+  {
+    name: "Document AI / RAG",
+    stack: "Ingestion · Chunking · Embeddings · Retrieval · Source-cited answers",
+    evidence: "RAG Document Assistant (concept interface)",
+    href: "/projects/rag-assistant",
+  },
+  {
+    name: "Full-stack products & APIs",
+    stack: "React · TypeScript · Python · FastAPI · Tauri",
+    evidence: "The Yuzuki desktop product",
     href: "/projects/yuzuki#workspace",
   },
   {
-    name: "AI workflow",
-    stack: "Claude Code · Codex · Structured context · Review gates",
-    evidence: "Hermes Agent integration in Yuzuki",
-    href: "/projects/yuzuki#boundary",
+    name: "Dashboards & internal tools",
+    stack: "Data-dense UI · Monitoring · Risk and status views",
+    evidence: "MellyTrade (concept interface, read-only)",
+    href: "/projects/mellytrade",
   },
   {
-    name: "Quality",
+    name: "Testing & validation",
     stack: "pytest · Playwright · GitHub Actions · Documentation",
     evidence: "Yuzuki's public validation suites (raw counts)",
     href: "/projects/yuzuki#validation",
   },
-  {
-    name: "Backend",
-    stack: "Python · FastAPI · API design",
-    evidence: "The read-only MellyTrade case study",
-    href: "/projects/mellytrade",
-  },
 ] as const;
 
 const email = "mateusz.ozimkiewicz9@gmail.com";
+const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow discussion")}`;
 ---
 
 <BaseLayout
-  title="Mateusz Ozimkiewicz — Full-Stack Developer"
-  description="Portfolio Mateusza Ozimkiewicza — React, TypeScript, FastAPI and safety-first AI applications."
+  title="Mateusz Ozimkiewicz — AI Automation & Full-Stack Developer"
+  description="Mateusz Ozimkiewicz builds AI automations and full-stack products for real business workflows: AI agents, RAG and document AI, internal tools, APIs and dashboards."
 >
   <MellyIntro />
   <HeroPlate />
@@ -74,6 +82,10 @@ const email = "mateusz.ozimkiewicz9@gmail.com";
   <section id="systems" class="chapter ground-surface" data-chapter data-title="Selected systems" aria-labelledby="systems-heading">
     <div class="content-width">
       <h2 id="systems-heading" class="chapter__title" data-flow>Selected systems</h2>
+      <p class="chapter__intro reading-width">
+        Each project proves a different kind of work you can commission — projects that are
+        concepts or previews are labelled as such.
+      </p>
 
       <ProjectCard
         weight="flagship"
@@ -261,9 +273,12 @@ const email = "mateusz.ozimkiewicz9@gmail.com";
   </section>
 
   <!-- 08 · Engineering capabilities — capability tied to evidence, no skill bars -->
-  <section id="capabilities" class="chapter ground-surface" data-chapter data-title="Capabilities" aria-labelledby="cap-heading">
+  <section id="capabilities" class="chapter ground-surface" data-chapter data-title="What I build" aria-labelledby="cap-heading">
     <div class="content-width stack">
-      <h2 id="cap-heading" class="chapter__title" data-flow>Engineering capabilities</h2>
+      <h2 id="cap-heading" class="chapter__title" data-flow>What I build</h2>
+      <p class="chapter__intro reading-width">
+        The categories of work I take on, each tied to evidence on this site.
+      </p>
       <dl class="caps">
         {
           capabilities.map((c, i) => (
@@ -283,7 +298,8 @@ const email = "mateusz.ozimkiewicz9@gmail.com";
     <div class="content-width stack">
       <h2 id="about-heading" class="chapter__title">About</h2>
       <p class="reading-width">
-        Full-Stack Developer working across React, TypeScript and FastAPI, with an
+        AI Automation &amp; Full-Stack Developer working across React, TypeScript and FastAPI,
+        building AI automations and full-stack products for real business workflows — with an
         AI-assisted workflow built around engineering discipline: dry-run defaults,
         read-only modes, and honest limits.
       </p>
@@ -291,8 +307,26 @@ const email = "mateusz.ozimkiewicz9@gmail.com";
     </div>
   </section>
 
-  <!-- 10 · Colophon — resolve: contact as a running line, the evidence record completes -->
-  <section id="colophon" class="chapter chapter--colophon ground-surface" data-chapter data-title="Colophon" aria-labelledby="colophon-heading">
+  <!-- 10 · Contact — the business path: what can be commissioned, why me, what next -->
+  <section id="contact" class="chapter ground-surface" data-chapter data-title="Contact" aria-labelledby="contact-heading">
+    <div class="content-width stack">
+      <h2 id="contact-heading" class="contact__title">
+        Have a workflow that still depends on repetitive manual work?
+      </h2>
+      <p class="reading-width contact__lead">
+        I build AI automation, internal tools and full-stack AI applications for businesses.
+        Send a short description of the process — what happens today and what should happen
+        instead — and I will reply by email.
+      </p>
+      <p class="cluster">
+        <a class="button button--primary" href={workflowHref}>Discuss your workflow</a>
+        <a class="button button--secondary" href="/contact">Other ways to reach me</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- 11 · Colophon — resolve: contact as a running line, the evidence record completes -->
+  <section id="colophon" class="chapter chapter--colophon ground-canvas" data-chapter data-title="Colophon" aria-labelledby="colophon-heading">
     <div class="content-width stack">
       <h2 id="colophon-heading" class="colophon__title">Colophon</h2>
       <p class="colophon__line">
@@ -313,6 +347,24 @@ const email = "mateusz.ozimkiewicz9@gmail.com";
   .chapter__title {
     font-size: var(--text-h1);
     letter-spacing: -0.015em;
+  }
+
+  .chapter__intro {
+    margin-top: var(--space-12);
+    color: var(--color-ink-secondary);
+    font-size: var(--text-body-lg);
+  }
+
+  .contact__title {
+    max-width: 24ch;
+    font-size: var(--text-h1);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  .contact__lead {
+    color: var(--color-ink-secondary);
+    font-size: var(--text-body-lg);
   }
 
   .chip-row {

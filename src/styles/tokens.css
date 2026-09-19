@@ -54,9 +54,9 @@
     monospace;
 
   /* ---- Typography: scale ---- */
-  /* Capped at 5.25rem so "I ARCHITECT AND SHIP" holds one line in cols 1–9
-     (handoff wants a 2-line h1; its 7.5rem cap cannot fit 20 caps in 9 cols). */
-  --text-display-hero: clamp(3rem, 1.2rem + 4.2vw, 5.25rem);
+  /* Capped at 4.75rem so "AND FULL-STACK PRODUCTS" (23 caps) holds one line in
+     cols 1–9 (handoff wants a 2-line h1; its 7.5rem cap cannot fit in 9 cols). */
+  --text-display-hero: clamp(2.5rem, 1rem + 3.4vw, 4.25rem);
   --text-display-hero-sm: clamp(2.25rem, 1.6rem + 3.2vw, 3rem);
   --text-display: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
   --text-h1: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
