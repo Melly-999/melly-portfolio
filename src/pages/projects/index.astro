@@ -1,37 +1,62 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import ProjectBadge from "../../components/ProjectBadge.astro";
-import { projects } from "../../data/projects";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { projects, concepts } from "../../data/projects";
+
+const [flagship, ...rest] = projects;
+const [automation] = concepts;
 ---
 
 <BaseLayout
   title="Projects — Mateusz Ozimkiewicz"
-  description="Selected projects by Mateusz Ozimkiewicz: an AI agent workflow, a docs-first AI command center, and a read-only, dry-run AI trading terminal."
+  description="Selected projects by Mateusz Ozimkiewicz: Yuzuki, a local-first AI desktop with a fail-closed private mode; MellyCore, an agent-orchestration architecture; and supporting work."
 >
   <section class="section content-width">
     <h1 style="font-size:var(--text-h1);">Projects</h1>
-    <p class="reading-width" style="margin-top:var(--space-8);color:var(--color-text-secondary);">
-      Three chapters of one system: the workflow, the platform, and the
-      product it builds.
+    <p class="reading-width" style="margin-top:var(--space-8);color:var(--color-ink-secondary);">
+      One flagship, one architecture, and supporting work — each labelled with how
+      well it is proven.
     </p>
 
-    <div class="grid-auto" style="margin-top:var(--space-32);">
+    <div style="margin-top:var(--space-32);">
+      <ProjectCard
+        weight="flagship"
+        headingLevel={2}
+        title={flagship.title}
+        subtitle={flagship.tagline}
+        description={flagship.description}
+        stack={flagship.stack}
+        href={flagship.href}
+        chips={flagship.chips}
+        image={flagship.image}
+        imageAlt={flagship.imageAlt}
+        imageCaption={flagship.imageCaption}
+        threshold
+      />
       {
-        projects.map((project) => (
-          <a href={project.href} class="panel panel--elevated" style="display:block;padding:var(--space-24);">
-            <ProjectBadge variant={project.variant} label={project.badge} />
-            <p style="margin-top:var(--space-12);font-weight:800;font-size:var(--text-h3);">
-              {project.title}
-            </p>
-            <p style="margin-top:var(--space-8);color:var(--color-text-secondary);">
-              {project.tagline}
-            </p>
-            <p class="mono" style="margin-top:var(--space-16);color:var(--color-accent-amber);font-size:var(--text-label);">
-              View case study →
-            </p>
-          </a>
+        rest.map((project) => (
+          <ProjectCard
+            headingLevel={2}
+            label={project.badge}
+            title={project.title}
+            subtitle={project.tagline}
+            description={project.description}
+            stack={project.stack}
+            href={project.href}
+            chips={project.chips}
+          />
         ))
       }
+      <ProjectCard
+        headingLevel={2}
+        label="Concept"
+        title={automation.title}
+        subtitle={automation.tagline}
+        description={automation.statement}
+        stack="Signal · Analysis · Priority · Suggested action · Human review"
+        href="/#automation"
+        chips={[automation.chip]}
+      />
     </div>
   </section>
 </BaseLayout>

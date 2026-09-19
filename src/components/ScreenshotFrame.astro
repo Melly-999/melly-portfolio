@@ -1,0 +1,150 @@
+---
+/**
+ * The §18.4 capture frame. Every product capture goes through this component.
+ * 1px line border, 8px surface mat (neutral buffer between the product's magenta
+ * and the portfolio's violet), always-visible caption, reserved aspect ratio,
+ * no fake chrome, no tilt, no reflection.
+ *
+ * Crops are expressed in source pixels of the 1440×900 capture, so a crop can be
+ * checked against the position of the on-screen PROTOTYPE chips. `mobileCrop`
+ * swaps the crop at ≤767px. `scrollable` instead shows the full capture in a
+ * bounded, keyboard-pannable frame at ≤767px (the page never scrolls sideways).
+ */
+interface Crop {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+interface Props {
+  src: string;
+  alt: string;
+  caption: string;
+  crop?: Crop;
+  mobileCrop?: Crop;
+  scrollable?: boolean;
+  eager?: boolean;
+  srcWidth?: number;
+  srcHeight?: number;
+}
+
+const {
+  src,
+  alt,
+  caption,
+  crop = { x: 0, y: 0, w: 1440, h: 900 },
+  mobileCrop,
+  scrollable = false,
+  eager = false,
+  srcWidth = 1440,
+  srcHeight = 900,
+} = Astro.props;
+
+const m = mobileCrop ?? crop;
+const vars = [
+  `--src-w:${srcWidth}`,
+  `--cw:${crop.w}`,
+  `--ch:${crop.h}`,
+  `--cx:${crop.x}`,
+  `--cy:${crop.y}`,
+  `--mcw:${m.w}`,
+  `--mch:${m.h}`,
+  `--mcx:${m.x}`,
+  `--mcy:${m.y}`,
+].join(";");
+---
+
+<figure class:list={["shot", { "shot--scroll": scrollable }]} style={vars}>
+  <div
+    class="shot__frame"
+    tabindex={scrollable ? 0 : undefined}
+    role={scrollable ? "img" : undefined}
+    aria-label={scrollable ? alt : undefined}
+  >
+    <div class="shot__mat">
+      <div class="shot__crop">
+        <img
+          class="shot__img"
+          src={src}
+          alt={scrollable ? "" : alt}
+          width={srcWidth}
+          height={srcHeight}
+          loading={eager ? "eager" : "lazy"}
+          decoding="async"
+          fetchpriority={eager ? "high" : undefined}
+        />
+      </div>
+    </div>
+  </div>
+  <figcaption class="shot__caption">{caption}</figcaption>
+</figure>
+
+<style>
+  .shot {
+    margin: 0;
+    min-width: 0;
+  }
+
+  .shot__frame {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-panel);
+  }
+
+  .shot__mat {
+    padding: 8px;
+  }
+
+  /* Reserved space: aspect ratio from the crop. No layout shift. */
+  .shot__crop {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    aspect-ratio: calc(var(--mcw) / var(--mch));
+  }
+
+  .shot__img {
+    position: absolute;
+    display: block;
+    max-width: none;
+    height: auto;
+    width: calc(var(--src-w) / var(--mcw) * 100%);
+    left: calc(var(--mcx) / var(--mcw) * -100%);
+    top: calc(var(--mcy) / var(--mcw) * -100%);
+  }
+
+  @media (min-width: 768px) {
+    .shot__crop {
+      aspect-ratio: calc(var(--cw) / var(--ch));
+    }
+
+    .shot__img {
+      width: calc(var(--src-w) / var(--cw) * 100%);
+      left: calc(var(--cx) / var(--cw) * -100%);
+      top: calc(var(--cy) / var(--cw) * -100%);
+    }
+  }
+
+  /* Bounded scroll frame on phones: the figure pans, the page does not. */
+  @media (max-width: 767px) {
+    .shot--scroll .shot__frame {
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+    }
+
+    .shot--scroll .shot__mat {
+      width: 720px;
+    }
+  }
+
+  .shot__caption {
+    margin-top: var(--space-12);
+    color: var(--color-ink-muted);
+    font-size: var(--text-label);
+    line-height: 1.5;
+    max-width: 62ch;
+  }
+</style>

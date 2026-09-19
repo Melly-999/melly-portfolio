@@ -1,0 +1,98 @@
+---
+/**
+ * The KOYE project-entry transition (handoff §7 section 00). Yuzuki entry ONLY.
+ * 720ms total: mark settles (320ms) · hold (160ms) · upward clip-path wipe (240ms).
+ *
+ * It is a transition, not a route and not a gate:
+ *  - the case study is already in the DOM beneath it;
+ *  - it renders only when an inline <head> script (BaseLayout) has armed it —
+ *    i.e. arriving from the homepage entry, first time this session, motion allowed;
+ *  - the CSS animation auto-hides it, so even if JS fails nothing is stranded;
+ *  - `[ ENTER ]` is a real focusable button that completes it immediately;
+ *  - it never traps focus and never delays the <h1>.
+ */
+---
+
+<div class="koye" data-threshold>
+  <div class="koye__inner">
+    <p class="koye__mark" aria-hidden="true">YUZUKI</p>
+    <p class="koye__sub" aria-hidden="true">LOCAL-FIRST AI SYSTEM</p>
+    <button type="button" class="koye__enter" data-threshold-enter aria-label="Enter Yuzuki case study">
+      [ ENTER ]
+    </button>
+  </div>
+</div>
+
+<style is:global>
+  .koye {
+    display: none;
+  }
+
+  html.koye-on .koye {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: center;
+    background: var(--color-canvas);
+    text-align: center;
+    animation: koye-wipe 240ms var(--ease-out-expo) 480ms forwards;
+  }
+
+  .koye__inner {
+    display: grid;
+    gap: var(--space-16);
+    justify-items: center;
+  }
+
+  .koye__mark {
+    margin: 0;
+    font-size: var(--text-display);
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: var(--color-ink);
+    animation: koye-mark 320ms var(--ease-out-expo) both;
+  }
+
+  .koye__sub {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.1em;
+    color: var(--color-ink-muted);
+  }
+
+  .koye__enter {
+    min-height: 44px;
+    padding-inline: var(--space-16);
+    border: 0;
+    background: transparent;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.1em;
+    color: var(--color-ink-secondary);
+    cursor: pointer;
+  }
+
+  .koye__enter:hover {
+    color: var(--color-violet-bright);
+  }
+
+  @keyframes koye-mark {
+    from {
+      opacity: 0;
+      letter-spacing: 0.22em;
+    }
+    to {
+      opacity: 1;
+      letter-spacing: 0.18em;
+    }
+  }
+
+  @keyframes koye-wipe {
+    to {
+      clip-path: inset(0 0 100% 0);
+      visibility: hidden;
+    }
+  }
+</style>

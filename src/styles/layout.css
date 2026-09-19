@@ -16,8 +16,15 @@
   padding-inline: var(--gutter-mobile);
 }
 
+.cinematic-width {
+  max-width: var(--width-cinematic);
+  margin-inline: auto;
+  padding-inline: var(--gutter-mobile);
+}
+
 @media (min-width: 768px) {
-  .content-width {
+  .content-width,
+  .cinematic-width {
     padding-inline: var(--gutter-desktop);
   }
 }
@@ -28,6 +35,19 @@
 
 .section {
   padding-block: var(--section-spacing);
+}
+
+.section--lg {
+  padding-block: var(--section-spacing-lg);
+}
+
+/* Chapter grounds change by HARD STEP — never a gradient between them. */
+.ground-canvas {
+  background: var(--color-canvas);
+}
+
+.ground-surface {
+  background: var(--color-surface);
 }
 
 .stack {
@@ -49,8 +69,27 @@
   gap: var(--space-24);
 }
 
-/* Prevent any accidental horizontal scroll from wide children. */
+/* 12-column grid at ≥1024px, collapsing to a single column below. */
+.grid-12 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-32) var(--space-24);
+}
+
+@media (min-width: 1024px) {
+  .grid-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+/* Long unbroken tokens (URLs, identifiers) must wrap rather than overflow. */
+code {
+  overflow-wrap: anywhere;
+}
+
+/* No page-level horizontal scroll: `clip` (unlike `hidden`) does not create a
+   scroll container, so sticky elements keep working. */
 html,
 body {
-  overflow-x: hidden;
+  overflow-x: clip;
 }

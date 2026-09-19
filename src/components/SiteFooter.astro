@@ -1,4 +1,6 @@
 ---
+import SocialDock from "./SocialDock.astro";
+
 const email = "mateusz.ozimkiewicz9@gmail.com";
 ---
 
@@ -9,10 +11,9 @@ const email = "mateusz.ozimkiewicz9@gmail.com";
       <p class="site-footer__note">Full-Stack Developer · Poland / Remote</p>
     </div>
 
+    <SocialDock showLabels />
+
     <nav class="site-footer__links" aria-label="Footer">
-      <a href="https://github.com/Melly-999" target="_blank" rel="noopener noreferrer">
-        GitHub
-      </a>
       <a href={`mailto:${email}`} class="site-footer__email">{email}</a>
     </nav>
 

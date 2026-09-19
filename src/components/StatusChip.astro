@@ -1,0 +1,38 @@
+---
+import { statusText, type StatusVariant } from "../data/claims";
+
+/**
+ * The one truth-label primitive (handoff §11.3). Every chip is glyph + text +
+ * colour — a truth state is never carried by colour alone, and never truncated.
+ * Glyph shapes stay distinguishable in greyscale.
+ */
+interface Props {
+  variant: StatusVariant;
+  /** Overrides the default text (e.g. `PARTIAL · DOCS + STATIC SLICE`). */
+  label?: string;
+  bare?: boolean;
+}
+
+const { variant, label, bare = false } = Astro.props;
+const text = label ?? statusText[variant];
+---
+
+<span class:list={["chip", `chip--${variant}`, { "chip--bare": bare }]}>
+  <svg class="chip__glyph" viewBox="0 0 10 10" aria-hidden="true" focusable="false">
+    {variant === "verified" && <circle cx="5" cy="5" r="4.25" fill="currentColor" />}
+    {variant === "validated" && <path d="M5 .75 9.25 5 5 9.25.75 5z" fill="currentColor" />}
+    {variant === "implemented" && <circle cx="5" cy="5" r="3.75" fill="none" stroke="currentColor" stroke-width="1.5" />}
+    {variant === "prototype" && <circle cx="5" cy="5" r="3.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 1.6" />}
+    {variant === "concept" && <rect x="1" y="1" width="8" height="8" fill="none" stroke="currentColor" stroke-width="1.5" />}
+    {variant === "shipped" && <rect x="1" y="1" width="8" height="8" fill="currentColor" />}
+    {variant === "source" && <path d="M5 1 9 5 5 9 1 5z" fill="none" stroke="currentColor" stroke-width="1.5" />}
+    {variant === "partial" && (
+      <>
+        <circle cx="5" cy="5" r="3.75" fill="none" stroke="currentColor" stroke-width="1.5" />
+        <path d="M5 1.25a3.75 3.75 0 0 0 0 7.5z" fill="currentColor" />
+      </>
+    )}
+    {variant === "planned" && <rect x="1" y="1" width="8" height="8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 1.6" />}
+  </svg>
+  <span class="chip__text">{text}</span>
+</span>

@@ -2,6 +2,8 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProjectCaseStudyShell from "../../components/ProjectCaseStudyShell.astro";
 import ProjectBadge from "../../components/ProjectBadge.astro";
+import StatusChip from "../../components/StatusChip.astro";
+import CycleDiagram from "../../components/CycleDiagram.astro";
 ---
 
 <BaseLayout
@@ -9,12 +11,19 @@ import ProjectBadge from "../../components/ProjectBadge.astro";
   description="MellyCore AIOS: a docs-first AI command center and context architecture prototype."
 >
   <ProjectCaseStudyShell current="aios">
-    <ProjectBadge variant="platform" label="Platform" />
+    <div class="cluster">
+      <ProjectBadge variant="platform" label="Platform" />
+      <StatusChip variant="partial" label="PARTIAL · DOCS + STATIC SLICE" />
+    </div>
     <h1 style="margin-top:var(--space-16);font-size:var(--text-h1);">MellyCore AIOS</h1>
-    <p class="reading-width" style="margin-top:var(--space-16);color:var(--color-text-secondary);">
+    <p class="reading-width" style="margin-top:var(--space-16);color:var(--color-ink-secondary);">
       Docs-first AI command center and context architecture prototype. The
-      full case study — the Living Context Graph, agent handoff, and the
-      cinematic showcase — is coming in a later implementation pass.
+      operating loop below is the architecture: a human approves before anything is
+      implemented. It is not a shipped public product; the full case study — the
+      Living Context Graph and agent handoff — is coming in a later pass.
     </p>
+    <div style="margin-top:var(--space-32);">
+      <CycleDiagram />
+    </div>
   </ProjectCaseStudyShell>
 </BaseLayout>

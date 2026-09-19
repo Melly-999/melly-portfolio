@@ -46,10 +46,35 @@ const canonicalURL = Astro.site
     {ogImage && <meta name="twitter:image" content={ogImage} />}
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Runs before first paint. Marks JS availability (entrance animation is
+         additive) and arms the KOYE threshold ONLY when arriving at the Yuzuki
+         route from the homepage entry, first time this session, motion allowed. -->
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add("js");
+        try {
+          var onYuzuki =
+            location.pathname.replace(/\/+$/, "") === "/projects/yuzuki";
+          var state = sessionStorage.getItem("koye");
+          var reduce = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+          ).matches;
+          if (onYuzuki && state === "pending") {
+            if (reduce) sessionStorage.setItem("koye", "seen");
+            else d.classList.add("koye-on");
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <PageShell>
       <slot />
     </PageShell>
+    <script>
+      import "../scripts/motion";
+    </script>
   </body>
 </html>

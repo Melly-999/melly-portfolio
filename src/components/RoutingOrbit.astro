@@ -1,0 +1,244 @@
+---
+import StatusChip from "./StatusChip.astro";
+import { routingModes, cloudModes } from "../data/routing";
+
+/**
+ * Yuzuki routing visual — THE engineered peak's diagram (handoff §9).
+ *
+ * PRIVATE is a CLOSED orbit that returns to the device: the only closed shape and
+ * the only 2px stroke. The six other modes are OPEN paths that leave the device
+ * and end in an open arc — no live destination has ever been reached, so there is
+ * NO cloud node anywhere in this diagram. Statuses come from data/routing.ts.
+ *
+ * Every mode carries its own truth label in the DOM at all times — never behind a
+ * tooltip, accordion, hover state or shared footnote. On ≤899px the diagram is
+ * REPLACED by a designed list (same information, same hierarchy).
+ *
+ * Motion (once, then still): the PRIVATE orbit draws a complete 1100ms sweep; the
+ * six open paths fade in afterwards WITHOUT drawing — they complete nothing.
+ */
+const rowY = [60, 120, 180, 240, 300, 360];
+const desc =
+  "A device node labelled this machine on the left. PRIVATE is a closed violet orbit that leaves the device and returns to it, marked live-verified. Six other modes, saver, fast, smart, deep, creative and advanced, are drawn as thin open paths that leave the device and end in an open arc without reaching any destination. Each is marked implemented, not live-verified. Advanced is additionally a read-only projection. There is no cloud node.";
+---
+
+<figure class="orbit" data-draw>
+  <svg class="orbit__svg" viewBox="0 0 720 500" role="img" aria-labelledby="orb-t orb-d" preserveAspectRatio="xMidYMid meet">
+    <title id="orb-t">Yuzuki routing modes — seven modes, one live-verified</title>
+    <desc id="orb-d">{desc}</desc>
+
+    <!-- Six open paths: 1px, no completion gesture -->
+    <g class="orbit__open fade" style="--fade-delay:1250ms">
+      {cloudModes.map((m, i) => {
+        const y = rowY[i];
+        const sy = 196 + i * 10;
+        return (
+          <g>
+            <path class="orbit__path" d={`M190 ${sy} C 270 ${sy}, 300 ${y}, 428 ${y}`}></path>
+            <path class="orbit__end" d={`M436 ${y - 6} A6 6 0 1 0 436 ${y + 6}`}></path>
+            <text class="orbit__mode" x="462" y={y - 2}>{m.name}</text>
+            <g class="orbit__status" transform={`translate(462 ${y + 12})`}>
+              <circle cx="5" cy="-3" r="3.75" fill="none" stroke-width="1.5"></circle>
+              <text x="14" y="0">IMPL · NOT LIVE-VERIFIED</text>
+              {m.clause && <text x="14" y="15">{m.clause}</text>}
+            </g>
+          </g>
+        );
+      })}
+    </g>
+
+    <!-- PRIVATE: the closed orbit, 2px, returns to the device -->
+    <ellipse class="orbit__private draw" pathLength="1" cx="115" cy="322" rx="112" ry="82" style="--i:0;--draw-ms:1100ms"></ellipse>
+
+    <!-- Device node drawn over the orbit so the loop leaves and returns to it -->
+    <rect class="orbit__device" x="40" y="180" width="150" height="76" rx="8"></rect>
+    <circle class="orbit__disc" cx="66" cy="218" r="7"></circle>
+    <text class="orbit__device-label" x="84" y="222">THIS MACHINE</text>
+
+    <rect class="orbit__label-bg" x="60" y="392" width="110" height="24"></rect>
+    <text class="orbit__private-label" x="115" y="409" text-anchor="middle">PRIVATE</text>
+    <g class="orbit__verified" transform="translate(46 440)">
+      <circle cx="5" cy="-3" r="4.25"></circle>
+      <text x="16" y="0">LIVE-VERIFIED</text>
+    </g>
+  </svg>
+
+  <!-- List form: replaces the diagram at ≤899px; visually hidden (still in the DOM) above -->
+  <dl class="orbit__list">
+    {routingModes.map((m) => (
+      <div class:list={["orbit__row", { "orbit__row--private": m.status === "verified" }]}>
+        <dt class="orbit__row-name">{m.name}</dt>
+        <dd class="orbit__row-status">
+          <StatusChip variant={m.status} />
+          {m.clause && <StatusChip variant="implemented" label={m.clause} />}
+        </dd>
+        <dd class="orbit__row-copy">{m.copy}</dd>
+      </div>
+    ))}
+  </dl>
+
+  <p class="orbit__note">
+    <strong>ADVANCED</strong> — a read-only projection of models the Hermes runtime
+    has already approved. Yuzuki does not invent, discover or activate models.
+  </p>
+</figure>
+
+<style>
+  .orbit {
+    margin: 0;
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .orbit__svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .orbit__private {
+    fill: none;
+    stroke: var(--color-violet);
+    stroke-width: 2;
+  }
+
+  .orbit__path {
+    fill: none;
+    stroke: var(--color-ink-muted);
+    stroke-width: 1;
+  }
+
+  .orbit__end {
+    fill: none;
+    stroke: var(--color-ink-muted);
+    stroke-width: 1;
+  }
+
+  .orbit__device {
+    fill: var(--color-panel);
+    stroke: var(--color-line);
+    stroke-width: 1;
+  }
+
+  .orbit__disc {
+    fill: var(--color-violet);
+  }
+
+  .orbit__device-label,
+  .orbit__mode {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    fill: var(--color-ink-secondary);
+  }
+
+  .orbit__device-label {
+    fill: var(--color-ink);
+  }
+
+  .orbit__label-bg {
+    fill: var(--color-canvas);
+  }
+
+  .orbit__private-label {
+    fill: var(--color-violet);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+
+  .orbit__verified circle {
+    fill: var(--color-state-verified);
+  }
+
+  .orbit__verified text {
+    fill: var(--color-state-verified);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .orbit__status circle {
+    stroke: var(--color-state-implemented);
+  }
+
+  .orbit__status text {
+    fill: var(--color-state-implemented);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+
+  .orbit__note {
+    margin-top: var(--space-24);
+    color: var(--color-ink-secondary);
+    font-size: var(--text-label);
+    max-width: 60ch;
+  }
+
+  /* ---- List form ---- */
+  .orbit__list {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .orbit__row {
+    display: grid;
+    gap: var(--space-8);
+    padding: var(--space-16);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+  }
+
+  .orbit__row--private {
+    background: var(--color-panel-raised);
+    border-left: 2px solid var(--color-violet);
+    padding-block: var(--space-24);
+  }
+
+  .orbit__row-name {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.1em;
+    color: var(--color-ink);
+  }
+
+  .orbit__row--private .orbit__row-name {
+    font-family: var(--font-sans);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-violet);
+  }
+
+  .orbit__row-status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+  }
+
+  .orbit__row-copy {
+    color: var(--color-ink-secondary);
+    font-size: var(--text-label);
+  }
+
+  /* Desktop: diagram visible, list kept in the DOM but visually hidden. */
+  @media (min-width: 900px) {
+    .orbit__list {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .orbit__svg {
+      display: none;
+    }
+  }
+</style>

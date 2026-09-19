@@ -1,11 +1,17 @@
 ---
 import { projects, type ProjectSlug } from "../data/projects";
 
+/**
+ * Case-study shell: breadcrumbs + prev/next sequencing, derived from the
+ * registry (Yuzuki-led). `bare` lets a page own its own chapter grounds and
+ * full-bleed sections and use the shell only for the breadcrumb and sequence.
+ */
 interface Props {
   current: ProjectSlug;
+  bare?: boolean;
 }
 
-const { current: currentSlug } = Astro.props;
+const { current: currentSlug, bare = false } = Astro.props;
 const currentIndex = projects.findIndex((project) => project.slug === currentSlug);
 const currentProject = projects[currentIndex];
 
@@ -31,40 +37,43 @@ const nextLabel = nextProject
   : "Next: All projects";
 ---
 
-<section class="section content-width">
-  <nav class="case-breadcrumbs" aria-label="Breadcrumb">
-    <ol>
-      <li><a href="/projects">Projects</a></li>
-      <li aria-hidden="true">/</li>
-      <li><span aria-current="page">{currentProject.title}</span></li>
-    </ol>
-  </nav>
+<section class:list={[bare ? "case-bare" : "section content-width"]}>
+  <div class:list={[{ "content-width": bare }]}>
+    <nav class="case-breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/projects">Projects</a></li>
+        <li aria-hidden="true">/</li>
+        <li><span aria-current="page">{currentProject.title}</span></li>
+      </ol>
+    </nav>
+  </div>
 
   <slot />
 
-  <nav class="project-sequence" aria-label="Project navigation">
-    <p class="mono project-sequence__story">Process → Platform → Product</p>
-    <div class="project-sequence__links">
-      <a
-        class="panel panel--elevated project-sequence__link"
-        href={previousHref}
-        rel={previousProject ? "prev" : undefined}
-        aria-label={previousLabel}
-      >
-        <span class="project-sequence__direction">← {previousDirection}</span>
-        <strong>{previousTitle}</strong>
-      </a>
-      <a
-        class="panel panel--elevated project-sequence__link project-sequence__link--next"
-        href={nextHref}
-        rel={nextProject ? "next" : undefined}
-        aria-label={nextLabel}
-      >
-        <span class="project-sequence__direction">Next →</span>
-        <strong>{nextTitle}</strong>
-      </a>
-    </div>
-  </nav>
+  <div class:list={[{ "content-width": bare }]}>
+    <nav class="project-sequence" aria-label="Project navigation">
+      <div class="project-sequence__links">
+        <a
+          class="panel project-sequence__link"
+          href={previousHref}
+          rel={previousProject ? "prev" : undefined}
+          aria-label={previousLabel}
+        >
+          <span class="project-sequence__direction">← {previousDirection}</span>
+          <strong>{previousTitle}</strong>
+        </a>
+        <a
+          class="panel project-sequence__link project-sequence__link--next"
+          href={nextHref}
+          rel={nextProject ? "next" : undefined}
+          aria-label={nextLabel}
+        >
+          <span class="project-sequence__direction">Next →</span>
+          <strong>{nextTitle}</strong>
+        </a>
+      </div>
+    </nav>
+  </div>
 </section>
 
 <style>
@@ -72,34 +81,39 @@ const nextLabel = nextProject
     margin-bottom: var(--space-24);
   }
 
+  .case-bare .case-breadcrumbs {
+    margin-block: var(--space-24);
+  }
+
   .case-breadcrumbs ol {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-8);
-    color: var(--color-text-muted);
+    color: var(--color-ink-muted);
     font-size: var(--text-label);
   }
 
   .case-breadcrumbs a {
-    color: var(--color-text-secondary);
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-ink-secondary);
+  }
+
+  .case-breadcrumbs ol {
+    align-items: center;
   }
 
   .project-sequence {
     margin-top: var(--space-48);
-    padding-top: var(--space-24);
-    border-top: 1px solid var(--color-border-soft);
-  }
-
-  .project-sequence__story {
-    color: var(--color-text-muted);
-    font-size: var(--text-label);
+    padding-block: var(--space-24) var(--space-48);
+    border-top: 1px solid var(--color-line-soft);
   }
 
   .project-sequence__links {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-16);
-    margin-top: var(--space-16);
   }
 
   .project-sequence__link {
@@ -111,6 +125,11 @@ const nextLabel = nextProject
     gap: var(--space-4);
     padding: var(--space-16);
     overflow-wrap: anywhere;
+    color: var(--color-ink);
+  }
+
+  .project-sequence__link:hover {
+    border-color: var(--color-violet);
   }
 
   .project-sequence__link--next {
@@ -118,7 +137,7 @@ const nextLabel = nextProject
   }
 
   .project-sequence__direction {
-    color: var(--color-accent-amber);
+    color: var(--color-violet);
     font-family: var(--font-mono);
     font-size: var(--text-micro);
     letter-spacing: 0.08em;
