@@ -385,12 +385,9 @@ const ladder = [
     min-width: 0;
   }
 
-  /* Phones: capture first (handoff §7-01). At tablet width the <h1> leads. */
-  @media (max-width: 639px) {
-    .premise__media {
-      order: -1;
-    }
-  }
+  /* Phones follow source order: <h1> and context first, then the capture and its
+     caption. (The capture used to lead on phones, which opened the page with an
+     unlabelled dark rectangle.) */
 
   .truth-line {
     color: var(--color-ink-muted);

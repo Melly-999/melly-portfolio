@@ -43,7 +43,7 @@ const items = record ? [...claims] : claimsFor(page);
       ))}
     </ol>
   ) : (
-    <nav class="trace" aria-label="Evidence trace" data-trace>
+    <nav class="trace" aria-label="Evidence trace" data-trace data-trace-page={page}>
       <p class="trace__folio" data-folio aria-hidden="true"></p>
       <ol class="trace__list">
         {items.map((c) => (
@@ -148,6 +148,16 @@ const items = record ? [...claims] : claimsFor(page);
 
   .trace__link:hover {
     color: var(--color-ink);
+  }
+
+  /* Yuzuki on phones: the glyph-only strip is redundant compression. Every status it
+     shows is a text chip in the chapter it links to, and the full record is the
+     colophon ledger, so it is removed (display:none also drops its links from the
+     tab order) rather than left as an unexplained row of dots. */
+  @media (max-width: 767px) {
+    .trace[data-trace-page="yuzuki"] {
+      display: none;
+    }
   }
 
   /* ---- Trace: wide = fixed margin rail ---- */

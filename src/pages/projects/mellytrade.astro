@@ -22,15 +22,17 @@ const workflow = [
 
 /**
  * Controlled crops of the same concept render (source 1672×941). The lower-right
- * system-health tiles carry visibly malformed generated text, so they are kept out
- * of frame: the overview crop stops above them, and the workflow crop is the
- * clean lower-left panel. No pixels are edited or painted over.
+ * system-health tiles carry visibly malformed generated text, and the recent-alerts
+ * column names a real exchange feed, which would contradict "no live data source".
+ * Both sit in the right-hand column, so the overview crop stops above the tiles and
+ * before that column, and the workflow crop is the clean lower-left panel. No pixels
+ * are edited or painted over.
  */
-const overviewCrop = { x: 0, y: 0, w: 1672, h: 442 };
+const overviewCrop = { x: 0, y: 0, w: 1250, h: 442 };
 const workflowCrop = { x: 226, y: 660, w: 900, h: 240 };
 
 const alt =
-  "MellyTrade concept dashboard overview: summary metrics for trades, volume, signals, win rate, latency and risk exposure; a market overview price chart; a live signals list with direction, strength and confidence; and a ranked list of recent alerts.";
+  "MellyTrade concept dashboard overview: summary metrics for trades, volume, signals, win rate and latency; a market overview price chart; and a live signals list with direction, strength and confidence.";
 
 const workflowAlt =
   "MellyTrade concept data and analytics workflow in four stages: data ingestion, data validation, analytics engine, and monitoring and alerts.";
@@ -97,9 +99,9 @@ const workflowAlt =
 
     <Chapter id="hierarchy" title="03 · Information hierarchy" ground="canvas">
       <p class="pchapter__body">
-        Summary metrics sit on top, the primary chart in the middle, and lists of
-        signals and alerts beside it, with the data workflow beneath. Reading order
-        follows urgency, and type scale carries the rest.
+        Summary metrics sit on top, the primary chart in the middle, and a list of
+        signals beside it, with the data workflow beneath. Reading order follows
+        urgency, and type scale carries the rest.
       </p>
     </Chapter>
 
@@ -113,9 +115,8 @@ const workflowAlt =
 
     <Chapter id="alerts" title="05 · Alerting / health presentation" ground="canvas">
       <p class="pchapter__body">
-        Alerts are ranked and timestamped, with the reason stated in a sentence — a
-        data-quality warning sits in the same list as a risk alert, so a data problem
-        is visible before it becomes a signal problem.
+        Alerts are ranked and timestamped, with the reason stated in a sentence, so a
+        data problem is visible before it becomes a signal problem.
       </p>
     </Chapter>
 

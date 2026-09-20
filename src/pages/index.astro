@@ -12,9 +12,9 @@ import { projects, concepts } from "../data/projects";
 import { YUZUKI_SOURCE_HREF } from "../data/social";
 
 /**
- * Homepage — ten chapters (handoff §3): hero · selected systems · [intertitle] ·
- * Yuzuki entry · MellyCore · automation · how I build · systems index ·
- * capabilities · about · colophon. Chapter grounds change by HARD STEP
+ * Homepage — ten chapters (handoff §3): hero · selected systems · what I build ·
+ * [intertitle] · Yuzuki entry · MellyCore · automation · how I build · systems
+ * index · about · colophon. Chapter grounds change by HARD STEP
  * (canvas ↔ surface). The one engineered peak lives on /projects/yuzuki; the
  * hero is the greet, not a second peak.
  */
@@ -94,7 +94,7 @@ const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow dis
         description={yuzuki.description}
         stack={yuzuki.stack}
         href={yuzuki.href}
-        chips={yuzuki.chips}
+        chips={yuzuki.chips.slice(0, 1)}
         image={yuzuki.image}
         imageAlt={yuzuki.imageAlt}
         imageCaption={yuzuki.imageCaption}
@@ -146,6 +146,29 @@ const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow dis
           chips={[automation.chip]}
         />
       </div>
+    </div>
+  </section>
+
+  <!-- 03 · What I build — the bridge from technical proof to commissionable capability.
+       Sits right after the systems so a buyer reads it before the deepest technical
+       chapters. Capability tied to evidence, no skill bars. -->
+  <section id="capabilities" class="chapter ground-canvas" data-chapter data-title="What I build" aria-labelledby="cap-heading">
+    <div class="content-width stack">
+      <h2 id="cap-heading" class="chapter__title" data-flow>What I build</h2>
+      <p class="chapter__intro reading-width">
+        The categories of work I take on, each tied to evidence on this site.
+      </p>
+      <dl class="caps">
+        {
+          capabilities.map((c, i) => (
+            <div class="caps__row" data-flow style={`--i:${i};--stagger:70ms`}>
+              <dt class="caps__name">{c.name}</dt>
+              <dd class="caps__stack mono">{c.stack}</dd>
+              <dd class="caps__evidence">Evidence: <a href={c.href}>{c.evidence}</a></dd>
+            </div>
+          ))
+        }
+      </dl>
     </div>
   </section>
 
@@ -269,27 +292,6 @@ const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow dis
         A directory view of the same work — not the navigation, just the map.
       </p>
       <SystemsIndex />
-    </div>
-  </section>
-
-  <!-- 08 · Engineering capabilities — capability tied to evidence, no skill bars -->
-  <section id="capabilities" class="chapter ground-surface" data-chapter data-title="What I build" aria-labelledby="cap-heading">
-    <div class="content-width stack">
-      <h2 id="cap-heading" class="chapter__title" data-flow>What I build</h2>
-      <p class="chapter__intro reading-width">
-        The categories of work I take on, each tied to evidence on this site.
-      </p>
-      <dl class="caps">
-        {
-          capabilities.map((c, i) => (
-            <div class="caps__row" data-flow style={`--i:${i};--stagger:70ms`}>
-              <dt class="caps__name">{c.name}</dt>
-              <dd class="caps__stack mono">{c.stack}</dd>
-              <dd class="caps__evidence">Evidence: <a href={c.href}>{c.evidence}</a></dd>
-            </div>
-          ))
-        }
-      </dl>
     </div>
   </section>
 

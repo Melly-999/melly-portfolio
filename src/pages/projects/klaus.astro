@@ -24,14 +24,56 @@ const stages = [
   { label: "Handoff" },
 ] as const;
 
-const capability = [
-  ["Intent capture", "CONCEPTUAL"],
-  ["Project context", "CONCEPTUAL"],
-  ["Agent / model orchestration", "CONCEPTUAL"],
-  ["Coding lane", "CONCEPTUAL"],
-  ["Review lane", "CONCEPTUAL"],
-  ["Validation gate", "CONCEPTUAL"],
-  ["Handoff record", "CONCEPTUAL"],
+/**
+ * A worked trace of ONE hypothetical task through the seven stages. It illustrates
+ * how the workflow is designed to move a task; it is not a record of work Klaus
+ * performed, so every line is written as design ("is scoped", "is selected"), never
+ * as an event that happened.
+ */
+const traceTask = "Add a source-grounded search feature to an internal operations dashboard.";
+const trace = [
+  {
+    stage: "Intent",
+    input: "“Add source-grounded document search.”",
+    action: "State what must exist, what must not change, and how “done” will be judged.",
+    output: "Scoped task with acceptance criteria.",
+  },
+  {
+    stage: "Context",
+    input: "Relevant repository files, project rules and truth boundaries.",
+    action: "Select only the slice each role needs.",
+    output: "Compact context packet.",
+  },
+  {
+    stage: "Orchestration",
+    input: "Scoped task and context packet.",
+    action: "Split the work by role and assign each role to its configured agent or model.",
+    output: "Architecture, implementation and review lanes.",
+  },
+  {
+    stage: "Implementation",
+    input: "Approved technical plan.",
+    action: "Make the change in bounded steps, under the same rules the plan was written with.",
+    output: "Candidate code change.",
+  },
+  {
+    stage: "Review",
+    input: "Candidate diff.",
+    action: "A separate lane checks it against the intent and the project rules.",
+    output: "Issues and corrections.",
+  },
+  {
+    stage: "Validation",
+    input: "Corrected implementation.",
+    action: "Check the build, the relevant tests and the rendered result; anything that cannot be verified is reported as unverified.",
+    output: "Check, build and test results, plus rendered evidence.",
+  },
+  {
+    stage: "Handoff",
+    input: "Verified result.",
+    action: "Record what was asked, what changed, what was verified and what remains.",
+    output: "Final report and next state.",
+  },
 ] as const;
 ---
 
@@ -121,16 +163,152 @@ const capability = [
         repository, verified run, or live provider or model integration is claimed on
         this page.
       </p>
-      <dl class="facts">
-        {
-          capability.map(([name, state]) => (
-            <div class="facts__row">
-              <dt>{name}</dt>
-              <dd class="mono">{state}</dd>
-            </div>
-          ))
-        }
-      </dl>
+
+      <div class="wtrace">
+        <p class="wtrace__label mono">CONCEPTUAL WORKED TRACE</p>
+        <h3 class="wtrace__title">One hypothetical task, seven stages</h3>
+        <p class="wtrace__task">
+          <span class="wtrace__task-label mono">Example task</span>
+          {traceTask}
+        </p>
+        <p class="pchapter__body wtrace__note">
+          This shows how the workflow is designed to move a task. It is a design
+          illustration, not a record of work Klaus performed.
+        </p>
+        <ol class="wtrace__list" aria-label="Conceptual worked trace: seven stages">
+          {
+            trace.map((s, i) => (
+              <li class="wtrace__step">
+                <p class="wtrace__stage mono">
+                  <span class="wtrace__n">{String(i + 1).padStart(2, "0")}</span>
+                  {s.stage}
+                </p>
+                <dl class="wtrace__io">
+                  <div>
+                    <dt class="mono">Input</dt>
+                    <dd>{s.input}</dd>
+                  </div>
+                  <div>
+                    <dt class="mono">Action</dt>
+                    <dd>{s.action}</dd>
+                  </div>
+                  <div class="wtrace__out">
+                    <dt class="mono">Output</dt>
+                    <dd>{s.output}</dd>
+                  </div>
+                </dl>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
     </Chapter>
   </ProjectCaseStudyShell>
 </BaseLayout>
+
+<style>
+  /* Worked trace: editorial rules and type, no cards, no fills. Every state is
+     carried by a text label (INPUT / ACTION / OUTPUT), never by colour alone. */
+  .wtrace {
+    margin-top: var(--space-32);
+    max-width: 860px;
+  }
+
+  .wtrace__label {
+    font-size: var(--text-label);
+    letter-spacing: 0.1em;
+    color: var(--color-ink-muted);
+  }
+
+  .wtrace__title {
+    margin-top: var(--space-8);
+    font-size: var(--text-body-lg);
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  .wtrace__task {
+    margin-top: var(--space-12);
+    color: var(--color-ink);
+  }
+
+  .wtrace__task-label {
+    display: block;
+    margin-bottom: var(--space-4);
+    font-size: var(--text-label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  .wtrace__note {
+    margin-top: var(--space-8);
+  }
+
+  .wtrace__list {
+    margin: var(--space-24) 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .wtrace__step {
+    display: grid;
+    gap: var(--space-8) var(--space-24);
+    padding-block: var(--space-16);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .wtrace__stage {
+    margin: 0;
+    font-size: var(--text-label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+
+  .wtrace__n {
+    margin-right: 0.6em;
+    color: var(--color-ink-muted);
+  }
+
+  .wtrace__io {
+    display: grid;
+    gap: var(--space-8);
+    margin: 0;
+  }
+
+  .wtrace__io > div {
+    display: grid;
+    gap: var(--space-4) var(--space-16);
+  }
+
+  .wtrace__io dt {
+    font-size: var(--text-label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  .wtrace__io dd {
+    margin: 0;
+    color: var(--color-ink-secondary);
+    font-size: var(--text-body);
+    line-height: 1.5;
+  }
+
+  .wtrace__out dd {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  @media (min-width: 768px) {
+    .wtrace__step {
+      grid-template-columns: 180px minmax(0, 1fr);
+    }
+
+    .wtrace__io > div {
+      grid-template-columns: 64px minmax(0, 1fr);
+    }
+  }
+</style>
