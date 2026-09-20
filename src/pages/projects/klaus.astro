@@ -180,7 +180,7 @@ const trace = [
             trace.map((s, i) => (
               <li class="wtrace__step">
                 <p class="wtrace__stage mono">
-                  <span class="wtrace__n">{String(i + 1).padStart(2, "0")}</span>
+                  <span class="wtrace__n">{String(i + 1).padStart(2, "0")}</span>{" "}
                   {s.stage}
                 </p>
                 <dl class="wtrace__io">
@@ -267,8 +267,9 @@ const trace = [
     color: var(--color-ink);
   }
 
+  /* The gap after the number is a real space (in the markup), so assistive tech reads
+     "01 Intent", not "01Intent". */
   .wtrace__n {
-    margin-right: 0.6em;
     color: var(--color-ink-muted);
   }
 

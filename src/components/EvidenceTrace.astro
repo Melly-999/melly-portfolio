@@ -150,12 +150,13 @@ const items = record ? [...claims] : claimsFor(page);
     color: var(--color-ink);
   }
 
-  /* Yuzuki on phones: the glyph-only strip is redundant compression. Every status it
-     shows is a text chip in the chapter it links to, and the full record is the
-     colophon ledger, so it is removed (display:none also drops its links from the
-     tab order) rather than left as an unexplained row of dots. */
+  /* Phones (home and Yuzuki): the glyph-only strip is redundant compression. Every
+     status it shows is a text chip in the chapter it links to, and the full record
+     is the colophon ledger (all stamps are in it), so it is removed (display:none
+     also drops its links from the tab order) rather than left as an unexplained row
+     of dots. Tablet keeps the in-flow strip; wide screens keep the margin rail. */
   @media (max-width: 767px) {
-    .trace[data-trace-page="yuzuki"] {
+    nav.trace {
       display: none;
     }
   }
