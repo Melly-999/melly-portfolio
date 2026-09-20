@@ -87,6 +87,12 @@ const Heading = `h${headingLevel}` as "h2" | "h3";
         </p>
       )
     }
+    <p class="row__cta">
+      <a class="row__cta-link" href={href} data-threshold-link={threshold ? "" : undefined}>
+        View case study <span class="row__cta-arrow" aria-hidden="true">→</span>
+        <span class="sr-only">: {title}</span>
+      </a>
+    </p>
   </div>
 
   <div class="row__visual">
@@ -169,6 +175,26 @@ const Heading = `h${headingLevel}` as "h2" | "h3";
     flex-wrap: wrap;
     gap: var(--space-8);
     margin-top: var(--space-8);
+  }
+
+  /* The explicit way in: a quiet text link, not a button. Colour comes from the
+     global link rule; the arrow keeps it recognisable without relying on colour,
+     and hover adds an underline. Focus uses the global :focus-visible ring. */
+  .row__cta {
+    margin-top: var(--space-8);
+  }
+
+  .row__cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    min-height: 44px;
+    font-weight: 600;
+  }
+
+  .row__cta-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
   }
 
   /* ---- Flagship: no split. The visual runs the full measure. ---- */
