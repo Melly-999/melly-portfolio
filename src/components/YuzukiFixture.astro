@@ -434,6 +434,16 @@ const fileGroups = [
     color: var(--color-ink);
   }
 
+  /* Touch: the real buttons meet the 44px target. Only <button> chips are affected;
+     the non-interactive spans on the showcase rows stay compact. */
+  @media (max-width: 767px), (pointer: coarse) {
+    button.yf__chip {
+      display: flex;
+      align-items: center;
+      min-height: 44px;
+    }
+  }
+
   /* ---- Composer ---- */
   .yf__field {
     width: 100%;

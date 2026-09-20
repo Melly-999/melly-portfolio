@@ -412,6 +412,12 @@ const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow dis
     font-size: var(--text-body-lg);
   }
 
+  /* The showcase rows open with a divider; without a gap it sat directly under the
+     intro's last line. Matches the 32px /projects already uses above its first row. */
+  #systems .chapter__intro {
+    margin-bottom: var(--space-32);
+  }
+
   .contact__title {
     max-width: 24ch;
     font-size: var(--text-h1);

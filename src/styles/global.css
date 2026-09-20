@@ -40,6 +40,8 @@ h4 {
 
 p {
   margin: 0;
+  /* Headings already balance; this stops body copy ending on a one- or two-word line. */
+  text-wrap: pretty;
 }
 
 a {
