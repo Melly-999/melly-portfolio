@@ -1,0 +1,211 @@
+---
+import StatusChip from "./StatusChip.astro";
+import type { StatusVariant } from "../data/claims";
+
+/**
+ * The one showcase abstraction: a project's copy beside its visual proof.
+ *
+ * Structure is carried by typography, not by a label above every part — the
+ * tagline leads, the problem is body copy, the consequence gets a rule, the stack
+ * is mono, and the honest status is a chip row.
+ *
+ * `direction` alternates the two columns on desktop so the page does not become a
+ * stack of identical cards. Source order never changes: copy is always read first,
+ * and on phones the visual always follows its own copy.
+ *
+ * `flagship` drops the split entirely and runs the visual full width beneath the
+ * copy — reserved for Yuzuki, so exactly one row is the peak.
+ */
+interface Chip {
+  variant: StatusVariant;
+  label?: string;
+}
+
+interface Props {
+  label?: string;
+  title: string;
+  /** What it is. */
+  tagline: string;
+  /** The business problem it answers. */
+  problem: string;
+  /** Why that matters — one line, given a rule. */
+  matters: string;
+  stack: string;
+  href: string;
+  chips?: readonly Chip[];
+  direction?: "copy-first" | "visual-first";
+  flagship?: boolean;
+  headingLevel?: 2 | 3;
+  /** Arms the KOYE project-entry transition (Yuzuki only). */
+  threshold?: boolean;
+}
+
+const {
+  label,
+  title,
+  tagline,
+  problem,
+  matters,
+  stack,
+  href,
+  chips = [],
+  direction = "copy-first",
+  flagship = false,
+  headingLevel = 3,
+  threshold = false,
+} = Astro.props;
+
+const Heading = `h${headingLevel}` as "h2" | "h3";
+---
+
+<article
+  class:list={[
+    "row",
+    {
+      "row--flagship": flagship,
+      "row--visual-first": !flagship && direction === "visual-first",
+    },
+  ]}
+>
+  <div class="row__copy">
+    {label && <p class="row__label">{label}</p>}
+    <Heading class="row__title">
+      <a class="row__link" href={href} data-threshold-link={threshold ? "" : undefined}>
+        {title}
+      </a>
+    </Heading>
+    <p class="row__tagline">{tagline}</p>
+    <p class="row__problem">{problem}</p>
+    <p class="row__matters">{matters}</p>
+    <p class="row__stack mono">{stack}</p>
+    {
+      chips.length > 0 && (
+        <p class="row__chips" role="group" aria-label={`${title}: truth status`}>
+          {chips.map((c) => (
+            <StatusChip variant={c.variant} label={c.label} />
+          ))}
+        </p>
+      )
+    }
+  </div>
+
+  <div class="row__visual">
+    <slot />
+  </div>
+</article>
+
+<style>
+  .row {
+    display: grid;
+    gap: var(--space-32);
+    padding-block: var(--section-spacing);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .row__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    min-width: 0;
+  }
+
+  .row__visual {
+    min-width: 0;
+  }
+
+  .row__label {
+    color: var(--color-ink-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .row__title {
+    font-size: var(--text-h2);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  .row__link {
+    color: var(--color-ink);
+  }
+
+  .row__link:hover {
+    color: var(--color-violet);
+  }
+
+  .row__tagline {
+    color: var(--color-ink);
+    font-size: var(--text-body-lg);
+    font-weight: 600;
+    max-width: 42ch;
+  }
+
+  .row__problem {
+    margin-top: var(--space-4);
+    color: var(--color-ink-secondary);
+    max-width: 48ch;
+  }
+
+  /* The consequence, given a rule instead of a label. */
+  .row__matters {
+    margin-top: var(--space-8);
+    padding-left: var(--space-16);
+    border-left: 2px solid var(--color-violet);
+    color: var(--color-ink);
+    max-width: 44ch;
+  }
+
+  .row__stack {
+    margin-top: var(--space-8);
+    color: var(--color-ink-muted);
+    font-size: var(--text-label);
+    overflow-wrap: anywhere;
+  }
+
+  .row__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+    margin-top: var(--space-8);
+  }
+
+  /* ---- Flagship: no split. The visual runs the full measure. ---- */
+  .row--flagship .row__title {
+    font-size: var(--text-h1);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .row--flagship .row__visual {
+    margin-top: var(--space-16);
+  }
+
+  /* ---- The alternating split ---- */
+  /* The visual takes the larger share: these are dense product interfaces and a
+     half column shrinks them past the point of being readable. */
+  @media (min-width: 900px) {
+    .row:not(.row--flagship) {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      align-items: center;
+      gap: var(--space-48);
+    }
+
+    /* Reorder visually only; the DOM keeps copy first for reading order.
+       `order` fills the columns in the new sequence, so the track sizes flip too —
+       otherwise the visual would land in the narrow column. */
+    /* Must out-rank `.row:not(.row--flagship)` above, which is (0,2,0). */
+    .row--visual-first:not(.row--flagship) {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+
+    .row--visual-first .row__copy {
+      order: 2;
+    }
+
+    .row--visual-first .row__visual {
+      order: 1;
+    }
+  }
+</style>

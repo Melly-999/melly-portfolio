@@ -1,9 +1,18 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
+import ShowcaseRow from "../../components/ShowcaseRow.astro";
+import YuzukiFixture from "../../components/YuzukiFixture.astro";
+import KlausConceptUI from "../../components/KlausConceptUI.astro";
+import ScreenshotFrame from "../../components/ScreenshotFrame.astro";
 import { projects, concepts } from "../../data/projects";
 
-const [flagship, ...rest] = projects;
+/**
+ * The directory reads in the same hierarchy as the homepage: Yuzuki is the only
+ * flagship row, the next four alternate copy/visual, and the supporting entries
+ * stay plain index lines.
+ */
+const [yuzuki, klaus, mellycore, rag, mellytrade, workspace] = projects;
 const [automation] = concepts;
 ---
 
@@ -19,35 +28,112 @@ const [automation] = concepts;
     </p>
 
     <div style="margin-top:var(--space-32);">
-      <ProjectCard
-        weight="flagship"
+      <ShowcaseRow
+        flagship
         headingLevel={2}
-        title={flagship.title}
-        subtitle={flagship.tagline}
-        description={flagship.description}
-        stack={flagship.stack}
-        href={flagship.href}
-        chips={flagship.chips}
-        image={flagship.image}
-        imageAlt={flagship.imageAlt}
-        imageCaption={flagship.imageCaption}
+        label={yuzuki.badge}
+        title={yuzuki.title}
+        tagline={yuzuki.tagline}
+        problem={yuzuki.problem}
+        matters={yuzuki.matters}
+        stack={yuzuki.stack}
+        href={yuzuki.href}
+        chips={yuzuki.chips}
         threshold
+      >
+        <YuzukiFixture />
+      </ShowcaseRow>
+
+      <ShowcaseRow
+        direction="visual-first"
+        headingLevel={2}
+        label={klaus.badge}
+        title={klaus.title}
+        tagline={klaus.tagline}
+        problem={klaus.problem}
+        matters={klaus.matters}
+        stack={klaus.stack}
+        href={klaus.href}
+        chips={klaus.chips}
+      >
+        <KlausConceptUI />
+      </ShowcaseRow>
+
+      <ShowcaseRow
+        headingLevel={2}
+        label={mellycore.badge}
+        title={mellycore.title}
+        tagline={mellycore.tagline}
+        problem={mellycore.problem}
+        matters={mellycore.matters}
+        stack={mellycore.stack}
+        href={mellycore.href}
+        chips={mellycore.chips}
+      >
+        <ScreenshotFrame
+          src="/assets/mellycore/mellycore-aios-command-center-1600x900.webp"
+          alt="MellyCore AIOS command center: a shared-context panel, a repository-derived topology graph, and the guarded operations workflow with execution locked."
+          caption="Static preview snapshot. Execution locked; no live providers."
+          srcWidth={1600}
+          srcHeight={900}
+          crop={{ x: 0, y: 66, w: 1090, h: 616 }}
+        />
+      </ShowcaseRow>
+
+      <ShowcaseRow
+        direction="visual-first"
+        headingLevel={2}
+        label={rag.badge}
+        title={rag.title}
+        tagline={rag.tagline}
+        problem={rag.problem}
+        matters={rag.matters}
+        stack={rag.stack}
+        href={rag.href}
+        chips={rag.chips}
+      >
+        <ScreenshotFrame
+          src="/assets/rag-assistant/rag-document-assistant-concept-v2-1672x941.webp"
+          alt="RAG Document Assistant concept interface: a question, an answer written from the documents with numbered citations, and the retrieved source passages beside it."
+          caption="Concept interface. Figures shown are placeholder values; no live data source is connected."
+          srcWidth={1672}
+          srcHeight={941}
+          crop={{ x: 330, y: 196, w: 1342, h: 640 }}
+        />
+      </ShowcaseRow>
+
+      <ShowcaseRow
+        headingLevel={2}
+        label={mellytrade.badge}
+        title={mellytrade.title}
+        tagline={mellytrade.tagline}
+        problem={mellytrade.problem}
+        matters={mellytrade.matters}
+        stack={mellytrade.stack}
+        href={mellytrade.href}
+        chips={mellytrade.chips}
+      >
+        <ScreenshotFrame
+          src="/assets/mellytrade/mellytrade-analytics-monitoring-concept-1672x941.webp"
+          alt="MellyTrade concept dashboard: a market overview chart, a signals list with direction, strength and confidence, and summary cards for volume, profit and loss, and risk exposure."
+          caption="Concept interface, read-only. Figures shown are placeholder values; no market connection."
+          srcWidth={1672}
+          srcHeight={941}
+          crop={{ x: 0, y: 0, w: 1180, h: 620 }}
+        />
+      </ShowcaseRow>
+
+      <ProjectCard
+        weight={workspace.weight}
+        headingLevel={2}
+        label={workspace.badge}
+        title={workspace.title}
+        subtitle={workspace.tagline}
+        description={workspace.description}
+        stack={workspace.stack}
+        href={workspace.href}
+        chips={workspace.chips}
       />
-      {
-        rest.map((project) => (
-          <ProjectCard
-            weight={project.weight}
-            headingLevel={2}
-            label={project.badge}
-            title={project.title}
-            subtitle={project.tagline}
-            description={project.description}
-            stack={project.stack}
-            href={project.href}
-            chips={project.chips}
-          />
-        ))
-      }
       <ProjectCard
         weight="supporting"
         headingLevel={2}

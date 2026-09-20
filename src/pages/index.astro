@@ -4,6 +4,10 @@ import HeroPlate from "../components/HeroPlate.astro";
 import MellyIntro from "../components/MellyIntro.astro";
 import EvidenceTrace from "../components/EvidenceTrace.astro";
 import ProjectCard from "../components/ProjectCard.astro";
+import ShowcaseRow from "../components/ShowcaseRow.astro";
+import YuzukiFixture from "../components/YuzukiFixture.astro";
+import KlausConceptUI from "../components/KlausConceptUI.astro";
+import ScreenshotFrame from "../components/ScreenshotFrame.astro";
 import StatusChip from "../components/StatusChip.astro";
 import CycleDiagram from "../components/CycleDiagram.astro";
 import ProcessSpine from "../components/ProcessSpine.astro";
@@ -87,44 +91,95 @@ const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow dis
         concepts or previews are labelled as such.
       </p>
 
-      <ProjectCard
-        weight="flagship"
+      <ShowcaseRow
+        flagship
+        label={yuzuki.badge}
         title={yuzuki.title}
-        subtitle={yuzuki.tagline}
-        description={yuzuki.description}
+        tagline={yuzuki.tagline}
+        problem={yuzuki.problem}
+        matters={yuzuki.matters}
         stack={yuzuki.stack}
         href={yuzuki.href}
-        chips={yuzuki.chips.slice(0, 1)}
-        image={yuzuki.image}
-        imageAlt={yuzuki.imageAlt}
-        imageCaption={yuzuki.imageCaption}
+        chips={yuzuki.chips}
         threshold
-      />
+      >
+        <YuzukiFixture />
+      </ShowcaseRow>
 
-      <ProjectCard
-        weight="major"
+      <ShowcaseRow
+        direction="visual-first"
+        label={klaus.badge}
         title={klaus.title}
-        subtitle={klaus.tagline}
-        description={klaus.description}
+        tagline={klaus.tagline}
+        problem={klaus.problem}
+        matters={klaus.matters}
         stack={klaus.stack}
         href={klaus.href}
         chips={klaus.chips}
-      />
+      >
+        <KlausConceptUI />
+      </ShowcaseRow>
 
-      <div class="trio">
-        {
-          [mellycore, rag, mellytrade].map((p) => (
-            <ProjectCard
-              title={p.title}
-              subtitle={p.tagline}
-              description={p.description}
-              stack={p.stack}
-              href={p.href}
-              chips={p.chips}
-            />
-          ))
-        }
-      </div>
+      <ShowcaseRow
+        label={mellycore.badge}
+        title={mellycore.title}
+        tagline={mellycore.tagline}
+        problem={mellycore.problem}
+        matters={mellycore.matters}
+        stack={mellycore.stack}
+        href={mellycore.href}
+        chips={mellycore.chips}
+      >
+        <ScreenshotFrame
+          src="/assets/mellycore/mellycore-aios-command-center-1600x900.webp"
+          alt="MellyCore AIOS command center: a shared-context panel, a repository-derived topology graph, and the guarded operations workflow with execution locked."
+          caption="Static preview snapshot. Execution locked; no live providers."
+          srcWidth={1600}
+          srcHeight={900}
+          crop={{ x: 0, y: 66, w: 1090, h: 616 }}
+        />
+      </ShowcaseRow>
+
+      <ShowcaseRow
+        direction="visual-first"
+        label={rag.badge}
+        title={rag.title}
+        tagline={rag.tagline}
+        problem={rag.problem}
+        matters={rag.matters}
+        stack={rag.stack}
+        href={rag.href}
+        chips={rag.chips}
+      >
+        <ScreenshotFrame
+          src="/assets/rag-assistant/rag-document-assistant-concept-v2-1672x941.webp"
+          alt="RAG Document Assistant concept interface: a question, an answer written from the documents with numbered citations, and the retrieved source passages beside it."
+          caption="Concept interface. Figures shown are placeholder values; no live data source is connected."
+          srcWidth={1672}
+          srcHeight={941}
+          crop={{ x: 330, y: 196, w: 1342, h: 640 }}
+        />
+      </ShowcaseRow>
+
+      <ShowcaseRow
+        label={mellytrade.badge}
+        title={mellytrade.title}
+        tagline={mellytrade.tagline}
+        problem={mellytrade.problem}
+        matters={mellytrade.matters}
+        stack={mellytrade.stack}
+        href={mellytrade.href}
+        chips={mellytrade.chips}
+      >
+        <ScreenshotFrame
+          src="/assets/mellytrade/mellytrade-analytics-monitoring-concept-1672x941.webp"
+          alt="MellyTrade concept dashboard: a market overview chart, a signals list with direction, strength and confidence, and summary cards for volume, profit and loss, and risk exposure."
+          caption="Concept interface, read-only. Figures shown are placeholder values; no market connection."
+          srcWidth={1672}
+          srcHeight={941}
+          crop={{ x: 0, y: 0, w: 1180, h: 620 }}
+        />
+      </ShowcaseRow>
 
       <div class="other">
         <h3 class="other__label mono">Other work</h3>
@@ -373,19 +428,6 @@ const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow dis
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-8);
-  }
-
-  /* Third tier: three distinct narratives in deliberately unequal measures. */
-  .trio {
-    display: grid;
-    gap: 0 var(--space-48);
-  }
-
-  @media (min-width: 1024px) {
-    .trio {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 4fr);
-      align-items: start;
-    }
   }
 
   .other {

@@ -19,6 +19,13 @@ export interface ProjectChip {
   label?: string;
 }
 
+/**
+ * Showcase copy. `problem` is the business problem the project answers and
+ * `matters` is the one consequence that makes it worth commissioning. Both are
+ * held here so the home page and /projects cannot drift apart, and both stay
+ * inside the status each project is allowed to claim above.
+ */
+
 export const projects = [
   {
     slug: "yuzuki",
@@ -29,6 +36,10 @@ export const projects = [
     tagline: "Local-first AI desktop with fail-closed private mode",
     description:
       "A complete AI product, not a UI mockup: a Tauri desktop application with a live-verified local chat path, seven named routing modes, and Hermes Agent integration. Public source only.",
+    problem:
+      "Teams want AI inside their daily work but cannot send client files, contracts or internal notes to somebody else's API.",
+    matters:
+      "In private mode the conversation never leaves the machine — and if the local runtime cannot serve a turn, Yuzuki stops instead of quietly falling back to a cloud model.",
     stack: "Tauri · React · TypeScript · Python · Hermes Agent · Ollama",
     href: "/projects/yuzuki",
     sourceHref: YUZUKI_SOURCE_HREF,
@@ -52,6 +63,10 @@ export const projects = [
     tagline: "AI orchestration and coding agent",
     description:
       "A personal AI engineering operator that coordinates agents and models, carries project context, and routes work through implementation, review and validation.",
+    problem:
+      "Hand one model a whole feature and it loses the thread: context runs out, nothing reviews the result, and nobody can say afterwards what was actually checked.",
+    matters:
+      "Work is split by role and gated, so a step that cannot be verified is reported as unverified instead of assumed to pass.",
     stack: "Orchestration · Coding agent · Project context · Review gates",
     href: "/projects/klaus",
     chips: [
@@ -67,6 +82,10 @@ export const projects = [
     tagline: "Command-center architecture for shared context and agent coordination",
     description:
       "A supervised, static-preview command center: shared context, a repository-derived topology, and explicit safety boundaries.",
+    problem:
+      "Once several agents share one codebase, nobody can see what context they hold or what they are about to do next.",
+    matters:
+      "Every step is gated before anything can run, and execution stays locked in this build — there are no live providers behind it.",
     stack: "Context Graph · Agent Handoffs · Safety Contracts · Static preview",
     href: "/projects/aios",
     chips: [
@@ -82,6 +101,10 @@ export const projects = [
     tagline: "RAG-powered document search with source-grounded answers",
     description:
       "Document intelligence for knowledge bases, procedures and support documentation: questions answered from a company's own documents, each answer shown with its sources.",
+    problem:
+      "Support and operations staff answer the same questions over and over by hunting through procedures, contracts and handbooks.",
+    matters:
+      "Each answer arrives with the document and page it came from, so a reader can check the claim instead of trusting it.",
     stack: "Retrieval · Embeddings · Indexing · Citations",
     href: "/projects/rag-assistant",
     chips: [
@@ -97,6 +120,10 @@ export const projects = [
     tagline: "Data-dense analytics and monitoring dashboard for signals, risk and system health",
     description:
       "Complex operational data — signals, risk, alerts and pipeline health — made readable in one view. A dashboard case study; read-only, dry-run.",
+    problem:
+      "Dense operational data defeats most dashboards: signals, risk, alerts and pipeline health end up on five screens nobody reads together.",
+    matters:
+      "One view a person can actually scan, and read-only by design — there is no broker execution behind it.",
     stack: "React · TypeScript · FastAPI · Analytics UI",
     href: "/projects/mellytrade",
     chips: [

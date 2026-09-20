@@ -1,0 +1,290 @@
+---
+import { klausStages, klausExampleTask } from "../data/klaus";
+
+/**
+ * Klaus — a restrained CONCEPT UI for the showcase rows.
+ *
+ * TRUTH BOUNDARY. This is a drawing of an owner-defined architecture, not a run.
+ * Nothing here executed: there is no terminal output, no elapsed time, no token
+ * count, no provider or model name, and no status that implies a stage completed.
+ * The stage rail is written in the designed present, and the example task is an
+ * illustration.
+ *
+ * `KlausOrchestrationDiagram` stays the case study's lane drawing; this is the
+ * compact stage rail used beside the project's description.
+ *
+ * No headings are used inside the frame — it must not enter the page outline.
+ */
+interface Props {
+  /** Which stage opens to show its Input / Action / Output. */
+  openStage?: string;
+}
+
+const { openStage = "Route" } = Astro.props;
+const open = klausStages.find((s) => s.label === openStage) ?? klausStages[2];
+---
+
+<figure class="kc">
+  <div class="kc__frame">
+    <div class="kc__bar">
+      <span class="kc__app">Klaus</span>
+      <span class="kc__sep" aria-hidden="true">/</span>
+      <span class="kc__role">AI orchestration &amp; coding agent</span>
+    </div>
+
+    <div class="kc__task">
+      <p class="kc__task-label">Example task</p>
+      <p class="kc__task-text">{klausExampleTask}</p>
+    </div>
+
+    <ol class="kc__rail" aria-label="Conceptual workflow: seven stages">
+      {
+        klausStages.map((s, i) => (
+          <li
+            class:list={[
+              "kc__stage",
+              { "kc__stage--key": s.key, "kc__stage--open": s.label === open.label },
+            ]}
+          >
+            <p class="kc__stage-head">
+              <span class="kc__n" aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span class="kc__label">{s.label}</span>
+            </p>
+            {s.label === open.label && (
+              <dl class="kc__io">
+                <div class="kc__io-row">
+                  <dt>Input</dt>
+                  <dd>{s.input}</dd>
+                </div>
+                <div class="kc__io-row">
+                  <dt>Action</dt>
+                  <dd>{s.action}</dd>
+                </div>
+                <div class="kc__io-row">
+                  <dt>Output</dt>
+                  <dd>{s.output}</dd>
+                </div>
+              </dl>
+            )}
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="kc__foot">
+      <span class="chip chip--concept">
+        <svg class="chip__glyph" viewBox="0 0 10 10" aria-hidden="true" focusable="false">
+          <circle cx="5" cy="5" r="3.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="1.4 1.6" />
+        </svg>
+        <span class="chip__text">CONCEPTUAL</span>
+      </span>
+      <span class="kc__foot-note">Owner-defined architecture · not a live agent run</span>
+    </div>
+  </div>
+
+  <figcaption class="kc__cap">
+    A drawing of a designed workflow. No provider, model or integration is named or
+    implied, and no stage below has been executed.
+  </figcaption>
+</figure>
+
+<style>
+  .kc {
+    margin: 0;
+    min-width: 0;
+  }
+
+  .kc__frame {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-panel);
+    overflow: hidden;
+  }
+
+  .kc__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-8);
+    padding: var(--space-12) var(--space-16);
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-panel);
+    font-size: var(--text-label);
+  }
+
+  .kc__app {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  .kc__sep,
+  .kc__role {
+    color: var(--color-ink-muted);
+  }
+
+  .kc__task {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-16);
+    border-bottom: 1px solid var(--color-line-soft);
+  }
+
+  .kc__task-label {
+    color: var(--color-ink-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .kc__task-text {
+    color: var(--color-ink);
+    font-size: var(--text-label);
+  }
+
+  /* ---- Stage rail: a 1px spine, no arrow glyphs, no glow ---- */
+  .kc__rail {
+    display: grid;
+    padding: var(--space-8) var(--space-16) var(--space-16);
+  }
+
+  .kc__stage {
+    position: relative;
+    padding: var(--space-8) 0 var(--space-8) var(--space-24);
+  }
+
+  /* The spine runs between stages, stopping at the first and last node. */
+  .kc__stage::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-line);
+  }
+
+  .kc__stage:first-child::before {
+    top: 50%;
+  }
+
+  .kc__stage:last-child::before {
+    bottom: 50%;
+  }
+
+  /* Node. Key stages are filled; the rest are hollow. */
+  .kc__stage::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: calc(50% - 3.5px);
+    width: 7px;
+    height: 7px;
+    border: 1px solid var(--color-line);
+    border-radius: 50%;
+    background: var(--color-surface);
+  }
+
+  .kc__stage--key::after {
+    border-color: var(--color-violet);
+    background: var(--color-violet);
+  }
+
+  .kc__stage--open {
+    padding-bottom: var(--space-16);
+  }
+
+  .kc__stage--open::after {
+    top: var(--space-12);
+    border-color: var(--color-violet);
+  }
+
+  .kc__stage-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-8);
+  }
+
+  .kc__n {
+    color: var(--color-ink-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+  }
+
+  .kc__label {
+    color: var(--color-ink-secondary);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .kc__stage--key .kc__label,
+  .kc__stage--open .kc__label {
+    color: var(--color-ink);
+  }
+
+  /* ---- The one opened stage ---- */
+  .kc__io {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+    padding: var(--space-12);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-panel);
+  }
+
+  .kc__io-row {
+    display: grid;
+    gap: 2px;
+  }
+
+  .kc__io dt {
+    color: var(--color-ink-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .kc__io dd {
+    color: var(--color-ink-secondary);
+    font-size: var(--text-micro);
+    line-height: 1.6;
+  }
+
+  @media (min-width: 560px) {
+    .kc__io-row {
+      grid-template-columns: 5.5rem minmax(0, 1fr);
+      gap: var(--space-12);
+      align-items: baseline;
+    }
+  }
+
+  .kc__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-8) var(--space-12);
+    padding: var(--space-12) var(--space-16);
+    border-top: 1px solid var(--color-line);
+    background: var(--color-panel);
+  }
+
+  .kc__foot-note {
+    color: var(--color-ink-muted);
+    font-size: var(--text-micro);
+  }
+
+  .kc__cap {
+    margin-top: var(--space-12);
+    color: var(--color-ink-muted);
+    font-size: var(--text-label);
+    line-height: 1.5;
+    max-width: 62ch;
+  }
+</style>

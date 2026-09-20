@@ -1,0 +1,607 @@
+---
+/**
+ * Yuzuki interface demo — the product's real layout (session rail, conversation
+ * pane, context/files panel) rebuilt in HTML for this site and filled with example
+ * content written for the portfolio.
+ *
+ * TRUTH BOUNDARY. This is not a screen capture and not a captured session. No real
+ * conversation, client, document or session data appears here; every file name and
+ * message below was written for this page. The genuine capture of the shipped
+ * application is on /projects/yuzuki.
+ *
+ * Portfolio-only interaction: choosing a starting point writes it into the example
+ * composer. Nothing is sent, no provider or Yuzuki runtime is contacted, and no
+ * session is created.
+ *
+ * No headings are used inside the frame — the demo must not enter the page outline.
+ */
+interface Props {
+  /** Turns the starting points into buttons that fill the example composer. */
+  interactive?: boolean;
+  caption?: string;
+}
+
+const {
+  interactive = false,
+  caption = "Interface demo rebuilt in HTML for this page: the application's real layout with example content. Not a screen capture, and not a captured session.",
+} = Astro.props;
+
+/** The recommended order is a real sequence, so it is numbered. */
+const steps = [
+  "Collect qualified company signals",
+  "Enrich the account",
+  "Score against the ICP",
+  "Generate a review-ready brief",
+  "Require approval before outreach",
+] as const;
+
+const prompts = [
+  "Explain this architecture",
+  "Compare two implementation approaches",
+  "Plan my next development task",
+  "Help me debug this error",
+  "Summarize these notes",
+  "Turn this idea into a step-by-step plan",
+] as const;
+
+/** Example fixture files. Invented for this page; no client material. */
+const fileGroups = [
+  {
+    group: "SEO manager",
+    files: [
+      "seo-manager-brief.md",
+      "keyword-opportunities.csv",
+      "content-plan-q4.md",
+      "technical-seo-review.md",
+    ],
+  },
+  {
+    group: "Automation",
+    files: ["workflow-map.md", "lead-qualification-rules.json", "approval-policy.md"],
+  },
+  {
+    group: "Project",
+    files: [
+      "client-requirements.md",
+      "implementation-plan.md",
+      "api-integration-checklist.md",
+    ],
+  },
+] as const;
+---
+
+<figure class="yf" data-prompt-demo={interactive ? "" : undefined}>
+  <div class="yf__frame">
+    <!-- Application bar -->
+    <div class="yf__bar">
+      <span class="yf__app">
+        <span class="yf__mark" aria-hidden="true"></span>
+        Yuzuki
+      </span>
+      <span class="yf__sep" aria-hidden="true">/</span>
+      <span class="yf__thread">SEO automation review</span>
+      <span class="yf__mode">Private · local</span>
+    </div>
+
+    <div class="yf__body">
+      <!-- Session rail -->
+      <div class="yf__rail">
+        <p class="yf__new">
+          <span class="yf__plus" aria-hidden="true">+</span> New conversation
+        </p>
+        <ul class="yf__nav">
+          <li class="yf__nav-item yf__nav-item--on">Chats</li>
+          <li class="yf__nav-item">Search</li>
+          <li class="yf__nav-item">Review</li>
+        </ul>
+      </div>
+
+      <!-- Conversation -->
+      <div class="yf__main">
+        <div class="yf__turn">
+          <p class="yf__who">You</p>
+          <p class="yf__msg">
+            Review this SEO automation architecture and tell me what should be
+            automated first.
+          </p>
+        </div>
+
+        <div class="yf__turn yf__turn--y">
+          <p class="yf__who yf__who--y">Yuzuki</p>
+          <p class="yf__msg">
+            Start with the repetitive handoff between lead discovery, qualification
+            and reporting.
+          </p>
+          <p class="yf__sublabel">Recommended first automation</p>
+          <ol class="yf__steps">
+            {
+              steps.map((s, i) => (
+                <li class="yf__step">
+                  <span class="yf__n" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span>{s}</span>
+                </li>
+              ))
+            }
+          </ol>
+          <p class="yf__msg yf__msg--plan">
+            One ingestion job, one scoring rule set, one brief template and a review
+            queue. Steps 01–04 can run unattended; 05 stays manual until the scoring
+            is trusted.
+          </p>
+        </div>
+
+        <!-- Starting points live inside the product, not beneath a picture -->
+        <div class="yf__suggest">
+          <p class="yf__sublabel">Starting points</p>
+          <ul class="yf__chips">
+            {
+              prompts.map((p) => (
+                <li>
+                  {interactive ? (
+                    <button type="button" class="yf__chip" data-prompt={p} aria-pressed="false">
+                      {p}
+                    </button>
+                  ) : (
+                    <span class="yf__chip">{p}</span>
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div class="yf__composer">
+          {
+            interactive ? (
+              <>
+                <label class="sr-only" for="yf-field">
+                  Example prompt — not sent
+                </label>
+                <textarea
+                  id="yf-field"
+                  class="yf__field"
+                  rows="1"
+                  readonly
+                  placeholder="Choose a starting point above"
+                  data-prompt-field
+                />
+                <p class="yf__sent">
+                  Portfolio-only demo. Nothing is sent, no model or provider is
+                  contacted, and no session is created.
+                </p>
+                <p class="sr-only" role="status" data-prompt-status />
+              </>
+            ) : (
+              <p class="yf__field yf__field--static">Ask a follow-up question…</p>
+            )
+          }
+        </div>
+      </div>
+
+      <!-- Context / files -->
+      <div class="yf__ctx">
+        <p class="yf__tabs">
+          <span class="yf__tab">Context</span>
+          <span class="yf__tab yf__tab--on">Files</span>
+        </p>
+        {
+          fileGroups.map((g) => (
+            <div class="yf__group">
+              <p class="yf__group-name">{g.group}</p>
+              <ul class="yf__files">
+                {g.files.map((f) => (
+                  <li class="yf__file">{f}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="yf__foot">
+      <span class="chip chip--prototype">
+        <svg class="chip__glyph" viewBox="0 0 10 10" aria-hidden="true" focusable="false">
+          <circle cx="5" cy="5" r="3.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 1.6" />
+        </svg>
+        <span class="chip__text">SYNTHETIC PUBLIC DEMO</span>
+      </span>
+      <span class="yf__foot-note">No real session data</span>
+    </div>
+  </div>
+
+  <figcaption class="yf__cap">{caption}</figcaption>
+</figure>
+
+<style>
+  .yf {
+    margin: 0;
+    min-width: 0;
+  }
+
+  .yf__frame {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-panel);
+    overflow: hidden;
+  }
+
+  /* ---- Application bar ---- */
+  .yf__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-8);
+    padding: var(--space-12) var(--space-16);
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-panel);
+    font-size: var(--text-label);
+  }
+
+  .yf__app {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  .yf__mark {
+    width: 14px;
+    height: 14px;
+    border-radius: var(--radius-sm);
+    background: var(--color-violet-fill);
+  }
+
+  .yf__sep,
+  .yf__thread {
+    color: var(--color-ink-muted);
+  }
+
+  .yf__mode {
+    margin-left: auto;
+    padding: 2px var(--space-8);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    color: var(--color-ink-secondary);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ---- Body: one column on phones, panes as width allows ---- */
+  .yf__body {
+    display: grid;
+  }
+
+  /* ---- Session rail ---- */
+  .yf__rail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-8);
+    padding: var(--space-12) var(--space-16);
+    border-bottom: 1px solid var(--color-line);
+    font-size: var(--text-label);
+  }
+
+  .yf__new {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-12);
+    border-radius: var(--radius-md);
+    background: var(--color-violet-fill);
+    color: #0b0618;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .yf__plus {
+    font-weight: 700;
+  }
+
+  .yf__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .yf__nav-item {
+    padding: var(--space-4) var(--space-8);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink-muted);
+  }
+
+  .yf__nav-item--on {
+    background: var(--color-panel-raised);
+    color: var(--color-ink);
+  }
+
+  /* ---- Conversation ---- */
+  .yf__main {
+    padding: var(--space-16);
+    display: grid;
+    gap: var(--space-16);
+    align-content: start;
+    min-width: 0;
+  }
+
+  .yf__turn {
+    display: grid;
+    gap: var(--space-4);
+    min-width: 0;
+  }
+
+  .yf__turn--y {
+    padding: var(--space-12) var(--space-16);
+    border: 1px solid var(--color-line);
+    border-left: 2px solid var(--color-violet);
+    border-radius: var(--radius-md);
+    background: var(--color-panel);
+  }
+
+  .yf__who {
+    color: var(--color-ink-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .yf__who--y {
+    color: var(--color-violet);
+  }
+
+  .yf__msg {
+    color: var(--color-ink);
+    font-size: var(--text-label);
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  .yf__msg--plan {
+    margin-top: var(--space-12);
+    color: var(--color-ink-secondary);
+  }
+
+  .yf__sublabel {
+    margin-top: var(--space-12);
+    color: var(--color-ink-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .yf__steps {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  .yf__step {
+    display: grid;
+    grid-template-columns: 2.25ch minmax(0, 1fr);
+    gap: var(--space-8);
+    color: var(--color-ink-secondary);
+    font-size: var(--text-label);
+    line-height: 1.5;
+  }
+
+  .yf__n {
+    color: var(--color-violet);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+  }
+
+  /* ---- Starting points ---- */
+  .yf__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+    margin-top: var(--space-8);
+  }
+
+  .yf__chip {
+    display: block;
+    padding: var(--space-8) var(--space-12);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--color-ink-secondary);
+    font: inherit;
+    font-size: var(--text-micro);
+    text-align: left;
+  }
+
+  button.yf__chip {
+    min-height: 32px;
+    cursor: pointer;
+    transition:
+      border-color var(--motion-fast) var(--ease-standard),
+      color var(--motion-fast) var(--ease-standard);
+  }
+
+  button.yf__chip:hover,
+  button.yf__chip[aria-pressed="true"] {
+    border-color: var(--color-violet);
+    color: var(--color-ink);
+  }
+
+  /* ---- Composer ---- */
+  .yf__field {
+    width: 100%;
+    display: block;
+    resize: none;
+    padding: var(--space-12) var(--space-16);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font: inherit;
+    font-size: var(--text-label);
+  }
+
+  .yf__field::placeholder {
+    color: var(--color-ink-muted);
+  }
+
+  .yf__field--static {
+    color: var(--color-ink-muted);
+  }
+
+  .yf__sent {
+    margin-top: var(--space-8);
+    color: var(--color-ink-muted);
+    font-size: var(--text-micro);
+    line-height: 1.5;
+  }
+
+  /* ---- Context / files ---- */
+  .yf__ctx {
+    padding: var(--space-16);
+    border-top: 1px solid var(--color-line);
+    display: grid;
+    gap: var(--space-16);
+    align-content: start;
+    min-width: 0;
+  }
+
+  .yf__tabs {
+    display: flex;
+    gap: var(--space-16);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-line-soft);
+  }
+
+  .yf__tab {
+    color: var(--color-ink-muted);
+    font-size: var(--text-label);
+  }
+
+  .yf__tab--on {
+    color: var(--color-ink);
+    font-weight: 600;
+    box-shadow: inset 0 -2px 0 0 var(--color-violet);
+  }
+
+  .yf__group-name {
+    color: var(--color-ink-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .yf__files {
+    display: grid;
+    gap: 2px;
+    margin-top: var(--space-8);
+  }
+
+  .yf__file {
+    color: var(--color-ink-secondary);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+  }
+
+  /* ---- Footer truth strip ---- */
+  .yf__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-8) var(--space-12);
+    padding: var(--space-12) var(--space-16);
+    border-top: 1px solid var(--color-line);
+    background: var(--color-panel);
+  }
+
+  .yf__foot-note {
+    color: var(--color-ink-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .yf__cap {
+    margin-top: var(--space-12);
+    color: var(--color-ink-muted);
+    font-size: var(--text-label);
+    line-height: 1.5;
+    max-width: 62ch;
+  }
+
+  /* ---- Two panes: conversation beside its files ---- */
+  @media (min-width: 720px) {
+    .yf__body {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 15rem);
+    }
+
+    .yf__rail {
+      grid-column: 1 / -1;
+    }
+
+    .yf__ctx {
+      border-top: 0;
+      border-left: 1px solid var(--color-line);
+    }
+  }
+
+  /* ---- Three panes: the product's real shape ---- */
+  @media (min-width: 1040px) {
+    .yf__body {
+      grid-template-columns: minmax(0, 10rem) minmax(0, 1fr) minmax(0, 15rem);
+    }
+
+    .yf__rail {
+      grid-column: auto;
+      align-content: start;
+      align-items: start;
+      padding: var(--space-16);
+      border-bottom: 0;
+      border-right: 1px solid var(--color-line);
+    }
+
+    .yf__new {
+      width: 100%;
+      justify-content: center;
+      margin-bottom: var(--space-8);
+    }
+
+    .yf__nav {
+      flex-direction: column;
+      width: 100%;
+      gap: 2px;
+    }
+
+    .yf__main {
+      padding: var(--space-24);
+    }
+  }
+</style>
+
+<script>
+  /* Portfolio-only: writes the chosen example into the composer. Nothing is sent. */
+  document.querySelectorAll<HTMLElement>("[data-prompt-demo]").forEach((root) => {
+    const field = root.querySelector<HTMLTextAreaElement>("[data-prompt-field]");
+    const status = root.querySelector<HTMLElement>("[data-prompt-status]");
+    const buttons = root.querySelectorAll<HTMLButtonElement>("[data-prompt]");
+    if (!field) return;
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        field.value = btn.dataset.prompt ?? "";
+        buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+        if (status) status.textContent = `Example prompt set: ${field.value}. Not sent.`;
+      });
+    });
+  });
+</script>

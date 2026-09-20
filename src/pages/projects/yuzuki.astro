@@ -9,8 +9,7 @@ import ProcessSpine from "../../components/ProcessSpine.astro";
 import ArchitectureDiagram from "../../components/ArchitectureDiagram.astro";
 import RoutingOrbit from "../../components/RoutingOrbit.astro";
 import ValidationMatrix from "../../components/ValidationMatrix.astro";
-import PromptSuggestions from "../../components/PromptSuggestions.astro";
-import SyntheticConversation from "../../components/SyntheticConversation.astro";
+import YuzukiFixture from "../../components/YuzukiFixture.astro";
 import { YUZUKI_SOURCE_HREF, YUZUKI_SOURCE_PUBLIC } from "../../data/social";
 
 /**
@@ -188,16 +187,10 @@ const ladder = [
         <p><StatusChip variant="shipped" label="SHIPPED · WORKSPACE" /></p>
         <h2 id="h-workspace" class="chapter__title">Desktop workspace</h2>
         <div data-flow>
-          <ScreenshotFrame
-            src="/assets/yuzuki/01-home-desktop-1440.png"
-            alt={alt01}
-            caption="Yuzuki desktop workspace — synthetic public fixture, empty state. Shown uncropped."
-            scrollable
+          <YuzukiFixture
+            interactive
+            caption="Interface demo rebuilt in HTML for this page: the application's real layout — session rail, conversation, context and files — with example content. Not a screen capture, and not a captured session. The capture of the shipped application is at the top of this page."
           />
-        </div>
-        <div class="demo-block">
-          <PromptSuggestions />
-          <SyntheticConversation />
         </div>
         <div class="split">
           <div>
@@ -580,20 +573,6 @@ const ladder = [
   .resolve__note {
     margin-top: var(--space-24);
     color: var(--color-ink-secondary);
-  }
-
-  /* ---- 05: portfolio-only demo (compact; never competes with the peak) ---- */
-  .demo-block {
-    display: grid;
-    gap: var(--space-32);
-    padding-block: var(--space-16);
-  }
-
-  @media (min-width: 1024px) {
-    .demo-block {
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      align-items: start;
-    }
   }
 
   /* ---- 05 / 07 ---- */
