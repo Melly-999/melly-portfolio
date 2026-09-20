@@ -9,8 +9,8 @@ import ProcessSpine from "../../components/ProcessSpine.astro";
 /**
  * /projects/rag-assistant — RAG Document Assistant.
  * The screenshot is a concept interface render used as a portfolio/case-study
- * visual (assets pack ASSET_MANIFEST.md). Figures inside it (document counts,
- * chunks, storage, indexing, relevance scores) are illustrative sample values and
+ * visual (assets pack ASSET_MANIFEST.md). Figures inside it (document and chunk
+ * counts, confidence, match scores, generation time) are illustrative sample values and
  * are NOT quoted or marketed anywhere in the copy. No implementation technology
  * is claimed beyond the generic pipeline stages.
  */
@@ -24,7 +24,7 @@ const pipeline = [
 ] as const;
 
 const alt =
-  "RAG Document Assistant interface showing document search, a source-grounded answer with citations, document collections, and a retrieval pipeline from ingestion through answer generation.";
+  "RAG Document Assistant concept interface: a natural-language question about a client onboarding workflow, a source-grounded answer with missing documents and recommended actions, four retrieved sources with match scores, a knowledge-base summary, and a five-step RAG pipeline from ingest to answer.";
 ---
 
 <BaseLayout
@@ -43,20 +43,21 @@ const alt =
       </div>
       <div class="cinematic-width" style="margin-top:var(--space-32);">
         <ScreenshotFrame
-          src="/assets/rag-assistant/rag-document-assistant-concept-1672x941.webp"
+          src="/assets/rag-assistant/rag-document-assistant-concept-v2-1672x941.webp"
           alt={alt}
           caption="RAG Document Assistant — concept interface render."
           srcWidth={1672}
           srcHeight={941}
+          mobileCrop={{ x: 340, y: 0, w: 1332, h: 941 }}
           scrollable
-          scrollWidth={940}
+          scrollWidth={1080}
           eager
         />
         <p class="pan-hint">Swipe or use arrow keys to inspect the full interface.</p>
         <p class="concept-note">
-          Interface concept. Figures shown — document counts, chunks, storage and relevance
-          scores — are placeholder values; no live data source or production deployment is
-          connected.
+          Interface concept. Figures shown — document and chunk counts, confidence and match
+          scores, timings — are placeholder values; no live data source or production
+          deployment is connected.
         </p>
       </div>
     </section>
