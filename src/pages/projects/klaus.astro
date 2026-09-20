@@ -5,6 +5,7 @@ import Chapter from "../../components/Chapter.astro";
 import StatusChip from "../../components/StatusChip.astro";
 import ProcessSpine from "../../components/ProcessSpine.astro";
 import KlausOrchestrationDiagram from "../../components/KlausOrchestrationDiagram.astro";
+import { klausStages, klausExampleTask } from "../../data/klaus";
 
 /**
  * /projects/klaus — AI orchestration + coding agent.
@@ -13,68 +14,15 @@ import KlausOrchestrationDiagram from "../../components/KlausOrchestrationDiagra
  * planning and workspace files. The role and architecture below are owner-defined,
  * so every capability is classified CONCEPTUAL. Nothing is presented as
  * implemented, validated, shipped, or connected to a live provider or model.
+ *
+ * The seven stages, their wording and the worked-trace example all come from
+ * `src/data/klaus.ts` — the same source the showcase concept UI reads — so the
+ * site uses one vocabulary (Understand · Research · Route · Implement · Review ·
+ * Validate · Handoff) for one process. The worked trace illustrates how the
+ * workflow is designed to move ONE hypothetical task; it is not a record of work
+ * Klaus performed, and every line in the data is written as design, never as an
+ * event that happened.
  */
-const stages = [
-  { label: "Intent" },
-  { label: "Context" },
-  { label: "Orchestration", key: true },
-  { label: "Implementation" },
-  { label: "Review" },
-  { label: "Validation", key: true },
-  { label: "Handoff" },
-] as const;
-
-/**
- * A worked trace of ONE hypothetical task through the seven stages. It illustrates
- * how the workflow is designed to move a task; it is not a record of work Klaus
- * performed, so every line is written as design ("is scoped", "is selected"), never
- * as an event that happened.
- */
-const traceTask = "Add a source-grounded search feature to an internal operations dashboard.";
-const trace = [
-  {
-    stage: "Intent",
-    input: "“Add source-grounded document search.”",
-    action: "State what must exist, what must not change, and how “done” will be judged.",
-    output: "Scoped task with acceptance criteria.",
-  },
-  {
-    stage: "Context",
-    input: "Relevant repository files, project rules and truth boundaries.",
-    action: "Select only the slice each role needs.",
-    output: "Compact context packet.",
-  },
-  {
-    stage: "Orchestration",
-    input: "Scoped task and context packet.",
-    action: "Split the work by role and assign each role to its configured agent or model.",
-    output: "Architecture, implementation and review lanes.",
-  },
-  {
-    stage: "Implementation",
-    input: "Approved technical plan.",
-    action: "Make the change in bounded steps, under the same rules the plan was written with.",
-    output: "Candidate code change.",
-  },
-  {
-    stage: "Review",
-    input: "Candidate diff.",
-    action: "A separate lane checks it against the intent and the project rules.",
-    output: "Issues and corrections.",
-  },
-  {
-    stage: "Validation",
-    input: "Corrected implementation.",
-    action: "Check the build, the relevant tests and the rendered result; anything that cannot be verified is reported as unverified.",
-    output: "Check, build and test results, plus rendered evidence.",
-  },
-  {
-    stage: "Handoff",
-    input: "Verified result.",
-    action: "Record what was asked, what changed, what was verified and what remains.",
-    output: "Final report and next state.",
-  },
-] as const;
 ---
 
 <BaseLayout
@@ -96,7 +44,7 @@ const trace = [
       </div>
     </section>
 
-    <Chapter id="intent" title="01 · Intent" ground="canvas">
+    <Chapter id="understand" title="01 · Understand" ground="canvas">
       <p class="pchapter__body">
         Work starts from a stated intent, not a prompt pile: what should exist, what
         must not change, and how it will be judged done. Klaus is designed to keep that
@@ -109,7 +57,7 @@ const trace = [
       </p>
     </Chapter>
 
-    <Chapter id="context" title="02 · Context" ground="surface">
+    <Chapter id="research" title="02 · Research" ground="surface">
       <p class="pchapter__body">
         A coding agent is only as good as the context it carries. Klaus is designed to
         hold project context — repository state, rules, prior decisions — and hand the
@@ -117,7 +65,7 @@ const trace = [
       </p>
     </Chapter>
 
-    <Chapter id="orchestration" title="03 · Orchestration" ground="canvas" eyebrow="The core of the concept">
+    <Chapter id="route" title="03 · Route" ground="canvas" eyebrow="The core of the concept">
       <p class="pchapter__body">
         Klaus sits between intent and execution. It splits work across roles — an
         architect, an implementer, a reviewer — and routes each to whichever agent or
@@ -126,7 +74,7 @@ const trace = [
       <KlausOrchestrationDiagram />
     </Chapter>
 
-    <Chapter id="implementation" title="04 · Implementation" ground="surface">
+    <Chapter id="implement" title="04 · Implement" ground="surface">
       <p class="pchapter__body">
         The coding lane turns an approved plan into changes, in bounded steps. It is
         meant to work against the same context and rules the plan was written under.
@@ -140,7 +88,7 @@ const trace = [
       </p>
     </Chapter>
 
-    <Chapter id="validation" title="06 · Validation" ground="surface">
+    <Chapter id="validate" title="06 · Validate" ground="surface">
       <p class="pchapter__body">
         Validation is a gate, not a summary: checks run, results are read, and a step
         that cannot be verified is reported as unverified rather than assumed to pass.
@@ -153,7 +101,7 @@ const trace = [
         verified, and what remains — so the next session, or the next agent, starts
         from facts.
       </p>
-      <ProcessSpine label="Klaus workflow" steps={stages} />
+      <ProcessSpine label="Klaus workflow" steps={klausStages} />
     </Chapter>
 
     <Chapter id="status" title="Current status" ground="surface">
@@ -169,7 +117,7 @@ const trace = [
         <h3 class="wtrace__title">One hypothetical task, seven stages</h3>
         <p class="wtrace__task">
           <span class="wtrace__task-label mono">Example task</span>
-          {traceTask}
+          {klausExampleTask}
         </p>
         <p class="pchapter__body wtrace__note">
           This shows how the workflow is designed to move a task. It is a design
@@ -177,11 +125,11 @@ const trace = [
         </p>
         <ol class="wtrace__list" aria-label="Conceptual worked trace: seven stages">
           {
-            trace.map((s, i) => (
+            klausStages.map((s, i) => (
               <li class="wtrace__step">
                 <p class="wtrace__stage mono">
                   <span class="wtrace__n">{String(i + 1).padStart(2, "0")}</span>{" "}
-                  {s.stage}
+                  {s.label}
                 </p>
                 <dl class="wtrace__io">
                   <div>

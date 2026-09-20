@@ -1,6 +1,5 @@
 ---
 import StatusChip from "./StatusChip.astro";
-import ScreenshotFrame from "./ScreenshotFrame.astro";
 import type { StatusVariant } from "../data/claims";
 
 /**
@@ -8,8 +7,8 @@ import type { StatusVariant } from "../data/claims";
  * keeps `safetyBadge` / `honestyBadge` / `disclaimer` — the honesty discipline —
  * and adds the flagship treatment.
  *
- *  - `weight="flagship"`: a full-width row, 7/5 split, product capture, title at
- *    --text-h1. The ONLY entry with an image; ≥2 type steps above the others.
+ *  - `weight="flagship"`: title at --text-h1, ≥2 type steps above the others. The
+ *    site's showcase visuals now live in `ShowcaseRow`; this card carries no image.
  *  - `weight="standard"`: an asymmetric INDEX ENTRY — no panel, no fill, a 1px
  *    rule is the only chrome. A grid of identical cards is refused.
  *  - The whole row is one link target via a stretched pseudo-element on the
@@ -30,9 +29,6 @@ interface Props {
   stack: string;
   href: string;
   chips?: readonly Chip[];
-  image?: string;
-  imageAlt?: string;
-  imageCaption?: string;
   safetyBadge?: string;
   honestyBadge?: string;
   disclaimer?: string;
@@ -52,9 +48,6 @@ const {
   stack,
   href,
   chips = [],
-  image,
-  imageAlt,
-  imageCaption,
   safetyBadge,
   honestyBadge,
   disclaimer,
@@ -97,14 +90,6 @@ const flagship = weight === "flagship";
 
     {disclaimer && <p class="entry__disclaimer">{disclaimer}</p>}
   </div>
-
-  {
-    flagship && image && imageAlt && imageCaption && (
-      <div class="entry__media">
-        <ScreenshotFrame src={image} alt={imageAlt} caption={imageCaption} />
-      </div>
-    )
-  }
 </article>
 
 <style>
@@ -219,25 +204,6 @@ const flagship = weight === "flagship";
 
   .entry--flagship .entry__subtitle {
     font-size: var(--text-body-lg);
-  }
-
-  .entry--flagship .entry__media {
-    min-width: 0;
-    order: -1; /* phones: image first, then type */
-  }
-
-  @media (min-width: 768px) {
-    .entry--flagship .entry__media {
-      order: 0;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .entry--flagship {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-      align-items: center;
-      gap: var(--space-48);
-    }
   }
 
   /* Secondary entries stay unequal in measure. */
