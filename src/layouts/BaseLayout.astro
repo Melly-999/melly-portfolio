@@ -4,19 +4,24 @@ import "../styles/tokens.css";
 import "../styles/global.css";
 import "../styles/layout.css";
 import "../styles/components.css";
-import "../styles/pages.css";
 
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
 }
 
-const DEFAULT_TITLE = "Mateusz Ozimkiewicz — Full-Stack Developer";
+const DEFAULT_TITLE = "Mateusz Ozimkiewicz — AI Automation & Full-Stack Developer";
 const DEFAULT_DESCRIPTION =
-  "Portfolio of Mateusz Ozimkiewicz — React, TypeScript, FastAPI and safety-first AI applications.";
-const { title = DEFAULT_TITLE, description = DEFAULT_DESCRIPTION } = Astro.props;
+  "Mateusz Ozimkiewicz builds AI automations and full-stack products for real business workflows: AI agents, RAG, internal tools, APIs and dashboards.";
+
+const { title = DEFAULT_TITLE, description = DEFAULT_DESCRIPTION, ogImage } =
+  Astro.props;
+
 const canonicalPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
-const canonicalURL = Astro.site ? new URL(canonicalPath, Astro.site).toString() : undefined;
+const canonicalURL = Astro.site
+  ? new URL(canonicalPath, Astro.site).toString()
+  : undefined;
 ---
 
 <!doctype html>
@@ -25,7 +30,6 @@ const canonicalURL = Astro.site ? new URL(canonicalPath, Astro.site).toString() 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#06080f" />
-    <meta name="color-scheme" content="dark" />
     <title>{title}</title>
     <meta name="description" content={description} />
     {canonicalURL && <link rel="canonical" href={canonicalURL} />}
@@ -34,14 +38,60 @@ const canonicalURL = Astro.site ? new URL(canonicalPath, Astro.site).toString() 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     {canonicalURL && <meta property="og:url" content={canonicalURL} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Runs before first paint. Marks JS availability (entrance animation is
+         additive) and arms the KOYE threshold ONLY when arriving at the Yuzuki
+         route from the homepage entry, first time this session, motion allowed. -->
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add("js");
+        try {
+          // MELLY999 intro: homepage only, once per browser session. sessionStorage
+          // only — no cookies, no tracking. This script ONLY arms the intro; the
+          // "seen" key is written by MellyIntro once it has actually played, so a
+          // reload before the first paint settles (e.g. the dev server's automatic
+          // reload) cannot use the session up. Reduced motion still plays a short
+          // opacity-only version (see MellyIntro). If this script never runs, the
+          // class is never added and the page is unaffected.
+          if (location.pathname.replace(/\/+$/, "") === "") {
+            // `?intro=1` replays it on local hosts only, for testing.
+            var local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+            var force = local && /[?&]intro=(1|force)(&|$)/.test(location.search);
+            if (force || !sessionStorage.getItem("melly999_intro_seen")) {
+              d.classList.add("intro-on");
+            }
+          }
+        } catch (e) {}
+        try {
+          var onYuzuki =
+            location.pathname.replace(/\/+$/, "") === "/projects/yuzuki";
+          var state = sessionStorage.getItem("koye");
+          var reduce = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+          ).matches;
+          if (onYuzuki && state === "pending") {
+            if (reduce) sessionStorage.setItem("koye", "seen");
+            else d.classList.add("koye-on");
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <PageShell>
       <slot />
     </PageShell>
+    <script>
+      import "../scripts/motion";
+    </script>
   </body>
 </html>

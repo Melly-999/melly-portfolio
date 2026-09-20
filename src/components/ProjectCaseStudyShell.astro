@@ -1,0 +1,149 @@
+---
+import { projects, type ProjectSlug } from "../data/projects";
+
+/**
+ * Case-study shell: breadcrumbs + prev/next sequencing, derived from the
+ * registry (Yuzuki-led). `bare` lets a page own its own chapter grounds and
+ * full-bleed sections and use the shell only for the breadcrumb and sequence.
+ */
+interface Props {
+  current: ProjectSlug;
+  bare?: boolean;
+}
+
+const { current: currentSlug, bare = false } = Astro.props;
+const currentIndex = projects.findIndex((project) => project.slug === currentSlug);
+const currentProject = projects[currentIndex];
+
+if (!currentProject) {
+  throw new Error(`Unknown project slug: ${currentSlug}`);
+}
+
+const previousProject = currentIndex > 0 ? projects[currentIndex - 1] : undefined;
+const nextProject =
+  currentIndex < projects.length - 1 ? projects[currentIndex + 1] : undefined;
+
+const previousHref = previousProject?.href ?? "/projects";
+const previousTitle = previousProject?.title ?? "All projects";
+const previousDirection = previousProject ? "Previous" : "Back";
+
+const nextHref = nextProject?.href ?? "/projects";
+const nextTitle = nextProject?.title ?? "All projects";
+---
+
+<section class:list={[bare ? "case-bare" : "section content-width"]}>
+  <div class:list={[{ "content-width": bare }]}>
+    <nav class="case-breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/projects">Projects</a></li>
+        <li aria-hidden="true">/</li>
+        <li><span aria-current="page">{currentProject.title}</span></li>
+      </ol>
+    </nav>
+  </div>
+
+  <slot />
+
+  <div class:list={[{ "content-width": bare }]}>
+    <nav class="project-sequence" aria-label="Project navigation">
+      <div class="project-sequence__links">
+        <a
+          class="panel project-sequence__link"
+          href={previousHref}
+          rel={previousProject ? "prev" : undefined}
+        >
+          <span class="project-sequence__direction">← {previousDirection}</span>
+          <strong>{previousTitle}</strong>
+        </a>
+        <a
+          class="panel project-sequence__link project-sequence__link--next"
+          href={nextHref}
+          rel={nextProject ? "next" : undefined}
+        >
+          <span class="project-sequence__direction">Next →</span>
+          <strong>{nextTitle}</strong>
+        </a>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<style>
+  .case-breadcrumbs {
+    margin-bottom: var(--space-24);
+  }
+
+  .case-bare .case-breadcrumbs {
+    margin-block: var(--space-24);
+  }
+
+  .case-breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+    color: var(--color-ink-muted);
+    font-size: var(--text-label);
+  }
+
+  .case-breadcrumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    min-width: 44px;
+    color: var(--color-ink-secondary);
+  }
+
+  .case-breadcrumbs ol {
+    align-items: center;
+  }
+
+  .project-sequence {
+    margin-top: var(--space-48);
+    padding-block: var(--space-24) var(--space-48);
+    border-top: 1px solid var(--color-line-soft);
+  }
+
+  .project-sequence__links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-16);
+  }
+
+  .project-sequence__link {
+    display: flex;
+    min-width: 0;
+    min-height: 44px;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-4);
+    padding: var(--space-16);
+    overflow-wrap: anywhere;
+    color: var(--color-ink);
+  }
+
+  .project-sequence__link:hover {
+    border-color: var(--color-violet);
+  }
+
+  .project-sequence__link--next {
+    text-align: right;
+  }
+
+  .project-sequence__direction {
+    color: var(--color-violet);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 639px) {
+    .project-sequence__links {
+      grid-template-columns: 1fr;
+    }
+
+    .project-sequence__link--next {
+      text-align: left;
+    }
+  }
+</style>

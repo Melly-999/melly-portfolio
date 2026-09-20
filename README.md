@@ -1,66 +1,57 @@
-# Melly Portfolio
+# Mateusz Ozimkiewicz — Portfolio
 
-Mateusz Ozimkiewicz’s static portfolio for full-stack development, AI tooling and safety-first product work. The site connects three parts of one story:
+**AI Automation & Full-Stack Developer** · also an AI Product Engineer
 
-- AI Agent Workspace — process
-- MellyCore AIOS — platform
-- MellyTrade — product
+A premium portfolio presenting AI automation, full-stack product engineering, agent orchestration, RAG/document intelligence, and systems architecture work.
 
-Public positioning: **Full-Stack Developer | React · TypeScript · FastAPI · AI Tools**.
+Live site: <https://mateusz-ozimkiewicz-portfolio.vercel.app>
 
-## Stack and boundaries
+## Projects
+
+Every project carries a status label on the site so that what is built, what is a prototype, and what is a concept stay clearly separate.
+
+| Project | What it is | Status shown on the site |
+|---|---|---|
+| **Yuzuki** | Flagship. A local-first Windows desktop AI application with seven named routing modes and a fail-closed private mode. Tauri, React and TypeScript front end, a local Node API, and Hermes Agent integration over loopback. Public source only. | Private mode and the local chat path are live-verified; other routing modes are implemented but not live-verified; the Knowledge Constellation is a prototype on fixture data |
+| **Klaus** | An AI orchestration and coding agent: coordinates agents and models, carries project context, and routes work through implementation, review and validation. | Concept — owner-defined architecture |
+| **MellyCore AIOS** | A command-center architecture for shared context and agent coordination. | Partial — documentation plus a static preview; execution locked, no live providers |
+| **RAG Document Assistant** | Document search with source-grounded answers for knowledge bases and support documentation. | Concept interface |
+| **MellyTrade** | A data-dense analytics and monitoring dashboard for signals, risk and system health. | Concept interface with sample values; read-only, dry-run, no broker execution |
+
+A supporting page describes a documented multi-agent development workflow.
+
+## Site
 
 - Astro 7 with strict TypeScript
-- Plain CSS and custom properties
-- Static output with minimal client JavaScript
-- System font stacks; no external font request
-- No UI framework, Tailwind, database, authentication, analytics or external API
-- Stable static production deployment on Vercel
+- Plain CSS with custom properties; no UI framework, database, analytics or external API
+- Static output with a small amount of client script for motion and navigation
+- Deployed on Vercel; canonical and Open Graph URLs come from the production `site` value in `astro.config.mjs`
 
-The production `site` value is `https://mateusz-ozimkiewicz-portfolio.vercel.app`. Canonical and Open Graph URLs are generated from that stable domain; preview deployment URLs are never published as the portfolio URL.
+Routes: `/`, `/projects`, `/projects/yuzuki`, `/projects/klaus`, `/projects/aios`, `/projects/rag-assistant`, `/projects/mellytrade`, `/projects/workspace`, `/about`, `/contact`.
 
-## Local setup
+## Development
 
 Requires Node.js 22.12 or newer.
 
-```powershell
+```bash
 npm ci
-npm run dev
+npm run dev      # local dev server
+npm run check    # Astro type and template diagnostics
+npm run build    # static production build to dist/
 ```
 
-Production validation:
+`npm run preview` serves the production build locally.
 
-```powershell
-npm run build
-npm run check
-git diff --check
-```
+## Continuous integration
 
-The repository does not currently define separate lint or format-check scripts.
+GitHub Actions installs dependencies with `npm ci`, then runs `npm run check` and `npm run build` on pushes and pull requests to `main`.
 
-## Routes
+## Notes on claims
 
-| Route | Purpose |
-|---|---|
-| `/` | Terminal-first home page and project narrative |
-| `/projects` | Project index |
-| `/projects/workspace` | AI Agent Workspace case study |
-| `/projects/aios` | MellyCore AIOS static architecture showcase |
-| `/projects/mellytrade` | MellyTrade safety-first research dashboard case study |
-| `/about` | Profile, skills and working principles |
-| `/contact` | Direct email, GitHub and CV-request links |
+The site does not present fabricated metrics, clients, users, testimonials or production results. Concept interfaces and fixture data are labelled as such wherever they appear.
 
-## Safety and honesty
+## Links
 
-- MellyTrade is read-only, dry-run and advisory.
-- Live orders and broker execution remain blocked.
-- Fixture content is labelled as static and illustrative.
-- No fabricated performance, clients, users, testimonials or production claims.
-- MellyCore AIOS is described as a docs-first prototype and static architecture model.
-- The terminal is an illustrative portfolio element, not live monitoring.
-
-## Design source
-
-The selected Terminal First prototype is the visual and content reference. Design-tool HTML, runtime scripts and boards are internal reference material only; the production site is implemented as maintainable Astro components and plain CSS.
-
-Deployment uses the stable Vercel project `mateusz-ozimkiewicz-portfolio`. GitHub profile linking is performed only after merged-main production QA passes.
+- Yuzuki source: <https://github.com/Melly-999/yuzuki-desktop>
+- GitHub: <https://github.com/Melly-999>
+- Contact: see the `/contact` page on the live site

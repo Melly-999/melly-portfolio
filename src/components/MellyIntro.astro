@@ -1,0 +1,314 @@
+---
+/**
+ * MELLY999 brand-entry intro. Homepage only, once per browser session.
+ *
+ * True black field, then an original typographic construction: a few strokes
+ * appear near the baseline, each character is built from clipped pieces (and a
+ * briefly wrong stand-in glyph) that step into the correct letter, the wordmark
+ * locks and holds, and the layer lifts into the hero. ~2350ms in total:
+ *   0–180ms     pure black
+ *   180–700     first strokes; characters start (staggered 75ms apart)
+ *   700–1725    pieces step through partial glyphs and resolve, left to right
+ *   1725–1950   MELLY999 locked and clean
+ *   1950–2350   dissolve into the hero
+ * No spinner, tagline, links, terminal text, ENTER or HUD; no canvas/WebGL/library.
+ *
+ * Progressive enhancement: the real homepage is in the DOM underneath. This layer
+ * is display:none unless the inline <head> script arms it (`html.intro-on`), and
+ * its exit is a pure CSS animation, so even if JS dies mid-way the layer removes
+ * itself and never gates the page. It is aria-hidden (fragments and the wordmark
+ * are decorative — the site's own name is in the header), non-interactive and
+ * cannot trap focus. Reduced motion: no construction — a ~200ms opacity-only
+ * MELLY999 (no clip, no blur, no movement).
+ *
+ * Session lifecycle: the <head> script arms the layer; the script below writes the
+ * session key only after the intro has actually played (animationend, or a
+ * fallback timer) while the tab is visible. Writing it at arm time let anything
+ * that reloads the page early — the Vite dev server does, ~200ms into the very
+ * first load — use the session up before a frame of it was seen. A tab opened in
+ * the background holds the timeline until it becomes visible.
+ */
+---
+
+<div class="intro" aria-hidden="true">
+  <div class="intro__stage">
+    <p class="intro__word">
+      <span class="ch" style="--i:0" data-alt="N"><span class="g">M</span></span>
+      <span class="ch" style="--i:1" data-alt="F"><span class="g">E</span></span>
+      <span class="ch" style="--i:2" data-alt="I"><span class="g">L</span></span>
+      <span class="ch" style="--i:3" data-alt="I"><span class="g">L</span></span>
+      <span class="ch" style="--i:4" data-alt="V"><span class="g">Y</span></span>
+      <span class="ch" style="--i:5" data-alt="6"><span class="g">9</span></span>
+      <span class="ch" style="--i:6" data-alt="0"><span class="g">9</span></span>
+      <span class="ch" style="--i:7" data-alt="8"><span class="g">9</span></span>
+    </p>
+    <span class="frag frag--a"></span>
+    <span class="frag frag--b"></span>
+    <span class="frag frag--c"></span>
+    <span class="frag frag--d"></span>
+    <span class="frag frag--e"></span>
+    <span class="frag frag--f"></span>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var d = document.documentElement;
+    if (!d.classList.contains("intro-on")) return;
+    var el = document.querySelector(".intro");
+    var marked = false;
+    var timer;
+
+    function mark() {
+      if (marked || document.visibilityState !== "visible") return;
+      marked = true;
+      try {
+        sessionStorage.setItem("melly999_intro_seen", "1");
+      } catch (e) {}
+    }
+
+    // Restart the CSS timeline (class off/on) and schedule the "seen" mark.
+    function run() {
+      d.classList.remove("intro-on");
+      void d.offsetWidth;
+      d.classList.add("intro-on");
+      clearTimeout(timer);
+      timer = setTimeout(mark, 3200);
+    }
+
+    if (el) {
+      el.addEventListener("animationend", function (e) {
+        if (e.animationName === "intro-out") mark();
+      });
+    }
+    // Leaving after the construction has started counts as seen; an early reload
+    // (the dev server's, ~200–400ms in) does not.
+    window.addEventListener("pagehide", function () {
+      if (performance.now() > 700) mark();
+    });
+
+    if (document.visibilityState === "visible") {
+      timer = setTimeout(mark, 3200);
+    } else {
+      document.addEventListener("visibilitychange", function wait() {
+        if (document.visibilityState !== "visible") return;
+        document.removeEventListener("visibilitychange", wait);
+        run();
+      });
+    }
+  })();
+</script>
+
+<style is:global>
+  .intro {
+    display: none;
+  }
+
+  html.intro-on .intro {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: grid;
+    place-items: center;
+    /* True black on purpose: the site canvas (#06080f) reads blue against it. */
+    background: #000;
+    pointer-events: none;
+    animation: intro-out 400ms var(--ease-standard) 1950ms forwards;
+  }
+
+  /* All sizes derive from the wordmark's font-size, so the strokes stay close to
+     it on every viewport. */
+  .intro__stage {
+    position: relative;
+    font-family: var(--font-sans);
+    font-size: clamp(2rem, 1.3rem + 3.4vw, 4rem);
+    font-weight: 800;
+    color: var(--color-ink);
+    line-height: 1;
+  }
+
+  .intro__word {
+    display: flex;
+    gap: 0.2em;
+    margin: 0;
+    font-variant-numeric: lining-nums;
+  }
+
+  .intro .ch {
+    position: relative;
+    display: block;
+  }
+
+  /* The correct glyph, revealed through a sequence of clipped pieces. Discrete
+     steps (not eased) keep it geometric rather than fade-like. */
+  .intro .g {
+    display: block;
+    animation: ch-glyph 1000ms steps(1, end) calc(200ms + var(--i) * 75ms) both;
+  }
+
+  /* A briefly wrong stand-in glyph, half-shown, that gives way to the right one. */
+  .intro .ch::after {
+    content: attr(data-alt);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: ch-alt 1000ms steps(1, end) calc(200ms + var(--i) * 75ms) both;
+  }
+
+  @keyframes ch-glyph {
+    0% {
+      clip-path: inset(50% 50% 50% 50%);
+    }
+    10% {
+      clip-path: inset(44% 66% 42% 4%);
+    }
+    26% {
+      clip-path: inset(58% 0 0 40%);
+    }
+    44% {
+      clip-path: inset(0 30% 52% 0);
+    }
+    62% {
+      clip-path: inset(0 0 30% 0);
+    }
+    82% {
+      clip-path: inset(0 0 0 0);
+      transform: translateY(0.05em);
+    }
+    100% {
+      clip-path: inset(0 0 0 0);
+      transform: none;
+    }
+  }
+
+  @keyframes ch-alt {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.5;
+      clip-path: inset(56% 0 0 0);
+    }
+    40% {
+      opacity: 0.5;
+      clip-path: inset(0 0 0 48%);
+    }
+    58% {
+      opacity: 0;
+      clip-path: none;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /* A few isolated strokes around the word: the "signal" before the letters. */
+  .intro .frag {
+    position: absolute;
+    background: var(--color-ink);
+    opacity: 0;
+    animation: frag 560ms steps(1, end) both;
+  }
+
+  .frag--a {
+    left: 6%;
+    top: -0.42em;
+    width: 0.34em;
+    height: 2px;
+    animation-delay: 180ms;
+  }
+  .frag--b {
+    left: 31%;
+    bottom: -0.4em;
+    width: 2px;
+    height: 0.26em;
+    animation-delay: 260ms;
+  }
+  .frag--c {
+    left: 58%;
+    top: -0.36em;
+    width: 0.22em;
+    height: 2px;
+    animation-delay: 340ms;
+  }
+  .frag--d {
+    right: 12%;
+    bottom: -0.44em;
+    width: 0.4em;
+    height: 2px;
+    animation-delay: 300ms;
+  }
+  .frag--e {
+    right: -0.05em;
+    top: -0.3em;
+    width: 2px;
+    height: 0.22em;
+    animation-delay: 420ms;
+  }
+  .frag--f {
+    left: -0.04em;
+    bottom: -0.3em;
+    width: 2px;
+    height: 0.3em;
+    animation-delay: 220ms;
+  }
+
+  @keyframes frag {
+    0% {
+      opacity: 0;
+    }
+    18% {
+      opacity: 0.7;
+      transform: translate(0.08em, 0);
+    }
+    60% {
+      opacity: 0.45;
+      transform: translate(0.16em, 0);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(0.16em, 0);
+    }
+  }
+
+  @keyframes intro-out {
+    to {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  /* Reduced motion: no construction. The identity moment stays, as opacity only
+     (~200ms total): black -> MELLY999 -> page. */
+  @keyframes intro-word-flat {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.intro-on .intro {
+      animation: intro-out 80ms linear 120ms forwards;
+    }
+
+    .intro__stage {
+      animation: intro-word-flat 80ms linear 0s both;
+    }
+
+    .intro .g {
+      animation: none;
+      clip-path: none;
+      transform: none;
+    }
+
+    .intro .ch::after,
+    .intro .frag {
+      display: none;
+    }
+  }
+</style>

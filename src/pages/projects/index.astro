@@ -1,30 +1,64 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
-import { projects } from "../../data/portfolio";
+import { projects, concepts } from "../../data/projects";
+
+const [flagship, ...rest] = projects;
+const [automation] = concepts;
 ---
 
 <BaseLayout
   title="Projects — Mateusz Ozimkiewicz"
-  description="A process-to-platform-to-product portfolio: AI Agent Workspace, MellyCore AIOS and the safety-first MellyTrade research dashboard."
+  description="Selected projects by Mateusz Ozimkiewicz: Yuzuki, a local-first AI desktop; Klaus, an AI orchestration and coding agent; MellyCore, a command-center architecture; a RAG document assistant; and MellyTrade, an analytics interface."
 >
-  <header class="page-intro content-width">
-    <p class="section-kicker">Projects</p>
-    <h1>A narrative in three layers</h1>
-    <p class="page-intro__copy">
-      Each project is a step in the same story. Process becomes platform; platform becomes
-      product. Read them in order, or jump to what matters.
+  <section class="section content-width">
+    <h1 style="font-size:var(--text-h1);">Projects</h1>
+    <p class="reading-width" style="margin-top:var(--space-8);color:var(--color-ink-secondary);">
+      One flagship, then the systems around it — each labelled with how well it is
+      proven.
     </p>
-    <div class="story-rail" aria-label="Project sequence">
-      <span>01 Process</span><span aria-hidden="true">→</span>
-      <span>02 Platform</span><span aria-hidden="true">→</span>
-      <span>03 Product</span>
-    </div>
-  </header>
 
-  <section class="section section--last content-width" aria-label="Portfolio projects">
-    <div class="project-list">
-      {projects.map((project) => <ProjectCard project={project} detailed />)}
+    <div style="margin-top:var(--space-32);">
+      <ProjectCard
+        weight="flagship"
+        headingLevel={2}
+        title={flagship.title}
+        subtitle={flagship.tagline}
+        description={flagship.description}
+        stack={flagship.stack}
+        href={flagship.href}
+        chips={flagship.chips}
+        image={flagship.image}
+        imageAlt={flagship.imageAlt}
+        imageCaption={flagship.imageCaption}
+        threshold
+      />
+      {
+        rest.map((project) => (
+          <ProjectCard
+            weight={project.weight}
+            headingLevel={2}
+            label={project.badge}
+            title={project.title}
+            subtitle={project.tagline}
+            description={project.description}
+            stack={project.stack}
+            href={project.href}
+            chips={project.chips}
+          />
+        ))
+      }
+      <ProjectCard
+        weight="supporting"
+        headingLevel={2}
+        label="Concept"
+        title={automation.title}
+        subtitle={automation.tagline}
+        description={automation.statement}
+        stack="Signal · Analysis · Priority · Suggested action · Human review"
+        href="/#automation"
+        chips={[automation.chip]}
+      />
     </div>
   </section>
 </BaseLayout>

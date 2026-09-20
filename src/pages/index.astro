@@ -1,114 +1,599 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import CommandCore from "../components/CommandCore.astro";
+import HeroPlate from "../components/HeroPlate.astro";
+import MellyIntro from "../components/MellyIntro.astro";
+import EvidenceTrace from "../components/EvidenceTrace.astro";
 import ProjectCard from "../components/ProjectCard.astro";
-import TerminalProof from "../components/TerminalProof.astro";
-import { githubProfile, projects } from "../data/portfolio";
+import StatusChip from "../components/StatusChip.astro";
+import CycleDiagram from "../components/CycleDiagram.astro";
+import ProcessSpine from "../components/ProcessSpine.astro";
+import SystemsIndex from "../components/SystemsIndex.astro";
+import { projects, concepts } from "../data/projects";
+import { YUZUKI_SOURCE_HREF } from "../data/social";
 
-const narrative = [
+/**
+ * Homepage — ten chapters (handoff §3): hero · selected systems · what I build ·
+ * [intertitle] · Yuzuki entry · MellyCore · automation · how I build · systems
+ * index · about · colophon. Chapter grounds change by HARD STEP
+ * (canvas ↔ surface). The one engineered peak lives on /projects/yuzuki; the
+ * hero is the greet, not a second peak.
+ */
+const [yuzuki, klaus, mellycore, rag, mellytrade, workspace] = projects;
+const [automation] = concepts;
+
+const buildStages = [
+  { label: "Discover" },
+  { label: "Architecture" },
+  { label: "Safety contract", key: true },
+  { label: "Build" },
+  { label: "Validate", key: true },
+  { label: "Real-device acceptance" },
+  { label: "Ship" },
+] as const;
+
+/** Work a client can commission, each tied to a project on this site. */
+const capabilities = [
   {
-    step: "01 · Process",
-    tone: "process",
-    title: "AI Agent Workspace",
-    body: "An agent-based workflow across ChatGPT, Claude Code, Codex, Obsidian, GitHub and ClickUp — how the work actually gets done.",
+    name: "AI automation & agents",
+    stack: "Agent workflows · Task routing · Human review · Context handoff",
+    evidence: "Yuzuki's routing and fail-closed provider check",
+    href: "/projects/yuzuki#routing",
   },
   {
-    step: "02 · Platform",
-    tone: "platform",
-    title: "MellyCore AIOS",
-    body: "A context graph and agent-handoff command center that turns process into a reusable platform. Docs-first prototype and static architecture showcase.",
+    name: "Document AI / RAG",
+    stack: "Ingestion · Chunking · Embeddings · Retrieval · Source-cited answers",
+    evidence: "RAG Document Assistant (concept interface)",
+    href: "/projects/rag-assistant",
   },
   {
-    step: "03 · Product",
-    tone: "product",
-    title: "MellyTrade",
-    body: "A safe, read-only AI trading research dashboard — advisory only, dry-run, no broker execution. A static portfolio case study.",
+    name: "Full-stack products & APIs",
+    stack: "React · TypeScript · Python · FastAPI · Tauri",
+    evidence: "The Yuzuki desktop product",
+    href: "/projects/yuzuki#workspace",
   },
-];
+  {
+    name: "Dashboards & internal tools",
+    stack: "Data-dense UI · Monitoring · Risk and status views",
+    evidence: "MellyTrade (concept interface, read-only)",
+    href: "/projects/mellytrade",
+  },
+  {
+    name: "Testing & validation",
+    stack: "pytest · Playwright · GitHub Actions · Documentation",
+    evidence: "Yuzuki's public validation suites (raw counts)",
+    href: "/projects/yuzuki#validation",
+  },
+] as const;
+
+const email = "mateusz.ozimkiewicz9@gmail.com";
+const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow discussion")}`;
 ---
 
-<BaseLayout>
-  <header class="hero">
-    <div class="hero__core" aria-hidden="true"><CommandCore /></div>
-    <div class="hero__grid content-width">
-      <div>
-        <p class="eyebrow">Full-Stack Developer</p>
-        <h1 class="hero__title">I build safety-first AI applications and developer tools.</h1>
-        <p class="hero__copy">
-          I use React, TypeScript, FastAPI and an AI-native development workflow to turn
-          documented ideas into clear, testable products.
-        </p>
-        <p class="hero__stack">React · TypeScript · FastAPI · Astro · AI Tools</p>
-        <p class="availability">Available now · Poland / Remote · B2B · Freelance · Contract</p>
-        <div class="hero__actions">
-          <a href="/projects" class="button button--primary">View Projects <span aria-hidden="true">→</span></a>
-          <a href={githubProfile} class="button button--secondary" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </div>
-      </div>
-      <div class="hero__terminal"><TerminalProof /></div>
-    </div>
-  </header>
+<BaseLayout
+  title="Mateusz Ozimkiewicz — AI Automation & Full-Stack Developer"
+  description="Mateusz Ozimkiewicz builds AI automations and full-stack products for real business workflows: AI agents, RAG and document AI, internal tools, APIs and dashboards."
+>
+  <MellyIntro />
+  <HeroPlate />
 
-  <section class="section content-width" aria-label="Process, platform and product story">
-    <div class="narrative-grid">
-      {
-        narrative.map((item) => (
-          <article class={`narrative-card narrative-card--${item.tone}`}>
-            <p class="narrative-card__meta"><span>{item.step}</span><i aria-hidden="true"></i></p>
-            <h2>{item.title}</h2>
-            <p>{item.body}</p>
-          </article>
-        ))
-      }
+  <EvidenceTrace page="home" />
+
+  <!-- 02 · Selected systems — deliberately unequal -->
+  <section id="systems" class="chapter ground-surface" data-chapter data-title="Selected systems" aria-labelledby="systems-heading">
+    <div class="content-width">
+      <h2 id="systems-heading" class="chapter__title" data-flow>Selected systems</h2>
+      <p class="chapter__intro reading-width">
+        Each project proves a different kind of work you can commission — projects that are
+        concepts or previews are labelled as such.
+      </p>
+
+      <ProjectCard
+        weight="flagship"
+        title={yuzuki.title}
+        subtitle={yuzuki.tagline}
+        description={yuzuki.description}
+        stack={yuzuki.stack}
+        href={yuzuki.href}
+        chips={yuzuki.chips.slice(0, 1)}
+        image={yuzuki.image}
+        imageAlt={yuzuki.imageAlt}
+        imageCaption={yuzuki.imageCaption}
+        threshold
+      />
+
+      <ProjectCard
+        weight="major"
+        title={klaus.title}
+        subtitle={klaus.tagline}
+        description={klaus.description}
+        stack={klaus.stack}
+        href={klaus.href}
+        chips={klaus.chips}
+      />
+
+      <div class="trio">
+        {
+          [mellycore, rag, mellytrade].map((p) => (
+            <ProjectCard
+              title={p.title}
+              subtitle={p.tagline}
+              description={p.description}
+              stack={p.stack}
+              href={p.href}
+              chips={p.chips}
+            />
+          ))
+        }
+      </div>
+
+      <div class="other">
+        <h3 class="other__label mono">Other work</h3>
+        <ProjectCard
+          weight="supporting"
+          title={workspace.title}
+          subtitle={workspace.tagline}
+          description={workspace.description}
+          stack={workspace.stack}
+          href={workspace.href}
+        />
+        <ProjectCard
+          weight="supporting"
+          title={automation.title}
+          subtitle={automation.tagline}
+          description={automation.statement}
+          stack="Signal · Analysis · Priority · Suggested action · Human review"
+          href="#automation"
+          chips={[automation.chip]}
+        />
+      </div>
     </div>
   </section>
 
-  <section class="section content-width" aria-labelledby="selected-work-heading">
-    <div class="section-heading">
-      <div>
-        <p class="section-kicker">Selected work</p>
-        <h2 id="selected-work-heading">Three layers, one system</h2>
-      </div>
-      <a href="/projects" class="text-link">All projects <span aria-hidden="true">→</span></a>
-    </div>
-    <div class="projects-grid">
-      {projects.map((project) => <ProjectCard project={project} />)}
+  <!-- 03 · What I build — the bridge from technical proof to commissionable capability.
+       Sits right after the systems so a buyer reads it before the deepest technical
+       chapters. Capability tied to evidence, no skill bars. -->
+  <section id="capabilities" class="chapter ground-canvas" data-chapter data-title="What I build" aria-labelledby="cap-heading">
+    <div class="content-width stack">
+      <h2 id="cap-heading" class="chapter__title" data-flow>What I build</h2>
+      <p class="chapter__intro reading-width">
+        The categories of work I take on, each tied to evidence on this site.
+      </p>
+      <dl class="caps">
+        {
+          capabilities.map((c, i) => (
+            <div class="caps__row" data-flow style={`--i:${i};--stagger:70ms`}>
+              <dt class="caps__name">{c.name}</dt>
+              <dd class="caps__stack mono">{c.stack}</dd>
+              <dd class="caps__evidence">Evidence: <a href={c.href}>{c.evidence}</a></dd>
+            </div>
+          ))
+        }
+      </dl>
     </div>
   </section>
 
-  <section class="section content-width" aria-labelledby="showcase-heading">
-    <div class="showcase">
-      <div class="showcase__grid">
-        <div>
-          <span class="showcase__label">Cinematic showcase · /projects/aios</span>
-          <h2 id="showcase-heading">The AI command center<br />behind the work</h2>
-          <p class="showcase__copy">
-            MellyCore AIOS is a docs-first prototype of an AI command center — context,
-            agents and handoffs mapped into a single graph. A cinematic portfolio route
-            tells the platform story end to end.
+  <!-- Intertitle: authored silence before the peak. Decorative; carries no claim. -->
+  <div class="intertitle ground-canvas" data-chapter data-title="Yuzuki" aria-hidden="true">
+    <p class="intertitle__word">Yuzuki</p>
+  </div>
+
+  <!-- 03 · Yuzuki — the flagship entry (KOYE threshold arms here) -->
+  <section id="yuzuki-entry" class="chapter ground-canvas entry-chapter" data-chapter data-title="Yuzuki" aria-labelledby="yuzuki-entry-heading">
+    <div class="content-width stack">
+      <h2 id="yuzuki-entry-heading" class="entry-chapter__title" data-reveal>
+        Watch a request meet the router.
+      </h2>
+      <p class="entry-chapter__line reading-width">
+        In private mode it hits a hard stop instead of a cloud fallback.
+      </p>
+      <p class="chip-row">
+        <StatusChip variant="verified" label="PRIVATE · LIVE-VERIFIED" />
+        <StatusChip variant="implemented" label="6 MODES · IMPLEMENTED · NOT LIVE-VERIFIED" />
+      </p>
+      <p class="cluster entry-chapter__actions">
+        <a class="enter" href="/projects/yuzuki" data-threshold-link>
+          <span aria-hidden="true">[ ENTER ]</span>
+          <span class="enter__text">Enter the Yuzuki case study</span>
+        </a>
+        <a class="button button--secondary" href={YUZUKI_SOURCE_HREF} target="_blank" rel="noopener noreferrer">
+          View source<span class="sr-only"> (opens in a new tab)</span>
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- 04 · MellyCore — architecture, not product -->
+  <section id="mellycore" class="chapter ground-surface" data-chapter data-title="MellyCore" aria-labelledby="mellycore-heading">
+    <div class="content-width">
+      <div class="grid-12">
+        <div class="mc__copy stack">
+          <StatusChip variant="partial" label="PARTIAL · DOCS + STATIC SLICE" />
+          <h2 id="mellycore-heading" class="chapter__title" data-flow>MellyCore</h2>
+          <p class="reading-width mc__lead" data-flow style="--i:1">
+            A systems architecture for agent orchestration: an operating loop where a human
+            approves before anything is implemented. It is not a shipped public product.
           </p>
-          <a href="/projects/aios" class="button button--primary">Enter the showcase <span aria-hidden="true">→</span></a>
+          <p><a href="/projects/aios">Read the MellyCore case study →</a></p>
         </div>
-        <div class="handoff-card" aria-label="Illustrative static agent handoff flow">
-          <p class="handoff-card__heading"><span>Agent handoff</span><span>illustrative flow</span></p>
-          <div class="handoff-step handoff-step--info"><span>Claude Code</span><small>plan</small></div>
-          <p class="handoff-arrow">↓ context handoff</p>
-          <div class="handoff-step handoff-step--brand"><span>Codex</span><small>implement</small></div>
-          <p class="handoff-arrow">↓ verify</p>
-          <div class="handoff-step handoff-step--safe"><span>Review + ship</span><small>GitHub</small></div>
+        <div class="mc__diagram">
+          <CycleDiagram />
         </div>
       </div>
+
+      <div class="mc__cols" data-flow>
+        <div>
+          <h3 class="mini mono">Implemented</h3>
+          <ul class="mc__list">
+            <li>Repository documentation and static homepage</li>
+            <li>Loop Operations Foundation (9 registered loops, report-only)</li>
+            <li>Context Gate through iteration 4</li>
+            <li>The static Holographic Source Arena CSS/DOM slice</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="mini mono">Prototype</h3>
+          <ul class="mc__list">
+            <li>The legacy Live Cockpit V2</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="mini mono">Planned</h3>
+          <ul class="mc__list">
+            <li>The full Observatory</li>
+            <li>Real provider adapters</li>
+            <li>The 3D/WebGL renderer</li>
+          </ul>
+        </div>
+      </div>
+      <p class="mc__note">
+        Simulated: model-comparison copy is deterministic local text, not live model responses.
+      </p>
     </div>
   </section>
 
-  <section class="section section--last content-width" aria-labelledby="home-contact-heading">
-    <div class="contact-cta">
-      <h2 id="home-contact-heading">Open to full-stack roles & freelance</h2>
-      <p>Full-stack, AI-tools, B2B, contract and remote. Based in Poland, available worldwide.</p>
-      <div class="action-row">
-        <a href="/contact" class="button button--primary">Get in touch <span aria-hidden="true">→</span></a>
-        <a href="/about" class="button button--secondary">About & skills</a>
-      </div>
+  <!-- 05 · AI Automation / OpsPilot — the plainest, most legible chapter -->
+  <section id="automation" class="chapter chapter--light ground-canvas" data-chapter data-title="AI Automation" aria-labelledby="automation-heading">
+    <div class="content-width stack">
+      <StatusChip variant="concept" />
+      <h2 id="automation-heading" class="chapter__title" data-flow>AI Automation</h2>
+      <p class="auto__lead reading-width" data-flow style="--i:1">{automation.statement}</p>
+      <ProcessSpine
+        variant="boxed"
+        label="Automation workflow"
+        stagger={60}
+        steps={[
+          { label: "Signal", sub: "operational" },
+          { label: "Analysis", sub: "AI" },
+          { label: "Priority", sub: "Low / Medium / High" },
+          { label: "Suggested action" },
+          { label: "Human review", key: true, sub: "the step that decides" },
+        ]}
+      />
+    </div>
+  </section>
+
+  <!-- 06 · How I build -->
+  <section id="how-i-build" class="chapter ground-surface" data-chapter data-title="How I build" aria-labelledby="how-heading">
+    <div class="content-width stack">
+      <h2 id="how-heading" class="chapter__title" data-flow>How I build</h2>
+      <ProcessSpine label="Build process" steps={buildStages} />
+      <p class="how__evidence reading-width">
+        Yuzuki's fail-closed provider check is the safety contract; its 23/210/63/7
+        suites are the validation.
+      </p>
+    </div>
+  </section>
+
+  <!-- 07 · Systems index (Max Leiter: bounded, one section) -->
+  <section id="systems-index" class="chapter ground-canvas" data-chapter data-title="Systems index" aria-labelledby="index-heading">
+    <div class="content-width stack">
+      <h2 id="index-heading" class="chapter__title">Systems index</h2>
+      <p class="reading-width idx__lead">
+        A directory view of the same work — not the navigation, just the map.
+      </p>
+      <SystemsIndex />
+    </div>
+  </section>
+
+  <!-- 09 · About -->
+  <section id="about" class="chapter ground-canvas" data-chapter data-title="About" aria-labelledby="about-heading">
+    <div class="content-width stack">
+      <h2 id="about-heading" class="chapter__title">About</h2>
+      <p class="reading-width">
+        AI Automation &amp; Full-Stack Developer working across React, TypeScript and FastAPI,
+        building AI automations and full-stack products for real business workflows — with an
+        AI-assisted workflow built around engineering discipline: dry-run defaults,
+        read-only modes, and honest limits.
+      </p>
+      <p><a href="/about">More about me →</a></p>
+    </div>
+  </section>
+
+  <!-- 10 · Contact — the business path: what can be commissioned, why me, what next -->
+  <section id="contact" class="chapter ground-surface" data-chapter data-title="Contact" aria-labelledby="contact-heading">
+    <div class="content-width stack">
+      <h2 id="contact-heading" class="contact__title">
+        Have a workflow that still depends on repetitive manual work?
+      </h2>
+      <p class="reading-width contact__lead">
+        I build AI automation, internal tools and full-stack AI applications for businesses.
+        Send a short description of the process — what happens today and what should happen
+        instead — and I will reply by email.
+      </p>
+      <p class="cluster">
+        <a class="button button--primary button--lead" href={workflowHref}>Discuss your workflow</a>
+        <a class="button button--secondary" href="/contact">Other ways to reach me</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- 11 · Colophon — resolve: contact as a running line, the evidence record completes -->
+  <section id="colophon" class="chapter chapter--colophon ground-canvas" data-chapter data-title="Colophon" aria-labelledby="colophon-heading">
+    <div class="content-width stack">
+      <h2 id="colophon-heading" class="colophon__title">Colophon</h2>
+      <p class="colophon__line">
+        Mateusz Ozimkiewicz · Available now · Poland / Remote · B2B · Freelance · Contract ·
+        <a href={`mailto:${email}`} class="colophon__email">{email}</a>
+      </p>
+      <p class="colophon__intro">Every claim this site makes, and how well each is proven:</p>
+      <EvidenceTrace page="home" record />
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .chapter {
+    padding-block: var(--section-spacing-lg);
+  }
+
+  .chapter__title {
+    font-size: var(--text-h1);
+    letter-spacing: -0.015em;
+  }
+
+  .chapter__intro {
+    margin-top: var(--space-12);
+    color: var(--color-ink-secondary);
+    font-size: var(--text-body-lg);
+  }
+
+  .contact__title {
+    max-width: 24ch;
+    font-size: var(--text-h1);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  .contact__lead {
+    color: var(--color-ink-secondary);
+    font-size: var(--text-body-lg);
+  }
+
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+  }
+
+  /* Third tier: three distinct narratives in deliberately unequal measures. */
+  .trio {
+    display: grid;
+    gap: 0 var(--space-48);
+  }
+
+  @media (min-width: 1024px) {
+    .trio {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 4fr);
+      align-items: start;
+    }
+  }
+
+  .other {
+    margin-top: var(--space-32);
+  }
+
+  .other__label {
+    color: var(--color-ink-muted);
+    font-size: var(--text-micro);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Intertitle: near-empty plate, chapter title only. Silence before the peak. */
+  .intertitle {
+    display: grid;
+    place-items: center start;
+    min-height: 44vh;
+    padding-inline: var(--gutter-mobile);
+  }
+
+  .intertitle__word {
+    width: min(100%, var(--content-max-width));
+    margin-inline: auto;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  /* 03 · Yuzuki entry */
+  .entry-chapter {
+    padding-block: var(--section-spacing-hero);
+  }
+
+  .entry-chapter__title {
+    font-size: var(--text-display);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    max-width: 18ch;
+  }
+
+  .entry-chapter__line {
+    color: var(--color-ink-secondary);
+    font-size: var(--text-body-lg);
+  }
+
+  .enter {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-8) var(--space-16);
+    min-height: 44px;
+    align-content: center;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.1em;
+    color: var(--color-ink);
+  }
+
+  .enter:hover {
+    color: var(--color-violet-bright);
+  }
+
+  .enter__text {
+    font-family: var(--font-sans);
+    letter-spacing: 0;
+    font-size: var(--text-body);
+    color: var(--color-ink-secondary);
+  }
+
+  /* 04 · MellyCore: dense, small type, tight rhythm — rigor */
+  .mc__copy {
+    grid-column: 1 / -1;
+    min-width: 0;
+    gap: var(--space-16);
+  }
+
+  .mc__diagram {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .mc__copy {
+      grid-column: 1 / span 6;
+    }
+    .mc__diagram {
+      grid-column: 8 / span 5;
+    }
+  }
+
+  .mc__lead {
+    color: var(--color-ink-secondary);
+  }
+
+  .mc__cols {
+    display: grid;
+    gap: var(--space-24);
+    margin-top: var(--space-48);
+    padding-top: var(--space-24);
+    border-top: 1px solid var(--color-line);
+    font-size: var(--text-label);
+  }
+
+  @media (min-width: 768px) {
+    .mc__cols {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .mini {
+    font-size: var(--text-micro);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    margin-bottom: var(--space-8);
+  }
+
+  .mc__list {
+    display: grid;
+    gap: var(--space-4);
+    color: var(--color-ink-secondary);
+  }
+
+  .mc__note {
+    margin-top: var(--space-24);
+    color: var(--color-ink-muted);
+    font-size: var(--text-label);
+  }
+
+  /* 05 · Automation: the lightest, most spacious section */
+  .chapter--light {
+    padding-block: var(--section-spacing-hero);
+  }
+
+  .auto__lead {
+    font-size: var(--text-body-lg);
+    color: var(--color-ink);
+  }
+
+  .how__evidence,
+  .idx__lead {
+    color: var(--color-ink-secondary);
+  }
+
+  /* 08 */
+  .caps {
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .caps__row {
+    display: grid;
+    gap: var(--space-4) var(--space-24);
+    padding-block: var(--space-16);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  @media (min-width: 768px) {
+    .caps__row {
+      grid-template-columns: 160px minmax(0, 1fr) minmax(0, 1fr);
+      align-items: baseline;
+    }
+  }
+
+  .caps__name {
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  .caps__stack {
+    color: var(--color-ink-muted);
+    font-size: var(--text-label);
+  }
+
+  .caps__evidence {
+    color: var(--color-ink-secondary);
+    font-size: var(--text-label);
+  }
+
+  /* 10 · Colophon: the smallest type on the page */
+  .chapter--colophon {
+    padding-block: var(--section-spacing-lg);
+  }
+
+  .colophon__title {
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--color-ink-muted);
+  }
+
+  .colophon__line,
+  .colophon__intro {
+    font-size: var(--text-label);
+    color: var(--color-ink-secondary);
+  }
+
+  .colophon__email {
+    overflow-wrap: anywhere;
+    /* Inline link in a sentence: not distinguishable by colour alone. */
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+</style>

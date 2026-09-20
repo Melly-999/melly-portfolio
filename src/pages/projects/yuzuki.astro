@@ -1,0 +1,688 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCaseStudyShell from "../../components/ProjectCaseStudyShell.astro";
+import ProjectThreshold from "../../components/ProjectThreshold.astro";
+import EvidenceTrace from "../../components/EvidenceTrace.astro";
+import StatusChip from "../../components/StatusChip.astro";
+import ScreenshotFrame from "../../components/ScreenshotFrame.astro";
+import ProcessSpine from "../../components/ProcessSpine.astro";
+import ArchitectureDiagram from "../../components/ArchitectureDiagram.astro";
+import RoutingOrbit from "../../components/RoutingOrbit.astro";
+import ValidationMatrix from "../../components/ValidationMatrix.astro";
+import PromptSuggestions from "../../components/PromptSuggestions.astro";
+import SyntheticConversation from "../../components/SyntheticConversation.astro";
+import { YUZUKI_SOURCE_HREF, YUZUKI_SOURCE_PUBLIC } from "../../data/social";
+
+/**
+ * /projects/yuzuki — the flagship case study (handoff §7). Ten story chapters.
+ * Copy is derived from the integration pack's "safe wording"; nothing here is
+ * inferred from a routing mode's name. Sections 06, 08 and 10 are deliberately
+ * STILL (no entrance animation) — see the case-study rhythm in §7.11.
+ *
+ * Public source is ACTIVE by default (data/social.ts: YUZUKI_SOURCE_PUBLIC).
+ * The disabled variant exists only as a defensive fallback if URL verification
+ * fails; verification is a validation step, not a build-time network call, so
+ * builds stay deterministic and offline-safe.
+ */
+const sourceLive = YUZUKI_SOURCE_PUBLIC;
+
+const alt01 =
+  "Yuzuki desktop application showing the session rail, an empty conversation pane, and the context panel.";
+const altConstellation =
+  "The Knowledge Constellation prototype: two labelled node clusters and a context note on a dark canvas, marked prototype slash fixture data.";
+
+const ladder = [
+  { cond: "Profile exists", state: "REQUIRED", glyph: "check" },
+  { cond: "Profile names a model", state: "REQUIRED", glyph: "check" },
+  { cond: "Provider base_url resolves to 127.0.0.1 / localhost / ::1", state: "REQUIRED", glyph: "check" },
+  { cond: "LAN address", state: "REJECTED", glyph: "slash" },
+] as const;
+---
+
+<BaseLayout
+  title="Yuzuki Desktop — Local-first AI desktop with fail-closed private mode"
+  description="Yuzuki Desktop: a local-first Tauri desktop app with a live-verified local chat path, seven named routing modes and a fail-closed private mode. Public source only."
+>
+  <ProjectCaseStudyShell current="yuzuki" bare>
+    <EvidenceTrace page="yuzuki" />
+
+    <!-- 01 · Product premise -->
+    <section id="premise" class="chapter ground-surface" data-chapter data-title="Product premise" aria-labelledby="yuzuki-title">
+      <div class="content-width grid-12">
+        <div class="premise__copy">
+          <h1 id="yuzuki-title" class="premise__title" data-reveal>Yuzuki Desktop</h1>
+          <p class="premise__line">Local-first AI desktop with fail-closed private mode</p>
+          <p class="premise__body">
+            A local-first Windows desktop application that runs AI conversations on a
+            local model by default. In <code>PRIVATE</code>, a conversation never leaves{" "}
+            <code>127.0.0.1</code> — and if the local runtime can't serve the turn,
+            Yuzuki fails the turn rather than substituting a cloud model.
+          </p>
+          <p class="chip-row">
+            <span class="badge">Tauri + React/TS</span>
+            <span class="badge">Hermes Agent via loopback</span>
+            <StatusChip variant="validated" label="PUBLIC CI GREEN" />
+          </p>
+          <p class="truth-line mono">Synthetic public fixture · empty state · no real session data.</p>
+        </div>
+        <div class="premise__media">
+          <ScreenshotFrame
+            src="/assets/yuzuki/01-home-desktop-1440.png"
+            alt={alt01}
+            caption="Yuzuki desktop workspace — synthetic public fixture, empty state. The PROTOTYPE label is the application's own."
+            eager
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 · Why local-first -->
+    <section id="local-first" class="chapter ground-canvas" data-chapter data-title="Why local-first" aria-labelledby="h-local">
+      <div class="content-width stack">
+        <h2 id="h-local" class="chapter__title">Why local-first</h2>
+        <div class="reading-width stack" data-flow>
+          <p>
+            Local execution keeps data on the machine. Networking is loopback-only, and
+            there is no cloud sync by default — so the conversation has nowhere else to go.
+          </p>
+          <p>
+            That gives privacy-sensitive workflows a verified fail-closed path: when the
+            local runtime cannot serve a turn, the turn fails instead of quietly leaving
+            the machine.
+          </p>
+        </div>
+        <ProcessSpine
+          label="Local-first properties"
+          steps={[{ label: "On device" }, { label: "Loopback only" }, { label: "Fails closed", key: true }]}
+        />
+        <p class="proof">
+          <StatusChip variant="verified" label="LIVE_VERIFIED · LOCAL CHAT PATH" />
+          <span>The local chat path is live-verified end-to-end against a local Hermes runtime.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- 03 · PRIVATE, fail-closed -->
+    <section id="private" class="chapter ground-surface" data-chapter data-title="PRIVATE fail-closed" aria-labelledby="h-private">
+      <div class="content-width grid-12">
+        <div class="private__copy stack">
+          <p><StatusChip variant="verified" label="LIVE_VERIFIED" /></p>
+          <h2 id="h-private" class="chapter__title">PRIVATE, fail-closed</h2>
+          <p class="reading-width">
+            Private mode validates the target profile before starting. The profile must
+            exist, name a model, and its provider's <code>base_url</code> must resolve to{" "}
+            <code>127.0.0.1</code>, <code>localhost</code> or <code>::1</code>. LAN
+            addresses are rejected. If any check fails, the runtime does not start and
+            Yuzuki does not fall back to a cloud model.
+          </p>
+        </div>
+        <dl class="ladder" aria-label="PRIVATE start-up checks">
+          {
+            ladder.map((r, i) => (
+              <div class="ladder__row" data-flow style={`--i:${i};--stagger:80ms`}>
+                <dt class="ladder__cond">
+                  <svg class="ladder__glyph" class:list={[r.glyph === "check" ? "is-ok" : "is-warn"]} viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+                    {r.glyph === "check" ? <path d="M2 6.5 5 9.500 10.500 3" /> : <path d="M2.500 9.500 9.500 2.500" />}
+                  </svg>
+                  {r.cond}
+                </dt>
+                <dd class="ladder__state mono">{r.state.toLowerCase()}</dd>
+              </div>
+            ))
+          }
+          <div class="ladder__row ladder__row--outcome" data-flow style="--i:4;--stagger:80ms">
+            <dt class="ladder__cond">
+              <span class="ladder__disc" aria-hidden="true"></span>
+              Any check fails
+            </dt>
+            <dd class="ladder__state ladder__state--outcome">
+              runtime does not start. <strong>No cloud fallback.</strong>
+            </dd>
+          </div>
+        </dl>
+      </div>
+      <blockquote class="pullquote content-width">Ambiguity resolves toward refusing to run.</blockquote>
+    </section>
+
+    <!-- 04 · Routing system — THE ENGINEERED PEAK -->
+    <section id="routing" class="chapter chapter--peak ground-canvas" data-chapter data-title="Routing system" aria-labelledby="h-routing">
+      <div class="content-width">
+        <div class="peak__head stack">
+          <p class="chip-row">
+            <StatusChip variant="verified" label="PRIVATE · LIVE-VERIFIED" />
+            <StatusChip variant="implemented" label="6 MODES · IMPLEMENTED · NOT LIVE-VERIFIED" />
+          </p>
+          <h2 id="h-routing" class="chapter__title chapter__title--peak" data-flow>Routing system</h2>
+          <p class="reading-width proof-line">
+            Seven routing modes are defined. Only <code>PRIVATE</code> is live-verified.
+            Six modes are implemented with deterministic tests against a fake transport,
+            disabled by default, and have never made a live provider request in this
+            repository state.
+          </p>
+        </div>
+
+        <div class="peak__visual">
+          <RoutingOrbit />
+        </div>
+
+        <div class="peak__resolution" aria-labelledby="h-resolve">
+          <h3 id="h-resolve" class="peak__resolve-title" data-reveal>In PRIVATE, the request meets a hard stop.</h3>
+          <ul class="resolve">
+            <li class="resolve__item resolve__item--verified"><StatusChip variant="verified" label="LIVE VERIFIED" /></li>
+            <li class="resolve__item mono">LOCAL ONLY</li>
+            <li class="resolve__item mono">FAIL-CLOSED</li>
+            <li class="resolve__item mono">NO CLOUD FALLBACK</li>
+          </ul>
+          <p class="reading-width resolve__note">
+            If the local runtime cannot serve the turn, Yuzuki fails the turn. No cloud
+            provider is contacted and no substitute model is used. The other six modes
+            stay <code>IMPLEMENTED</code> · <code>NOT LIVE VERIFIED</code>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 · Desktop workspace -->
+    <section id="workspace" class="chapter ground-surface" data-chapter data-title="Desktop workspace" aria-labelledby="h-workspace">
+      <div class="content-width stack">
+        <p><StatusChip variant="shipped" label="SHIPPED · WORKSPACE" /></p>
+        <h2 id="h-workspace" class="chapter__title">Desktop workspace</h2>
+        <div data-flow>
+          <ScreenshotFrame
+            src="/assets/yuzuki/01-home-desktop-1440.png"
+            alt={alt01}
+            caption="Yuzuki desktop workspace — synthetic public fixture, empty state. Shown uncropped."
+            scrollable
+          />
+        </div>
+        <div class="demo-block">
+          <PromptSuggestions />
+          <SyntheticConversation />
+        </div>
+        <div class="split">
+          <div>
+            <h3 class="mini">What it is</h3>
+            <p class="split__copy">
+              Integrated AI chat, session persistence, local search, and a
+              review/approvals interface.
+            </p>
+          </div>
+          <div>
+            <h3 class="mini">What it isn't</h3>
+            <p class="split__copy">
+              Document editing, real-time collaboration and multi-user features do not
+              exist. There is no execution engine behind approvals.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 · Knowledge Constellation (supporting; deliberately STILL) -->
+    <section id="constellation" class="chapter ground-canvas" data-chapter data-title="Knowledge Constellation" aria-labelledby="h-constellation">
+      <div class="content-width stack">
+        <p><StatusChip variant="prototype" label="PROTOTYPE / FIXTURE DATA" /></p>
+        <h2 id="h-constellation" class="chapter__title">Knowledge Constellation</h2>
+        <ScreenshotFrame
+          src="/assets/yuzuki/02-knowledge-constellation-1440.png"
+          alt={altConstellation}
+          caption="Knowledge Constellation (prototype) illustrates conceptual data relationships using synthetic fixture data."
+          crop={{ x: 232, y: 56, w: 888, h: 760 }}
+          mobileCrop={{ x: 232, y: 56, w: 620, h: 684 }}
+        />
+        <p class="reading-width">
+          The prototype was built with a full keyboard grammar — select, focus, inspect,
+          expand, return. It is not live memory, production data or synchronisation.
+        </p>
+      </div>
+    </section>
+
+    <!-- 07 · Yuzuki ↔ Hermes boundary -->
+    <section id="boundary" class="chapter ground-surface" data-chapter data-title="Yuzuki ↔ Hermes boundary" aria-labelledby="h-boundary">
+      <div class="content-width stack">
+        <p class="chip-row">
+          <span class="badge">Architecture — derived from source</span>
+        </p>
+        <h2 id="h-boundary" class="chapter__title">Yuzuki ↔ Hermes boundary</h2>
+        <p class="reading-width">
+          Ownership is drawn as a deliberate boundary. Hermes owns sessions, memory and
+          routing authority; Yuzuki owns presentation and lifecycle. Yuzuki does not
+          mirror the canonical SessionDB.
+        </p>
+        <div data-flow>
+          <ArchitectureDiagram />
+        </div>
+        <table class="owns">
+          <caption class="sr-only">Responsibility split across the authority boundary</caption>
+          <thead>
+            <tr><th scope="col">Hermes owns</th><th scope="col">Yuzuki owns</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sessions · memory · routing authority</td>
+              <td>Presentation · native lifecycle · the window and child process tree</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="note">No public architecture capture exists; this is an original diagram.</p>
+      </div>
+    </section>
+
+    <!-- 08 · Lifecycle and safety engineering (deliberately STILL) -->
+    <section id="lifecycle" class="chapter ground-canvas" data-chapter data-title="Lifecycle & safety" aria-labelledby="h-lifecycle">
+      <div class="content-width stack">
+        <p><StatusChip variant="shipped" /></p>
+        <h2 id="h-lifecycle" class="chapter__title">Lifecycle and safety engineering</h2>
+        <div class="reading-width stack life">
+          <div>
+            <h3 class="mini mono">PROCESS TREE</h3>
+            <p>
+              A Windows Job Object with <code>KILL_ON_JOB_CLOSE</code> takes the whole
+              descendant process tree when the window closes. The Tauri shell owns the
+              window and the child process tree.
+            </p>
+          </div>
+          <div>
+            <h3 class="mini mono">LAUNCHER</h3>
+            <p>The Hermes launcher re-execs a pinned interpreter to defeat parent-walking kills.</p>
+          </div>
+          <div>
+            <h3 class="mini mono">TELEMETRY</h3>
+            <p>No telemetry, no analytics, no crash reporting — no network destination exists.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09 · Validation evidence -->
+    <section id="validation" class="chapter ground-surface" data-chapter data-title="Validation evidence" aria-labelledby="h-validation">
+      <div class="content-width stack">
+        <h2 id="h-validation" class="chapter__title">Validation evidence</h2>
+        <p class="reading-width">Engineering validation from the public test suites and CI pipeline.</p>
+        <ValidationMatrix />
+      </div>
+    </section>
+
+    <!-- 10 · Current public status (deliberately STILL) -->
+    <section id="status" class="chapter chapter--status ground-canvas" data-chapter data-title="Public status" aria-labelledby="h-status">
+      <div class="content-width status">
+        <svg class="status__disc" viewBox="0 0 96 96" aria-hidden="true" focusable="false">
+          <circle cx="48" cy="48" r="48" fill="var(--color-violet)" fill-opacity="0.3"></circle>
+        </svg>
+        <h2 id="h-status" class="chapter__title">Current public status</h2>
+        <p class="status__copy">
+          Yuzuki is publicly available as source code only. No binary is distributed, and
+          existing Windows builds were not produced from this public snapshot.
+        </p>
+        <p><StatusChip variant="source" label="SOURCE ONLY · NO BINARY RELEASE" /></p>
+        {
+          sourceLive ? (
+            <a class="button button--primary button--block-mobile" href={YUZUKI_SOURCE_HREF} target="_blank" rel="noopener noreferrer">
+              View source<span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          ) : (
+            <span class="button button--disabled button--block-mobile" aria-disabled="true">
+              Source — link unavailable
+            </span>
+          )
+        }
+      </div>
+    </section>
+  </ProjectCaseStudyShell>
+
+  <ProjectThreshold />
+</BaseLayout>
+
+<style>
+  .chapter {
+    padding-block: var(--section-spacing-lg);
+  }
+
+  .chapter__title {
+    font-size: var(--text-h1);
+    letter-spacing: -0.015em;
+  }
+
+  .chapter__title--peak {
+    font-size: var(--text-display);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+    align-items: center;
+  }
+
+  /* ---- 01 ---- */
+  .premise__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  .premise__title {
+    font-size: var(--text-display);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .premise__line {
+    color: var(--color-ink-secondary);
+    font-size: var(--text-body-lg);
+  }
+
+  .premise__body {
+    max-width: 46ch;
+  }
+
+  .premise__media {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  /* Phones follow source order: <h1> and context first, then the capture and its
+     caption. (The capture used to lead on phones, which opened the page with an
+     unlabelled dark rectangle.) */
+
+  .truth-line {
+    color: var(--color-ink-muted);
+    font-size: var(--text-label);
+  }
+
+  code {
+    color: var(--color-violet-bright);
+    font-size: 0.92em;
+  }
+
+  @media (min-width: 1024px) {
+    .premise__copy {
+      grid-column: 1 / span 6;
+    }
+    .premise__media {
+      grid-column: 7 / span 6;
+    }
+  }
+
+  .proof {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-12);
+    color: var(--color-ink-secondary);
+  }
+
+  /* ---- 03 ---- */
+  .private__copy {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  .ladder {
+    position: relative;
+    display: grid;
+    gap: var(--space-8);
+    grid-column: 1 / -1;
+    min-width: 0;
+    padding-left: var(--space-24);
+  }
+
+  .ladder::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 28px;
+    bottom: 28px;
+    width: 1px;
+    background: var(--color-line);
+  }
+
+  .ladder__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4) var(--space-16);
+    min-height: 64px;
+    padding: var(--space-12) var(--space-16);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+  }
+
+  .ladder__row--outcome {
+    background: var(--color-panel-raised);
+    border-left: 2px solid var(--color-violet);
+  }
+
+  .ladder__cond {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .ladder__glyph {
+    flex: none;
+    width: 12px;
+    height: 12px;
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .ladder__glyph.is-ok {
+    stroke: var(--color-state-verified);
+  }
+
+  .ladder__glyph.is-warn {
+    stroke: var(--color-state-implemented);
+  }
+
+  .ladder__disc {
+    flex: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-violet);
+  }
+
+  .ladder__state {
+    color: var(--color-ink-secondary);
+    font-size: var(--text-label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ladder__state--outcome {
+    font-family: var(--font-sans);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: var(--text-body);
+    color: var(--color-ink);
+  }
+
+  .pullquote {
+    margin-block: var(--space-96) 0;
+    font-size: var(--text-h2);
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 1024px) {
+    .private__copy {
+      grid-column: 1 / span 5;
+    }
+    .ladder {
+      grid-column: 7 / span 6;
+    }
+  }
+
+  /* ---- 04 · the peak: the longest chapter on the route ---- */
+  .chapter--peak {
+    padding-block: var(--section-spacing-hero);
+  }
+
+  @media (min-width: 900px) {
+    .chapter--peak {
+      min-height: 140vh;
+    }
+  }
+
+  .peak__head {
+    margin-bottom: clamp(3rem, 10vh, 7rem);
+  }
+
+  .proof-line {
+    color: var(--color-ink-secondary);
+  }
+
+  .peak__visual {
+    margin-bottom: clamp(3rem, 10vh, 7rem);
+  }
+
+  .peak__resolve-title {
+    font-size: var(--text-h1);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    max-width: 22ch;
+  }
+
+  .resolve {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-12) var(--space-24);
+    align-items: center;
+    margin-top: var(--space-24);
+  }
+
+  .resolve__item {
+    font-size: var(--text-label);
+    letter-spacing: 0.12em;
+    color: var(--color-ink);
+    padding: var(--space-8) var(--space-12);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+  }
+
+  .resolve__item--verified {
+    padding: 0;
+    border: 0;
+  }
+
+  .resolve__note {
+    margin-top: var(--space-24);
+    color: var(--color-ink-secondary);
+  }
+
+  /* ---- 05: portfolio-only demo (compact; never competes with the peak) ---- */
+  .demo-block {
+    display: grid;
+    gap: var(--space-32);
+    padding-block: var(--space-16);
+  }
+
+  @media (min-width: 1024px) {
+    .demo-block {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      align-items: start;
+    }
+  }
+
+  /* ---- 05 / 07 ---- */
+  .split {
+    display: grid;
+    gap: var(--space-32);
+  }
+
+  @media (min-width: 768px) {
+    .split {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .mini {
+    font-size: var(--text-label);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    margin-bottom: var(--space-8);
+  }
+
+  .split__copy {
+    color: var(--color-ink-secondary);
+    max-width: 46ch;
+  }
+
+  .owns {
+    width: 100%;
+    max-width: 880px;
+    margin-inline: auto;
+    border-collapse: collapse;
+  }
+
+  .owns th,
+  .owns td {
+    padding: var(--space-12) var(--space-16);
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .owns th {
+    color: var(--color-ink-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .note {
+    color: var(--color-ink-muted);
+    font-size: var(--text-label);
+  }
+
+  /* ---- 08 ---- */
+  .life > div + div {
+    padding-top: var(--space-24);
+    border-top: 1px solid var(--color-line);
+  }
+
+  /* ---- 10 ---- */
+  .chapter--status {
+    padding-block: var(--section-spacing-hero);
+  }
+
+  .status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-24);
+    text-align: center;
+  }
+
+  .status__disc {
+    width: 96px;
+    height: 96px;
+  }
+
+  .status__copy {
+    max-width: 52ch;
+    color: var(--color-ink-secondary);
+    font-size: var(--text-body-lg);
+  }
+
+  @media (max-width: 639px) {
+    .status .button {
+      width: 100%;
+    }
+  }
+</style>

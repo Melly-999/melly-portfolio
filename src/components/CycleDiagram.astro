@@ -1,0 +1,196 @@
+---
+/**
+ * MellyCore operating loop (handoff §12). A CYCLE, in contrast to Yuzuki's
+ * vertical stack — architecture, not product. No 3D, no starfield, no orbit
+ * animation, no glow. Diagram only; MellyCore is never mocked as a shipped app.
+ *
+ * `approve` is the single emphasised node (HUMAN-IN-THE-LOOP) — the approval
+ * gate is MellyCore's differentiating claim. Ring on wide screens; a vertical
+ * 7-step list with a return arrow on narrow ones. Both forms are in the DOM.
+ */
+const steps = [
+  "observe",
+  "analyse",
+  "recommend",
+  "approve",
+  "implement",
+  "validate",
+  "record",
+] as const;
+
+const cx = 240;
+const cy = 200;
+const r = 130;
+const points = steps.map((label, i) => {
+  const a = -Math.PI / 2 + (i * 2 * Math.PI) / steps.length;
+  const x = cx + r * Math.cos(a);
+  const y = cy + r * Math.sin(a);
+  const anchor = Math.abs(Math.cos(a)) < 0.2 ? "middle" : Math.cos(a) > 0 ? "start" : "end";
+  const lx = x + (anchor === "middle" ? 0 : Math.cos(a) > 0 ? 16 : -16);
+  const ly = y + (anchor === "middle" ? (Math.sin(a) < 0 ? -18 : 26) : 4);
+  return { label, x, y, lx, ly, anchor };
+});
+
+const desc =
+  "A closed loop of seven steps: observe, analyse, recommend, approve, implement, validate, record, then back to observe. Approve is the one emphasised step, labelled human in the loop.";
+---
+
+<figure class="cycle" data-draw>
+  <svg class="cycle__svg" viewBox="0 0 480 400" role="img" aria-labelledby="cyc-t cyc-d" preserveAspectRatio="xMidYMid meet">
+    <title id="cyc-t">MellyCore operating loop</title>
+    <desc id="cyc-d">{desc}</desc>
+    <circle class="cycle__ring draw" pathLength="1" cx={cx} cy={cy} r={r} style="--i:0;--draw-ms:800ms"></circle>
+    <g class="fade" style="--fade-delay:500ms">
+      {
+        points.map((p) => (
+          <g>
+            <circle
+              class:list={["cycle__node", { "cycle__node--key": p.label === "approve" }]}
+              cx={p.x}
+              cy={p.y}
+              r={p.label === "approve" ? 7 : 4}
+            ></circle>
+            {p.label === "approve" && <circle class="cycle__halo" cx={p.x} cy={p.y} r="12"></circle>}
+            <text class:list={["cycle__label", { "cycle__label--key": p.label === "approve" }]} x={p.lx} y={p.ly} text-anchor={p.anchor}>
+              {p.label}
+            </text>
+            {p.label === "approve" && (
+              <text class="cycle__gate" x={p.lx} y={p.ly + 16} text-anchor={p.anchor}>HUMAN-IN-THE-LOOP</text>
+            )}
+          </g>
+        ))
+      }
+    </g>
+  </svg>
+
+  <ol class="cycle__list">
+    {
+      steps.map((s) => (
+        <li class:list={["cycle__step", { "cycle__step--key": s === "approve" }]}>
+          <span class="cycle__step-name">{s}</span>
+          {s === "approve" && <span class="cycle__gate-text">HUMAN-IN-THE-LOOP</span>}
+        </li>
+      ))
+    }
+    <li class="cycle__return" aria-label="then back to observe">↺ back to observe</li>
+  </ol>
+</figure>
+
+<style>
+  .cycle {
+    margin: 0;
+    max-width: 480px;
+  }
+
+  .cycle__svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .cycle__ring {
+    fill: none;
+    stroke: var(--color-line);
+    stroke-width: 1;
+  }
+
+  .cycle__node {
+    fill: var(--color-canvas);
+    stroke: var(--color-ink-muted);
+    stroke-width: 1;
+  }
+
+  .cycle__node--key {
+    fill: var(--color-violet);
+    stroke: var(--color-violet);
+  }
+
+  .cycle__halo {
+    fill: none;
+    stroke: var(--color-violet);
+    stroke-width: 1;
+  }
+
+  .cycle__label,
+  .cycle__gate {
+    fill: var(--color-ink-secondary);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .cycle__label--key {
+    fill: var(--color-ink);
+  }
+
+  .cycle__gate {
+    fill: var(--color-violet);
+    font-size: 10.5px;
+  }
+
+  .cycle__list {
+    display: none;
+    position: relative;
+    gap: var(--space-16);
+    padding-left: var(--space-32);
+  }
+
+  .cycle__list::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--color-line);
+  }
+
+  .cycle__step {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4) var(--space-12);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.08em;
+    color: var(--color-ink);
+  }
+
+  .cycle__step::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--space-32) * -1 + 1px);
+    top: 4px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 1px solid var(--color-ink-muted);
+    background: var(--color-canvas);
+  }
+
+  .cycle__step--key::before {
+    background: var(--color-violet);
+    border-color: var(--color-violet);
+  }
+
+  .cycle__gate-text {
+    color: var(--color-violet);
+    font-size: var(--text-micro);
+  }
+
+  .cycle__return {
+    color: var(--color-ink-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+  }
+
+  @media (max-width: 767px) {
+    .cycle__svg {
+      display: none;
+    }
+
+    .cycle__list {
+      display: grid;
+    }
+  }
+</style>

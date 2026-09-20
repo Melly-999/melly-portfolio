@@ -1,0 +1,300 @@
+---
+import StatusChip from "./StatusChip.astro";
+import { claims, claimsFor, statusText, type TracePage } from "../data/claims";
+
+/**
+ * The Evidence Trace — the site's signature move (handoff §30).
+ *
+ * A margin rail that doubles as the chapter folio and as navigation. As a reader
+ * passes a claim, the rail STAMPS a marker carrying that claim's real verification
+ * status. By the colophon it is a complete, clickable record of what the site
+ * claimed and how well each claim is proven.
+ *
+ * It is NOT a progress bar (no fill, no percentage, no count), NOT a restyled
+ * scroll-spy dot nav (each stamp carries persistent status content), and NOT a
+ * cursor effect. Statuses come from data/claims.ts — the same data the routing
+ * visual and validation matrix read — so the rail can never disagree with the page.
+ *
+ * Layouts (one markup, two forms):
+ *   ≥1200px  fixed left-margin rail; folio + accumulating stamp column.
+ *   <1200px  in-flow record strip; never overlays content, never under the dock.
+ *
+ * `record` renders the colophon's complete stamped record instead of the rail.
+ */
+interface Props {
+  page: TracePage;
+  record?: boolean;
+}
+
+const { page, record = false } = Astro.props as Props;
+const items = record ? [...claims] : claimsFor(page);
+---
+
+{
+  record ? (
+    <ol class="record" aria-label="Evidence record">
+      {items.map((c) => (
+        <li class="record__item" data-flow>
+          <a class="record__link" href={c.href} aria-label={`${c.label} — ${statusText[c.status]}`}>
+            <span class="record__label">{c.label}</span>
+            <StatusChip variant={c.status} />
+          </a>
+        </li>
+      ))}
+    </ol>
+  ) : (
+    <nav class="trace" aria-label="Evidence trace" data-trace data-trace-page={page}>
+      <p class="trace__folio" data-folio aria-hidden="true"></p>
+      <ol class="trace__list">
+        {items.map((c) => (
+          <li class="trace__stamp" data-stamp data-section={c.sections[page]}>
+            <a
+              class="trace__link"
+              href={c.href}
+              aria-label={`${c.label} — ${statusText[c.status]}`}
+            >
+              <span class="trace__label">{c.label}</span>
+              <StatusChip variant={c.status} bare />
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  )
+}
+
+<style is:global>
+  /* ---- Record (colophon) ---- */
+  .record {
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .record__link {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8) var(--space-16);
+    min-height: 56px;
+    padding-block: var(--space-12);
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-ink);
+  }
+
+  .record__link:hover .record__label {
+    color: var(--color-violet-bright);
+  }
+
+  .record__label {
+    color: var(--color-ink);
+    font-size: var(--text-body);
+  }
+
+  /* ---- Trace: narrow = in-flow strip ---- */
+  .trace {
+    padding: var(--space-16) var(--gutter-mobile);
+    border-bottom: 1px solid var(--color-line-soft);
+    background: var(--color-canvas);
+  }
+
+  .trace__folio {
+    display: none;
+  }
+
+  /* One compact row of stamps: glyph only, full name is the accessible name and
+     the complete record lives in the colophon. Never overlays content. */
+  .trace {
+    padding-block: 0;
+  }
+
+  .trace__list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 0;
+    max-width: var(--content-max-width);
+    margin-inline: auto;
+  }
+
+  .trace__link {
+    /* Containing block for the visually-hidden label, so it can never escape the
+       scroller and widen the page (caused 27px overflow at 320px). */
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex: none;
+    min-width: 44px;
+    min-height: 44px;
+    color: var(--color-ink-secondary);
+  }
+
+  .trace__label,
+  .trace__link .chip__text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .trace__link .chip__glyph {
+    width: 12px;
+    height: 12px;
+  }
+
+  .trace__link:hover {
+    color: var(--color-ink);
+  }
+
+  /* Phones (home and Yuzuki): the glyph-only strip is redundant compression. Every
+     status it shows is a text chip in the chapter it links to, and the full record
+     is the colophon ledger (all stamps are in it), so it is removed (display:none
+     also drops its links from the tab order) rather than left as an unexplained row
+     of dots. Tablet keeps the in-flow strip; wide screens keep the margin rail. */
+  @media (max-width: 767px) {
+    nav.trace {
+      display: none;
+    }
+  }
+
+  /* ---- Trace: wide = fixed margin rail ---- */
+  @media (min-width: 1200px) {
+    .trace {
+      position: fixed;
+      z-index: 5;
+      top: calc(var(--header-height) + var(--space-24));
+      bottom: var(--space-24);
+      left: max(
+        8px,
+        calc((100vw - var(--content-max-width)) / 2 - var(--rail-width) - 8px)
+      );
+      width: var(--rail-width);
+      padding: 0;
+      border: 0;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-16);
+    }
+
+    /* Nothing is drawn until the first claim is stamped. */
+    /* …but never while a keyboard user is inside it: focus must be visible. */
+    .js .trace:not(.has-stamps):not(:focus-within) {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .trace.has-stamps {
+      opacity: 1;
+      transition: opacity var(--motion-normal) var(--ease-standard);
+    }
+
+    .trace__folio {
+      display: block;
+      margin: 0;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      align-self: flex-start;
+      font-family: var(--font-mono);
+      font-size: var(--text-micro);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted);
+      max-height: 40vh;
+      overflow: hidden;
+    }
+
+    .trace__list {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      gap: var(--space-4);
+      margin: 0;
+      max-width: none;
+    }
+
+    /* A stamp: a 10px glyph + a 1px tick. The label is text for AT, not visual. */
+    .trace__link {
+      position: relative;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0;
+      min-height: 24px;
+      min-width: 24px;
+    }
+
+    .trace__link::after {
+      content: "";
+      width: 14px;
+      height: 1px;
+      margin-left: var(--space-8);
+      background: var(--color-line);
+    }
+
+    .trace__label,
+    .trace__link .chip__text {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    /* Reveal the claim + status on hover/focus (never the only carrier: the full
+       name is also the link's accessible name and the colophon record). */
+    .trace__link:hover .trace__label,
+    .trace__link:focus-visible .trace__label {
+      position: absolute;
+      left: calc(var(--rail-width) + var(--space-8));
+      width: max-content;
+      max-width: 34ch;
+      height: auto;
+      margin: 0;
+      padding: var(--space-4) var(--space-8);
+      clip: auto;
+      overflow: visible;
+      white-space: normal;
+      background: var(--color-panel-raised);
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-sm);
+      color: var(--color-ink);
+      z-index: 6;
+    }
+
+    /* Stamps accumulate as claims are passed; unstamped ones are not drawn.
+       Still in the DOM and reachable by keyboard (visible on focus). */
+    .js .trace__stamp:not(.is-stamped):not(:focus-within) {
+      opacity: 0;
+    }
+
+    .trace__stamp.is-active .chip__glyph {
+      outline: 1px solid var(--color-violet);
+      outline-offset: 3px;
+      border-radius: 50%;
+    }
+  }
+
+  @media (min-width: 1200px) and (prefers-reduced-motion: no-preference) {
+    .js .trace__stamp.is-stamped {
+      animation: trace-in var(--motion-flow) var(--ease-out-expo) both;
+    }
+  }
+
+  @keyframes trace-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

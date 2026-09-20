@@ -1,0 +1,29 @@
+---
+/**
+ * A project-page chapter: hard-step ground, heading, optional status label.
+ * Keeps chapter structure identical across Klaus / RAG / MellyCore / MellyTrade
+ * without forcing them through the same composition.
+ */
+interface Props {
+  id: string;
+  title: string;
+  ground?: "canvas" | "surface";
+  eyebrow?: string;
+}
+
+const { id, title, ground = "canvas", eyebrow } = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={["pchapter", `ground-${ground}`]}
+  data-chapter
+  data-title={title}
+  aria-labelledby={`${id}-h`}
+>
+  <div class="content-width stack">
+    {eyebrow && <p class="mini-label">{eyebrow}</p>}
+    <h2 id={`${id}-h`} class="pchapter__title" data-flow>{title}</h2>
+    <slot />
+  </div>
+</section>

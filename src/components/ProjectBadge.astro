@@ -1,10 +1,15 @@
 ---
+/**
+ * Neutral category tag. Retoned from the retired process/platform/product
+ * palette to the single-accent system: a category is NOT a truth state, so it
+ * carries no status colour. Truth labelling lives in StatusChip.
+ */
 interface Props {
-  variant: "process" | "platform" | "product";
+  variant?: "process" | "platform" | "product";
   label: string;
 }
 
-const { variant, label } = Astro.props;
+const { label } = Astro.props;
 ---
 
-<span class={`badge badge--${variant}`}>{label}</span>
+<span class="badge">{label}</span>

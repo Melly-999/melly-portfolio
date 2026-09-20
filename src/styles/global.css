@@ -1,3 +1,10 @@
+/* Global resets, base element styles, focus, and the motion architecture.
+
+   Motion architecture (handoff §23.3): the FINAL state is the CSS default.
+   Entrance animation is added only inside `prefers-reduced-motion: no-preference`
+   and only when JS has marked <html class="js">. Nothing is ever hidden by
+   default, so no content can be stranded at opacity: 0. */
+
 *,
 *::before,
 *::after {
@@ -6,133 +13,161 @@
 
 html {
   color-scheme: dark;
-  background: var(--bg-void);
-  overflow-x: clip;
+  scroll-padding-top: calc(var(--header-height) + var(--space-16));
 }
 
 body {
-  min-width: 320px;
   margin: 0;
-  background:
-    radial-gradient(1200px 640px at 72% -8%, rgba(247, 147, 60, 0.12), transparent 58%),
-    radial-gradient(1000px 560px at 6% 14%, rgba(79, 147, 230, 0.1), transparent 55%),
-    radial-gradient(800px 700px at 90% 90%, rgba(47, 191, 107, 0.06), transparent 60%),
-    var(--bg-void);
-  color: var(--fg-1);
+  background: var(--color-canvas);
+  color: var(--color-ink);
   font-family: var(--font-sans);
-  font-size: 1rem;
-  line-height: 1.55;
+  font-size: var(--text-body);
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-}
-
-body::before {
-  position: fixed;
-  z-index: -1;
-  inset: 0;
-  content: "";
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(1000px 700px at 50% 0%, #000, transparent 75%);
-  pointer-events: none;
 }
 
 h1,
 h2,
 h3,
-p,
-dl,
-dd {
+h4 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+p {
   margin: 0;
 }
 
-h1,
-h2,
-h3 {
-  color: var(--fg-1);
-  line-height: 1.1;
-  letter-spacing: -0.015em;
-}
-
 a {
-  color: inherit;
+  color: var(--color-violet);
   text-decoration: none;
 }
 
-button {
-  border: 0;
-  color: inherit;
-  font: inherit;
+a:hover {
+  color: var(--color-violet-bright);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+code,
+kbd,
+.mono {
+  font-family: var(--font-mono);
 }
 
 ul,
-ol {
+ol,
+dl,
+dd {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-svg,
-img {
-  display: block;
-  max-width: 100%;
+button {
+  font: inherit;
+  color: inherit;
 }
 
+/* Visible keyboard focus everywhere; never suppressed. Canonical violet ring. */
 :focus-visible {
-  outline: 2px solid var(--brand);
-  outline-offset: 3px;
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
   border-radius: var(--radius-sm);
 }
 
-::selection {
-  background: rgba(247, 147, 60, 0.3);
-  color: var(--fg-1);
+/* Visually hidden but present for assistive tech. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
+/* Skip link: visually hidden until focused. */
 .skip-link {
-  position: fixed;
-  z-index: 200;
-  top: -80px;
-  left: 16px;
-  padding: 10px 14px;
+  position: absolute;
+  top: -100%;
+  left: var(--space-16);
+  z-index: 100;
+  padding: var(--space-12) var(--space-16);
+  background: var(--color-violet);
+  color: var(--color-canvas);
+  font-weight: 700;
   border-radius: var(--radius-md);
-  background: var(--brand);
-  color: var(--bg-base);
-  font-weight: 800;
-  transition: top var(--motion-normal) var(--ease);
+  transition: top var(--motion-normal) var(--ease-standard);
 }
 
 .skip-link:focus {
-  top: 12px;
+  top: var(--space-16);
+  color: var(--color-canvas);
+}
+
+/* ---- Entrance devices: `flow + in` and `reveal` (once, then unobserved) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-flow] {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  .js [data-flow].is-in {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--motion-flow) var(--ease-out-expo)
+        calc(var(--i, 0) * var(--stagger, 60ms)),
+      transform var(--motion-flow) var(--ease-out-expo)
+        calc(var(--i, 0) * var(--stagger, 60ms));
+  }
+
+  /* clip-path wipe: a change of state, bottom-to-top. */
+  .js [data-reveal] {
+    clip-path: inset(0 0 100% 0);
+  }
+
+  .js [data-reveal].is-in {
+    clip-path: inset(0 0 -0.2em 0);
+    transition: clip-path 720ms var(--ease-out-expo)
+      calc(var(--i, 0) * 90ms);
+  }
+
+  /* SVG line-draw: an application of `reveal`. Elements carry pathLength="1". */
+  .js [data-draw] .draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  .js [data-draw].is-in .draw {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset var(--draw-ms, 900ms) var(--ease-out-expo)
+      calc(var(--i, 0) * 1ms);
+  }
+
+  .js [data-draw] .fade {
+    opacity: 0;
+  }
+
+  .js [data-draw].is-in .fade {
+    opacity: 1;
+    transition: opacity 400ms var(--ease-standard) var(--fade-delay, 900ms);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-  }
-}
-
-@media (prefers-contrast: more) {
-  :root {
-    --fg-2: #d2d8e5;
-    --fg-3: #aab2c6;
-    --line: #58627a;
-    --line-soft: #3c465d;
-  }
-}
-
-@media (prefers-reduced-transparency: reduce) {
-  .site-chrome,
-  .terminal-proof,
-  .panel {
-    background: var(--bg-base) !important;
-    backdrop-filter: none !important;
+  html {
+    scroll-behavior: auto;
   }
 }

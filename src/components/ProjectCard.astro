@@ -1,34 +1,254 @@
 ---
-import type { PortfolioProject } from "../data/portfolio";
-import ProjectBadge from "./ProjectBadge.astro";
-import ProjectVisual from "./ProjectVisual.astro";
+import StatusChip from "./StatusChip.astro";
+import ScreenshotFrame from "./ScreenshotFrame.astro";
+import type { StatusVariant } from "../data/claims";
 
-interface Props {
-  project: PortfolioProject;
-  detailed?: boolean;
+/**
+ * Project entry (handoff §6). Extended from the original card, not replaced: it
+ * keeps `safetyBadge` / `honestyBadge` / `disclaimer` — the honesty discipline —
+ * and adds the flagship treatment.
+ *
+ *  - `weight="flagship"`: a full-width row, 7/5 split, product capture, title at
+ *    --text-h1. The ONLY entry with an image; ≥2 type steps above the others.
+ *  - `weight="standard"`: an asymmetric INDEX ENTRY — no panel, no fill, a 1px
+ *    rule is the only chrome. A grid of identical cards is refused.
+ *  - The whole row is one link target via a stretched pseudo-element on the
+ *    title link, so the accessible name is the project title, not "read more".
+ *  - No decorative numerals, no hover lift: colour + a `→` gutter glyph only.
+ */
+interface Chip {
+  variant: StatusVariant;
+  label?: string;
 }
 
-const { project, detailed = false } = Astro.props;
-const Heading = detailed ? "h2" : "h3";
+interface Props {
+  weight?: "flagship" | "major" | "standard" | "supporting";
+  label?: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  stack: string;
+  href: string;
+  chips?: readonly Chip[];
+  image?: string;
+  imageAlt?: string;
+  imageCaption?: string;
+  safetyBadge?: string;
+  honestyBadge?: string;
+  disclaimer?: string;
+  /** Arms the KOYE project-entry transition (Yuzuki entry only). */
+  threshold?: boolean;
+  headingLevel?: 2 | 3;
+  /** Unequal measures keep the secondary entries from reading as a card pair. */
+  measure?: "full" | "wide" | "narrow";
+}
+
+const {
+  weight = "standard",
+  label,
+  title,
+  subtitle,
+  description,
+  stack,
+  href,
+  chips = [],
+  image,
+  imageAlt,
+  imageCaption,
+  safetyBadge,
+  honestyBadge,
+  disclaimer,
+  threshold = false,
+  headingLevel = 3,
+  measure = "full",
+} = Astro.props;
+
+const Heading = `h${headingLevel}` as "h2" | "h3";
+const flagship = weight === "flagship";
 ---
 
-<a
-  href={project.href}
-  class:list={["project-card", detailed && "project-card--detailed"]}
-  aria-label={`View ${project.title} case study`}
->
-  <div class="project-card__content">
-    <div class="project-card__meta">
-      <ProjectBadge variant={project.tone} label={project.layer} />
-      <span>{project.number}</span>
-    </div>
-    <Heading>{project.title}</Heading>
-    <p class="project-card__tagline">{project.tagline}</p>
-    <p class="project-card__description">{project.description}</p>
-    <ul class="chip-list" aria-label={`${project.title} technologies and attributes`}>
-      {project.chips.map((chip) => <li>{chip}</li>)}
-    </ul>
-    <span class="project-card__link">View case study <span aria-hidden="true">→</span></span>
+<article class:list={["entry", { "entry--flagship": flagship, "entry--major": weight === "major", "entry--supporting": weight === "supporting" }, `entry--${measure}`]}>
+  <div class="entry__body">
+    {label && <p class="entry__label mono">{label}</p>}
+    <Heading class="entry__title">
+      <a class="entry__link" href={href} data-threshold-link={threshold ? "" : undefined}>{title}</a>
+    </Heading>
+    <p class="entry__subtitle">{subtitle}</p>
+    <p class="entry__description">{description}</p>
+    <p class="entry__stack mono">{stack}</p>
+
+    {
+      chips.length > 0 && (
+        <p class="entry__chips" role="group" aria-label="Truth status">
+          {chips.map((c) => (
+            <StatusChip variant={c.variant} label={c.label} />
+          ))}
+        </p>
+      )
+    }
+
+    {
+      (safetyBadge || honestyBadge) && (
+        <p class={`badge ${safetyBadge ? "badge--safety" : ""} entry__badge`}>
+          {safetyBadge ?? honestyBadge}
+        </p>
+      )
+    }
+
+    {disclaimer && <p class="entry__disclaimer">{disclaimer}</p>}
   </div>
-  {detailed && <ProjectVisual kind={project.visual} />}
-</a>
+
+  {
+    flagship && image && imageAlt && imageCaption && (
+      <div class="entry__media">
+        <ScreenshotFrame src={image} alt={imageAlt} caption={imageCaption} />
+      </div>
+    )
+  }
+</article>
+
+<style>
+  .entry {
+    position: relative;
+    display: grid;
+    gap: var(--space-24);
+    padding-block: var(--space-32);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .entry__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    min-width: 0;
+  }
+
+  .entry__label {
+    color: var(--color-ink-muted);
+    font-size: var(--text-micro);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .entry__title {
+    font-size: var(--text-h3);
+    font-weight: 600;
+  }
+
+  /* Stretched link: the whole row is one target, named by the title. */
+  .entry__link {
+    color: var(--color-ink);
+  }
+
+  .entry__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .entry__link:hover {
+    color: var(--color-violet);
+  }
+
+  .entry__subtitle {
+    color: var(--color-ink-secondary);
+    font-weight: 600;
+    max-width: 46ch;
+  }
+
+  .entry__description {
+    color: var(--color-ink-secondary);
+    max-width: 46ch;
+  }
+
+  .entry__stack {
+    color: var(--color-ink-muted);
+    font-size: var(--text-label);
+    overflow-wrap: anywhere;
+  }
+
+  .entry__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+    margin-top: var(--space-8);
+  }
+
+  .entry__badge {
+    align-self: flex-start;
+    margin-top: var(--space-8);
+  }
+
+  .entry__disclaimer {
+    color: var(--color-ink-muted);
+    font-size: var(--text-label);
+  }
+
+  /* ---- Major (second tier): larger than standard, quieter than flagship ---- */
+  .entry--major {
+    padding-block: var(--space-48);
+  }
+
+  .entry--major .entry__title {
+    font-size: var(--text-h2);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  .entry--major .entry__subtitle {
+    font-size: var(--text-body-lg);
+  }
+
+  /* ---- Supporting: smallest, plainest ---- */
+  .entry--supporting {
+    padding-block: var(--space-16);
+  }
+
+  .entry--supporting .entry__description,
+  .entry--supporting .entry__stack {
+    display: none;
+  }
+
+  /* ---- Flagship ---- */
+  .entry--flagship .entry__title {
+    font-size: var(--text-h1);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-transform: none;
+  }
+
+  .entry--flagship .entry__subtitle {
+    font-size: var(--text-body-lg);
+  }
+
+  .entry--flagship .entry__media {
+    min-width: 0;
+    order: -1; /* phones: image first, then type */
+  }
+
+  @media (min-width: 768px) {
+    .entry--flagship .entry__media {
+      order: 0;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .entry--flagship {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: center;
+      gap: var(--space-48);
+    }
+  }
+
+  /* Secondary entries stay unequal in measure. */
+  @media (min-width: 768px) {
+    .entry--wide {
+      max-width: 58%;
+    }
+
+    .entry--narrow {
+      max-width: 42%;
+      padding-block: var(--space-24);
+    }
+  }
+</style>

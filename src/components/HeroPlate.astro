@@ -1,0 +1,331 @@
+---
+import SocialDock from "./SocialDock.astro";
+
+/**
+ * The title plate (handoff §4). MELLY / CLOSED LOOP — the greet, not the peak.
+ *
+ * Four planes, named before building:
+ *   1 rear sheet  — deep violet/indigo swirl field     (parallax ≈24px)
+ *   2 type        — h1, subtext, actions, dock, plate  (1×, never moves)
+ *   3 front sheet — thin luminous veil across the type (parallax ≈40px)
+ *   4 grain       — static monochrome noise
+ *
+ * The swirl is the ONLY atmospheric material on the site. It is inline SVG
+ * (feTurbulence + displacement, rendered once — no WebGL, no canvas, no shader,
+ * no loop). The sheet is masked AWAY from the headline rather than dimmed by an
+ * overlay (§18.6). If a plane fails, the inline rear sheet remains: the plate
+ * degrades to poster + grain and the copy is unaffected.
+ *
+ * All hero motion lives here. The isolation boundary (§24.7): swap this one
+ * component and the rest of the site is unchanged.
+ */
+---
+
+<section class="hero ground-canvas" aria-labelledby="hero-title" data-hero>
+  <!-- plane 1 · rear sheet (also the static poster) -->
+  <div class="hero__plane hero__rear" aria-hidden="true">
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMaxYMid slice" focusable="false">
+      <defs>
+        <linearGradient id="hs-a" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#7c3aed"></stop>
+          <stop offset="0.55" stop-color="#818cf8"></stop>
+          <stop offset="1" stop-color="#60a5fa"></stop>
+        </linearGradient>
+        <linearGradient id="hs-b" x1="1" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#a78bfa"></stop>
+          <stop offset="1" stop-color="#4338ca"></stop>
+        </linearGradient>
+        <filter id="hs-warp" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.0055 0.009" numOctaves="3" seed="11" result="n"></feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="190" xChannelSelector="R" yChannelSelector="G" result="d"></feDisplacementMap>
+          <feGaussianBlur in="d" stdDeviation="16"></feGaussianBlur>
+        </filter>
+      </defs>
+      <g filter="url(#hs-warp)">
+        <ellipse cx="1090" cy="470" rx="470" ry="260" fill="none" stroke="url(#hs-a)" stroke-width="84" opacity="0.5" transform="rotate(-24 1090 470)"></ellipse>
+        <ellipse cx="1130" cy="520" rx="330" ry="170" fill="none" stroke="url(#hs-b)" stroke-width="52" opacity="0.62" transform="rotate(20 1130 520)"></ellipse>
+        <ellipse cx="1040" cy="430" rx="560" ry="320" fill="none" stroke="url(#hs-a)" stroke-width="130" opacity="0.24" transform="rotate(-8 1040 430)"></ellipse>
+        <ellipse cx="1160" cy="480" rx="190" ry="96" fill="#8b5cf6" opacity="0.4" transform="rotate(-30 1160 480)"></ellipse>
+      </g>
+    </svg>
+  </div>
+
+  <!-- plane 2 · type (exactly four text elements: h1, subtext, actions, plate) -->
+  <div class="hero__content cinematic-width">
+    <div class="hero__copy">
+      <h1 id="hero-title" class="hero__title">
+        <span class="hero__line" data-reveal style="--i:0">I BUILD AI AUTOMATIONS</span>{" "}
+        <span class="hero__line" data-reveal style="--i:1">AND FULL-STACK PRODUCTS<span class="hero__mark" aria-hidden="true"></span></span>
+      </h1>
+
+      <p class="hero__sub">
+        <span>AI Automation &amp; Full-Stack Developer ·</span>{" "}
+        <span class="nw">AI Product Engineer</span>
+      </p>
+
+      <p class="hero__lead">
+        For real business workflows — from AI agents and RAG systems to internal tools, APIs,
+        integrations and dashboards, I design, build and validate the full product stack.
+      </p>
+
+      <div class="hero__actions">
+        <a class="button button--primary button--lead button--block-mobile" href="/contact">Discuss your workflow</a>
+        <a class="button button--secondary button--block-mobile" href="#systems">View selected work</a>
+      </div>
+
+      <SocialDock class="hero__dock" />
+    </div>
+
+    <section class="hero__plate" aria-labelledby="focus-label">
+      <p id="focus-label" class="hero__plate-label">WHAT YOU CAN COMMISSION</p>
+      <ul class="hero__plate-list">
+        <li>AI agents &amp; automations</li>
+        <li>Internal tools &amp; dashboards</li>
+        <li>Document intelligence / RAG</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- plane 3 · front sheet: a thin veil that crosses the type -->
+  <div class="hero__plane hero__front" aria-hidden="true">
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMinYMid slice" focusable="false">
+      <defs>
+        <linearGradient id="hs-c" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#a78bfa" stop-opacity="0"></stop>
+          <stop offset="0.5" stop-color="#c4b5fd"></stop>
+          <stop offset="1" stop-color="#818cf8" stop-opacity="0"></stop>
+        </linearGradient>
+        <filter id="hs-veil" x="-20%" y="-60%" width="140%" height="220%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.004 0.012" numOctaves="2" seed="4" result="n"></feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="70" xChannelSelector="R" yChannelSelector="G" result="d"></feDisplacementMap>
+          <feGaussianBlur in="d" stdDeviation="3"></feGaussianBlur>
+        </filter>
+      </defs>
+      <g filter="url(#hs-veil)" fill="none" stroke="url(#hs-c)" stroke-linecap="round">
+        <path d="M-60 520 C 200 430, 420 620, 760 500" stroke-width="6" opacity="0.55"></path>
+        <path d="M-60 548 C 220 470, 440 650, 720 540" stroke-width="2.5" opacity="0.4"></path>
+      </g>
+    </svg>
+  </div>
+
+  <!-- plane 4 · grain (static) -->
+  <div class="hero__grain" aria-hidden="true"></div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    min-height: 92vh;
+    min-height: 92svh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-block: var(--space-48);
+  }
+
+  .hero__plane {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  .hero__rear {
+    /* Masked AWAY from the headline (§18.6): luminance is pulled down beneath the
+       text block instead of covering it with a dark overlay. */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 34%, #000 68%);
+    mask-image: linear-gradient(to right, transparent 0%, transparent 34%, #000 68%);
+  }
+
+  .hero__plane svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero__front {
+    z-index: 2;
+    -webkit-mask-image: linear-gradient(to right, #000 0%, #000 55%, transparent 82%);
+    mask-image: linear-gradient(to right, #000 0%, #000 55%, transparent 82%);
+  }
+
+  .hero__grain {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1 0 0 0 -0.3'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-size: 160px 160px;
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: grid;
+    gap: var(--space-32);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero__title {
+    font-size: var(--text-display-hero-sm);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--color-ink);
+    max-width: 16ch;
+  }
+
+  .hero__line {
+    display: block;
+    text-wrap: balance;
+  }
+
+  /* The closed-loop mark: a violet disc, baseline-aligned, aria-hidden. */
+  .hero__mark {
+    display: inline-block;
+    width: 0.42em;
+    height: 0.42em;
+    margin-left: 0.08em;
+    border-radius: 50%;
+    background: var(--color-violet);
+    vertical-align: baseline;
+  }
+
+  .nw {
+    white-space: nowrap;
+  }
+
+  .hero__sub {
+    margin-top: var(--space-24);
+    max-width: 66ch;
+    font-family: var(--font-mono);
+    font-size: var(--text-body);
+    letter-spacing: 0.02em;
+    color: var(--color-ink-secondary);
+  }
+
+  /* The plain-language line: what is being offered, in one sentence. */
+  .hero__lead {
+    margin-top: var(--space-16);
+    max-width: 58ch;
+    font-size: var(--text-body-lg);
+    line-height: 1.55;
+    color: var(--color-ink);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-12);
+    margin-top: var(--space-32);
+  }
+
+  .hero :global(.hero__dock) {
+    margin-top: var(--space-32);
+  }
+
+  /* Flat, fully opaque, bordered. No glass. */
+  .hero__plate {
+    align-self: end;
+    padding: var(--space-16) var(--space-24);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+  }
+
+  .hero__plate-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.1em;
+    color: var(--color-ink-muted);
+  }
+
+  .hero__plate-list {
+    margin-top: var(--space-8);
+    color: var(--color-ink);
+    font-size: var(--text-body);
+    line-height: 1.6;
+  }
+
+  /* ---- 375–430: rear sheet only, as a masthead band; type above; no parallax. ---- */
+  @media (max-width: 767px) {
+    .hero {
+      align-items: flex-start;
+      min-height: 0;
+      padding-top: var(--space-32);
+    }
+
+    .hero__rear {
+      inset: 0 0 auto 0;
+      height: 46vh;
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+    }
+
+    .hero__front {
+      display: none;
+    }
+
+    .hero :global(.dock__label) {
+      opacity: 1;
+    }
+
+    .hero :global(.dock__item) {
+      width: auto;
+      min-width: 64px;
+    }
+  }
+
+  /* ---- 768: type above the swirl; rear sheet + grain only. ---- */
+  @media (min-width: 768px) {
+    .hero__title {
+      font-size: clamp(2.25rem, 4.6vw, 4.25rem);
+      max-width: none;
+    }
+
+    .hero__front {
+      display: none;
+    }
+  }
+
+  /* ---- 1024: 8-col feel, plate to the right. ---- */
+  @media (min-width: 1024px) {
+    .hero__content {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--space-24);
+    }
+
+    .hero__copy {
+      grid-column: 1 / span 9;
+    }
+
+    .hero__plate {
+      grid-column: 10 / span 3;
+    }
+
+    .hero__front {
+      display: block;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .hero__title {
+      font-size: var(--text-display-hero);
+      max-width: none;
+    }
+  }
+
+  /* ---- Parallax: plane separation only, never on text. Off under reduced motion. ---- */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__rear {
+      transform: translate3d(0, calc(var(--hero-p, 0) * 24px), 0);
+    }
+
+    .hero__front {
+      transform: translate3d(0, calc(var(--hero-p, 0) * 40px), 0);
+    }
+  }
+</style>

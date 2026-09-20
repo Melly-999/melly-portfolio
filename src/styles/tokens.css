@@ -1,49 +1,139 @@
+/*
+  Design tokens — MELLY / CLOSED LOOP.
+  Source of truth: PORTFOLIO_YUZUKI_FABLE_HANDOFF.md (§16–§20).
+
+  Rules baked into this file:
+  - ONE UI accent hue (violet, two lightness stops + two restricted variants).
+  - Indigo / cold blue are environmental light for the hero material only.
+  - Focus is violet. There is no cyan focus treatment anywhere.
+  - No translucent surfaces, no backdrop-filter.
+  - No web-font requests; families fall back to the system stack.
+*/
+
 :root {
-  --bg-void: #06080f;
-  --bg-base: #0a0e17;
-  --bg-panel: #0e1320;
-  --bg-panel-2: #131a2b;
-  --bg-inset: #080b13;
-  --line: #1d2740;
-  --line-soft: #161d30;
-  --line-strong: #2a3652;
-  --brand: #f7933c;
-  --brand-bright: #ff9d4a;
-  --brand-deep: #e8623a;
-  --safe: #2fbf6b;
-  --safe-bright: #3ad17e;
-  --info: #4f93e6;
-  --info-bright: #67a6f2;
-  --warn: #f5c518;
-  --warn-bright: #ffd23f;
-  --danger: #e5484d;
-  --fg-1: #eef1f8;
-  --fg-2: #aab2c6;
-  --fg-3: #6f7a93;
-  --fg-4: #44506b;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  --font-mono: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.25rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-10: 2.5rem;
-  --space-12: 3rem;
-  --space-16: 4rem;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
+  /* ---- Surfaces ---- */
+  --color-canvas: #06080f;          /* page background, deepest */
+  --color-surface: #0a0e17;         /* alternating chapter ground */
+  --color-panel: #0e1320;           /* inset / working surface */
+  --color-panel-raised: #131a2b;    /* the one emphasised row in a group */
+
+  /* ---- Lines ---- */
+  --color-line: #1d2740;            /* visible technical border */
+  --color-line-soft: #161d30;       /* quiet separator */
+
+  /* ---- Ink ---- */
+  --color-ink: #eef1f8;
+  --color-ink-secondary: #aab2c6;
+  --color-ink-muted: #8590a8;       /* corrected from #6f7a93 (fails AA on panels) */
+
+  /* ---- THE accent hue: violet ---- */
+  --color-violet: #a78bfa;          /* stop 1 — links, orbit, emphasis */
+  --color-violet-bright: #c4b5fd;   /* stop 2 — hover, focus, prototype status */
+  --color-violet-deep: #8b5cf6;     /* restricted: canvas/surface text, non-text on panels */
+  --color-violet-fill: #7c3aed;     /* non-text only — never text */
+
+  /* ---- Environmental light: hero material ONLY, never UI ---- */
+  --env-indigo: #818cf8;
+  --env-blue-cold: #60a5fa;
+
+  /* ---- Focus (canonical violet system) ---- */
+  --color-focus: #c4b5fd;           /* = --color-violet-bright */
+  --color-focus-ring: var(--color-focus);
+
+  /* ---- Truth states (semantic signals, not accents) ---- */
+  --color-state-verified: #3ad17e;
+  --color-state-implemented: #e8b23a;
+  --color-state-prototype: #c4b5fd;
+  --color-state-concept: #8590a8;
+  --color-state-danger: #e5484d;
+
+  /* ---- Typography: families ---- */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas,
+    monospace;
+
+  /* ---- Typography: scale ---- */
+  /* Capped at 4.75rem so "AND FULL-STACK PRODUCTS" (23 caps) holds one line in
+     cols 1–9 (handoff wants a 2-line h1; its 7.5rem cap cannot fit in 9 cols). */
+  --text-display-hero: clamp(2.5rem, 1rem + 3.4vw, 4.25rem);
+  --text-display-hero-sm: clamp(2.25rem, 1.6rem + 3.2vw, 3rem);
+  --text-display: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+  --text-h1: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
+  --text-h2: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  --text-h3: clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);
+  --text-body: 1rem;
+  --text-body-lg: 1.0625rem;
+  --text-label: 0.75rem;
+  --text-micro: 0.6875rem;
+
+  /* ---- Spacing scale (4px base) ---- */
+  --space-4: 0.25rem;
+  --space-8: 0.5rem;
+  --space-12: 0.75rem;
+  --space-16: 1rem;
+  --space-24: 1.5rem;
+  --space-32: 2rem;
+  --space-48: 3rem;
+  --space-64: 4rem;
+  --space-96: 6rem;
+
+  /* ---- Radii (nothing above 12px on rectangular surfaces) ---- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  /* ---- Shadows: offset-and-blur, tinted to the ground. Level 3 only. ---- */
   --shadow-panel: 0 18px 50px -24px rgba(0, 0, 0, 0.85);
-  --shadow-card: 0 12px 34px -20px rgba(0, 0, 0, 0.85);
-  --content-width: 1160px;
-  --case-width: 1000px;
-  --gutter: clamp(16px, 4vw, 40px);
+  --shadow-elevated: 0 10px 30px -16px rgba(0, 0, 0, 0.8);
+  /* Hard-edged ring (0 blur) from --color-focus #C4B5FD = rgb(196, 181, 253). */
+  --shadow-focus: 0 0 0 3px rgba(196, 181, 253, 0.45);
+
+  /* ---- Layout ---- */
+  --width-cinematic: 1440px;
+  --content-max-width: 1080px;
+  --reading-max-width: 70ch;
   --header-height: 64px;
-  --motion-fast: 150ms;
-  --motion-normal: 220ms;
-  --ease: cubic-bezier(0.2, 0.75, 0.25, 1);
+  --rail-width: 56px;
+  --section-spacing: clamp(2.5rem, 2rem + 2vw, 5rem);
+  --section-spacing-lg: clamp(4rem, 3rem + 4vw, 8rem);
+  --section-spacing-hero: clamp(5rem, 4rem + 6vw, 11rem);
+  --gutter-mobile: 16px;
+  --gutter-desktop: 40px;
+
+  /* ---- Motion ---- */
+  --motion-fast: 120ms;
+  --motion-normal: 200ms;
+  --motion-slow: 320ms;
+  --motion-flow: 620ms;
+  --motion-draw: 900ms;
+  --motion-cinema: 720ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- Migration aliases (neutral renames only; delete next release) ----
+     Amber and cyan accents are intentionally NOT aliased: they were retired. */
+  --color-bg-obsidian: var(--color-canvas);
+  --color-bg-base: var(--color-surface);
+  --color-panel-muted: var(--color-panel);
+  --color-panel-elevated: var(--color-panel-raised);
+  --color-border-subtle: var(--color-line);
+  --color-border-soft: var(--color-line-soft);
+  --color-text-primary: var(--color-ink);
+  --color-text-secondary: var(--color-ink-secondary);
+  --color-text-muted: var(--color-ink-muted);
+}
+
+/* Reduced motion: fewer and gentler transitions — not zero. Spatial travel,
+   parallax and decorative movement are removed in the component layers. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 80ms;
+    --motion-normal: 100ms;
+    --motion-slow: 120ms;
+    --motion-flow: 120ms;
+    --motion-draw: 0ms;
+    --motion-cinema: 0ms;
+  }
 }
