@@ -1,0 +1,210 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import StatusChip from "../components/StatusChip.astro";
+import type { StatusVariant } from "../data/claims";
+
+/**
+ * /systems — the canonical public architecture surface.
+ *
+ * Product-truth remediation, not a redesign: no new graph framework, no new
+ * animation. Nesting in the markup IS the hierarchy — Job Router Finder's
+ * <li> sits inside Klaus Dev Orchestrator's, not beside it, so the DOM (and
+ * a screen reader) read the same dependency the connectors draw. The same
+ * `.tree`-style directory pattern already shipped on the homepage
+ * (SystemsIndex.astro) is reused here, just with an extra nesting level.
+ */
+interface SystemNode {
+  name: string;
+  role: string;
+  href: string;
+  chipVariant: StatusVariant;
+  chipLabel: string;
+  children?: SystemNode[];
+}
+
+const root: SystemNode = {
+  name: "MellyCore AIOS",
+  role: "Orchestration and governance substrate",
+  href: "/projects/aios",
+  chipVariant: "partial",
+  chipLabel: "PARTIAL",
+  children: [
+    {
+      name: "Klaus Dev Orchestrator",
+      role: "AI engineering and coding orchestrator",
+      href: "/projects/klaus",
+      chipVariant: "concept",
+      chipLabel: "CONCEPT",
+      children: [
+        {
+          name: "Job Router Finder",
+          role: "Opportunity intelligence, downstream of Klaus",
+          href: "/projects/klaus#job-router",
+          chipVariant: "concept",
+          chipLabel: "CONCEPT",
+        },
+      ],
+    },
+    {
+      name: "OpsPilot AI",
+      role: "Business and operations AI system",
+      href: "/#automation",
+      chipVariant: "concept",
+      chipLabel: "CONCEPT",
+    },
+    {
+      name: "Yuzuki",
+      role: "Local-first agentic desktop product",
+      href: "/projects/yuzuki",
+      chipVariant: "verified",
+      chipLabel: "LIVE-VERIFIED",
+    },
+    {
+      name: "RAG Assistant",
+      role: "RAG and document-intelligence assistant",
+      href: "/projects/rag-assistant",
+      chipVariant: "concept",
+      chipLabel: "CONCEPT",
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="Systems — Mateusz Ozimkiewicz"
+  description="How MellyCore AIOS, Klaus Dev Orchestrator, Job Router Finder, OpsPilot AI, Yuzuki and RAG Assistant fit together: one substrate, four systems that run on it directly, and one application built on Klaus."
+>
+  <section class="section content-width">
+    <h1 style="font-size:var(--text-h1);">Systems</h1>
+    <p class="reading-width" style="margin-top:var(--space-16);color:var(--color-ink-secondary);">
+      One substrate, four systems that run on it directly, and one
+      application built specifically on another: Job Router Finder is not a
+      peer of Klaus Dev Orchestrator — it is a workflow Klaus runs.
+    </p>
+
+    <div class="stree" style="margin-top:var(--space-32);">
+      <ul class="stree__list stree__list--root">
+        <li class="stree__row">
+          <a class="stree__link" href={root.href}>
+            <span class="stree__name">{root.name}</span>
+            <span class="stree__role">{root.role}</span>
+            <StatusChip variant={root.chipVariant} label={root.chipLabel} bare />
+          </a>
+
+          <ul class="stree__list">
+            {
+              root.children!.map((node) => (
+                <li class="stree__row">
+                  <a class="stree__link" href={node.href}>
+                    <span class="stree__name">{node.name}</span>
+                    <span class="stree__role">{node.role}</span>
+                    <StatusChip variant={node.chipVariant} label={node.chipLabel} bare />
+                  </a>
+
+                  {node.children && (
+                    <ul class="stree__list">
+                      {node.children.map((child) => (
+                        <li class="stree__row">
+                          <a class="stree__link" href={child.href}>
+                            <span class="stree__name">{child.name}</span>
+                            <span class="stree__role">{child.role}</span>
+                            <StatusChip variant={child.chipVariant} label={child.chipLabel} bare />
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <p class="reading-width" style="margin-top:var(--space-32);color:var(--color-ink-muted);font-size:var(--text-label);">
+      <a href="/projects">See every project →</a>
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .stree__list {
+    position: relative;
+    margin: 0;
+    padding-left: var(--space-24);
+    list-style: none;
+  }
+
+  .stree__list--root {
+    padding-left: 0;
+  }
+
+  /* Vertical trunk connecting a node's children — CSS-only, so a screen
+     reader hears a nested list, not decorative punctuation. */
+  .stree__list:not(.stree__list--root)::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 0;
+    bottom: 18px;
+    width: 1px;
+    background: var(--color-line);
+  }
+
+  .stree__row {
+    position: relative;
+    margin-top: var(--space-8);
+  }
+
+  .stree__list:not(.stree__list--root) > .stree__row::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--space-24) * -1 + 6px);
+    top: 22px;
+    width: 14px;
+    height: 1px;
+    background: var(--color-line);
+  }
+
+  .stree__link {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4) var(--space-16);
+    min-height: 44px;
+    padding: var(--space-8) var(--space-12);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink);
+  }
+
+  a.stree__link:hover,
+  a.stree__link:focus-visible {
+    border-color: var(--color-violet);
+  }
+
+  a.stree__link:hover .stree__name,
+  a.stree__link:focus-visible .stree__name {
+    color: var(--color-violet);
+  }
+
+  .stree__name {
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  .stree__role {
+    color: var(--color-ink-muted);
+    font-size: var(--text-label);
+  }
+
+  @media (max-width: 599px) {
+    .stree__link {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+  }
+</style>

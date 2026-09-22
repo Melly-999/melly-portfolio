@@ -3,13 +3,18 @@ import { YUZUKI_SOURCE_HREF } from "./social";
 
 /**
  * Project registry. Order is the hierarchy and is identical at every breakpoint:
- * Yuzuki (flagship) → Klaus (major) → MellyCore → RAG Document Assistant →
- * MellyTrade → supporting work. Prev/next sequencing reads this order.
+ * Yuzuki (flagship) → Klaus Dev Orchestrator (major) → MellyCore →
+ * RAG Assistant → MellyTrade → supporting work. Prev/next sequencing reads
+ * this order. Job Router Finder is not a top-level entry here: it is an
+ * application downstream of Klaus Dev Orchestrator specifically (see
+ * /projects/klaus#job-router and /systems), the same relationship OpsPilot AI
+ * has to MellyCore below in `concepts`.
  *
  * Truth notes:
- *  - Klaus: owner-defined role and architecture only. No repository or run
- *    evidence was located, so it is CONCEPT — no implemented capability is claimed.
- *  - RAG Document Assistant and MellyTrade: interface concept renders used as
+ *  - Klaus Dev Orchestrator: owner-defined role and architecture only. No
+ *    repository or run evidence was located, so it is CONCEPT — no
+ *    implemented capability is claimed.
+ *  - RAG Assistant and MellyTrade: interface concept renders used as
  *    portfolio/case-study visuals, not evidence of a live deployment, production
  *    scale or trading system (assets pack ASSET_MANIFEST.md).
  *  - MellyCore: partial; its screenshot is a real static-preview snapshot.
@@ -25,7 +30,7 @@ export const projects = [
     weight: "flagship",
     variant: "product",
     badge: "Flagship",
-    title: "Yuzuki Desktop",
+    title: "Yuzuki",
     tagline: "Local-first AI desktop with fail-closed private mode",
     description:
       "A complete AI product, not a UI mockup: a Tauri desktop application with a live-verified local chat path, seven named routing modes, and Hermes Agent integration. Public source only.",
@@ -48,7 +53,7 @@ export const projects = [
     weight: "major",
     variant: "platform",
     badge: "Agent",
-    title: "Klaus",
+    title: "Klaus Dev Orchestrator",
     tagline: "AI orchestration and coding agent",
     description:
       "A personal AI engineering operator that coordinates agents and models, carries project context, and routes work through implementation, review and validation.",
@@ -78,7 +83,7 @@ export const projects = [
     weight: "standard",
     variant: "product",
     badge: "RAG system",
-    title: "RAG Document Assistant",
+    title: "RAG Assistant",
     tagline: "RAG-powered document search with source-grounded answers",
     description:
       "Document intelligence for knowledge bases, procedures and support documentation: questions answered from a company's own documents, each answer shown with its sources.",
@@ -124,7 +129,7 @@ export type ProjectSlug = (typeof projects)[number]["slug"];
 export const concepts = [
   {
     slug: "automation",
-    title: "AI Automation / OpsPilot",
+    title: "OpsPilot AI",
     tagline: "Operational signals to a human decision",
     statement: "A concept for a workflow I can build — not a shipped project.",
     chip: { variant: "concept" } satisfies ProjectChip,

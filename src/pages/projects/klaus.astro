@@ -78,8 +78,8 @@ const trace = [
 ---
 
 <BaseLayout
-  title="Klaus — AI orchestration and coding agent"
-  description="Klaus: a concept for a personal AI engineering operator that orchestrates agents and coding work through context, implementation, review and validation."
+  title="Klaus Dev Orchestrator — AI orchestration and coding agent"
+  description="Klaus Dev Orchestrator: a concept for a personal AI engineering operator that orchestrates agents and coding work through context, implementation, review and validation."
 >
   <ProjectCaseStudyShell current="klaus" bare>
     <section class="phero ground-surface" aria-labelledby="klaus-title">
@@ -88,7 +88,7 @@ const trace = [
           <StatusChip variant="concept" label="CONCEPT · OWNER-DEFINED ARCHITECTURE" />
           <span class="badge">Orchestration + coding agent</span>
         </p>
-        <h1 id="klaus-title" class="phero__title">Klaus</h1>
+        <h1 id="klaus-title" class="phero__title">Klaus Dev Orchestrator</h1>
         <p class="phero__tag">
           AI orchestration and coding agent for coordinating development workflows,
           agent and model handoffs, implementation tasks, and verification.
@@ -154,6 +154,21 @@ const trace = [
         from facts.
       </p>
       <ProcessSpine label="Klaus workflow" steps={stages} />
+    </Chapter>
+
+    <Chapter id="job-router" title="08 · Downstream: Job Router Finder" ground="surface" eyebrow="An application built on Klaus">
+      <p><StatusChip variant="concept" label="CONCEPT · APPLICATION ON KLAUS" /></p>
+      <p class="pchapter__body">
+        Job Router Finder is opportunity intelligence built on Klaus Dev
+        Orchestrator, not a separate orchestrator of its own: it inherits
+        Klaus's operator skills and approval policy to search postings, score
+        fit against a profile, and draft an application — then stop for a
+        person to send it.
+      </p>
+      <p class="pchapter__body">
+        It is one workflow Klaus can run, the same way the coding, review and
+        validation stages above are — not a peer system next to Klaus.
+      </p>
     </Chapter>
 
     <Chapter id="status" title="Current status" ground="surface">

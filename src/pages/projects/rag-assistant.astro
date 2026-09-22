@@ -7,7 +7,7 @@ import ScreenshotFrame from "../../components/ScreenshotFrame.astro";
 import ProcessSpine from "../../components/ProcessSpine.astro";
 
 /**
- * /projects/rag-assistant — RAG Document Assistant.
+ * /projects/rag-assistant — RAG Assistant.
  * The screenshot is a concept interface render used as a portfolio/case-study
  * visual (assets pack ASSET_MANIFEST.md). Figures inside it (document and chunk
  * counts, confidence, match scores, generation time) are illustrative sample values and
@@ -24,12 +24,12 @@ const pipeline = [
 ] as const;
 
 const alt =
-  "RAG Document Assistant concept interface: a natural-language question about a client onboarding workflow, a source-grounded answer with missing documents and recommended actions, four retrieved sources with match scores, a knowledge-base summary, and a five-step RAG pipeline from ingest to answer.";
+  "RAG Assistant concept interface: a natural-language question about a client onboarding workflow, a source-grounded answer with missing documents and recommended actions, four retrieved sources with match scores, a knowledge-base summary, and a five-step RAG pipeline from ingest to answer.";
 ---
 
 <BaseLayout
-  title="RAG Document Assistant — source-grounded document search"
-  description="RAG Document Assistant: RAG-powered document search with source-grounded answers — a concept interface for retrieval, citations and document intelligence."
+  title="RAG Assistant — source-grounded document search"
+  description="RAG Assistant: RAG-powered document search with source-grounded answers — a concept interface for retrieval, citations and document intelligence."
 >
   <ProjectCaseStudyShell current="rag-assistant" bare>
     <section class="phero ground-surface" aria-labelledby="rag-title">
@@ -38,14 +38,14 @@ const alt =
           <StatusChip variant="concept" label="CONCEPT INTERFACE" />
           <span class="badge">RAG system</span>
         </p>
-        <h1 id="rag-title" class="phero__title">RAG Document Assistant</h1>
+        <h1 id="rag-title" class="phero__title">RAG Assistant</h1>
         <p class="phero__tag">RAG-powered document search with source-grounded answers.</p>
       </div>
       <div class="cinematic-width" style="margin-top:var(--space-32);">
         <ScreenshotFrame
           src="/assets/rag-assistant/rag-document-assistant-concept-v2-1672x941.webp"
           alt={alt}
-          caption="RAG Document Assistant — concept interface render."
+          caption="RAG Assistant — concept interface render."
           srcWidth={1672}
           srcHeight={941}
           mobileCrop={{ x: 322, y: 76, w: 1350, h: 865 }}

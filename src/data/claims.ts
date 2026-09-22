@@ -130,7 +130,7 @@ export const claims: readonly Claim[] = [
   },
   {
     id: "klaus",
-    label: "Klaus orchestration + coding agent",
+    label: "Klaus Dev Orchestrator",
     status: "concept",
     href: "/projects/klaus",
     sections: {},
@@ -138,7 +138,7 @@ export const claims: readonly Claim[] = [
   },
   {
     id: "rag-assistant",
-    label: "RAG Document Assistant interface",
+    label: "RAG Assistant interface",
     status: "concept",
     href: "/projects/rag-assistant",
     sections: {},
@@ -154,7 +154,7 @@ export const claims: readonly Claim[] = [
   },
   {
     id: "opspilot",
-    label: "OpsPilot",
+    label: "OpsPilot AI",
     status: "concept",
     href: "/#automation",
     sections: { home: "automation" },
