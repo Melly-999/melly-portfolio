@@ -141,7 +141,7 @@ const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow dis
           title={automation.title}
           subtitle={automation.tagline}
           description={automation.statement}
-          stack="Signal · Analysis · Priority · Suggested action · Human review"
+          stack="Signal · Analysis · Qualification · Suggested action · Human review"
           href="#automation"
           chips={[automation.chip]}
         />
@@ -264,7 +264,7 @@ const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow dis
         steps={[
           { label: "Signal", sub: "operational" },
           { label: "Analysis", sub: "AI" },
-          { label: "Priority", sub: "Low / Medium / High" },
+          { label: "Qualification", sub: "HOT / WARM / LOW" },
           { label: "Suggested action" },
           { label: "Human review", key: true, sub: "the step that decides" },
         ]}
