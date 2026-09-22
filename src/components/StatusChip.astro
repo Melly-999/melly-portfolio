@@ -24,6 +24,12 @@ const text = label ?? statusText[variant];
     {variant === "implemented" && <circle cx="5" cy="5" r="3.75" fill="none" stroke="currentColor" stroke-width="1.5" />}
     {variant === "prototype" && <circle cx="5" cy="5" r="3.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 1.6" />}
     {variant === "concept" && <rect x="1" y="1" width="8" height="8" fill="none" stroke="currentColor" stroke-width="1.5" />}
+    {variant === "development" && (
+      <>
+        <rect x="1" y="1" width="8" height="8" fill="none" stroke="currentColor" stroke-width="1.5" />
+        <rect x="1" y="5" width="8" height="4" fill="currentColor" />
+      </>
+    )}
     {variant === "shipped" && <rect x="1" y="1" width="8" height="8" fill="currentColor" />}
     {variant === "source" && <path d="M5 1 9 5 5 9 1 5z" fill="none" stroke="currentColor" stroke-width="1.5" />}
     {variant === "partial" && (

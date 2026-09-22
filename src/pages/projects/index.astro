@@ -3,13 +3,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
 import { projects, concepts } from "../../data/projects";
 
-const [flagship, ...rest] = projects;
+const [yuzuki, klaus, mellycore, rag, mellytrade, workspace] = projects;
 const [automation] = concepts;
 ---
 
 <BaseLayout
   title="Projects — Mateusz Ozimkiewicz"
-  description="Selected projects by Mateusz Ozimkiewicz: Yuzuki, a local-first AI desktop; Klaus Dev Orchestrator, an AI orchestration and coding agent; MellyCore, a command-center architecture; RAG Assistant, a document intelligence assistant; and MellyTrade, an analytics interface."
+  description="Selected projects by Mateusz Ozimkiewicz: Yuzuki, a local-first AI desktop; Klaus Dev Orchestrator, an AI orchestration and coding agent; MellyCore, a command-center architecture; OpsPilot AI, an operations automation workflow; RAG Assistant, a document intelligence assistant; and MellyTrade, an analytics interface."
 >
   <section class="section content-width">
     <h1 style="font-size:var(--text-h1);">Projects</h1>
@@ -22,36 +22,43 @@ const [automation] = concepts;
       <ProjectCard
         weight="flagship"
         headingLevel={2}
-        title={flagship.title}
-        subtitle={flagship.tagline}
-        description={flagship.description}
-        stack={flagship.stack}
-        href={flagship.href}
-        chips={flagship.chips}
-        image={flagship.image}
-        imageAlt={flagship.imageAlt}
-        imageCaption={flagship.imageCaption}
+        title={yuzuki.title}
+        subtitle={yuzuki.tagline}
+        description={yuzuki.description}
+        stack={yuzuki.stack}
+        href={yuzuki.href}
+        chips={yuzuki.chips}
+        image={yuzuki.image}
+        imageAlt={yuzuki.imageAlt}
+        imageCaption={yuzuki.imageCaption}
         threshold
       />
-      {
-        rest.map((project) => (
-          <ProjectCard
-            weight={project.weight}
-            headingLevel={2}
-            label={project.badge}
-            title={project.title}
-            subtitle={project.tagline}
-            description={project.description}
-            stack={project.stack}
-            href={project.href}
-            chips={project.chips}
-          />
-        ))
-      }
       <ProjectCard
-        weight="supporting"
+        weight={klaus.weight}
         headingLevel={2}
-        label="Concept"
+        label={klaus.badge}
+        title={klaus.title}
+        subtitle={klaus.tagline}
+        description={klaus.description}
+        stack={klaus.stack}
+        href={klaus.href}
+        chips={klaus.chips}
+      />
+      <ProjectCard
+        weight={mellycore.weight}
+        headingLevel={2}
+        label={mellycore.badge}
+        title={mellycore.title}
+        subtitle={mellycore.tagline}
+        description={mellycore.description}
+        stack={mellycore.stack}
+        href={mellycore.href}
+        chips={mellycore.chips}
+      />
+      <ProjectCard
+        weight="standard"
+        headingLevel={2}
+        label="Automation"
         title={automation.title}
         subtitle={automation.tagline}
         description={automation.statement}
@@ -59,6 +66,54 @@ const [automation] = concepts;
         href="/#automation"
         chips={[automation.chip]}
       />
+      <ProjectCard
+        weight={rag.weight}
+        headingLevel={2}
+        label={rag.badge}
+        title={rag.title}
+        subtitle={rag.tagline}
+        description={rag.description}
+        stack={rag.stack}
+        href={rag.href}
+        chips={rag.chips}
+      />
+
+      <h2 class="other-heading mono">Other work</h2>
+      <ProjectCard
+        weight={mellytrade.weight}
+        headingLevel={2}
+        label={mellytrade.badge}
+        title={mellytrade.title}
+        subtitle={mellytrade.tagline}
+        description={mellytrade.description}
+        stack={mellytrade.stack}
+        href={mellytrade.href}
+        chips={mellytrade.chips}
+      />
+      <ProjectCard
+        weight={workspace.weight}
+        headingLevel={2}
+        label={workspace.badge}
+        title={workspace.title}
+        subtitle={workspace.tagline}
+        description={workspace.description}
+        stack={workspace.stack}
+        href={workspace.href}
+        chips={workspace.chips}
+      />
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .other-heading {
+    margin-top: var(--space-32);
+    padding-top: var(--space-24);
+    border-top: 1px solid var(--color-line);
+    color: var(--color-ink-muted);
+    font-size: var(--text-micro);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+</style>

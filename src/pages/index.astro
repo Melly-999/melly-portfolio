@@ -21,6 +21,20 @@ import { YUZUKI_SOURCE_HREF } from "../data/social";
 const [yuzuki, klaus, mellycore, rag, mellytrade, workspace] = projects;
 const [automation] = concepts;
 
+/**
+ * OpsPilot AI (from `concepts`, no dedicated route) shaped to the same props
+ * as a `projects` card so it can sit at its locked priority position — #4,
+ * between MellyCore and RAG Assistant — inside the trio below.
+ */
+const opsPilot = {
+  title: automation.title,
+  tagline: automation.tagline,
+  description: automation.statement,
+  stack: "Signal · Analysis · Qualification · Suggested action · Human review",
+  href: "#automation",
+  chips: [automation.chip],
+};
+
 const buildStages = [
   { label: "Discover" },
   { label: "Architecture" },
@@ -113,7 +127,7 @@ const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow dis
 
       <div class="trio">
         {
-          [mellycore, rag, mellytrade].map((p) => (
+          [mellycore, opsPilot, rag].map((p) => (
             <ProjectCard
               title={p.title}
               subtitle={p.tagline}
@@ -130,20 +144,20 @@ const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow dis
         <h3 class="other__label mono">Other work</h3>
         <ProjectCard
           weight="supporting"
+          title={mellytrade.title}
+          subtitle={mellytrade.tagline}
+          description={mellytrade.description}
+          stack={mellytrade.stack}
+          href={mellytrade.href}
+          chips={mellytrade.chips}
+        />
+        <ProjectCard
+          weight="supporting"
           title={workspace.title}
           subtitle={workspace.tagline}
           description={workspace.description}
           stack={workspace.stack}
           href={workspace.href}
-        />
-        <ProjectCard
-          weight="supporting"
-          title={automation.title}
-          subtitle={automation.tagline}
-          description={automation.statement}
-          stack="Signal · Analysis · Qualification · Suggested action · Human review"
-          href="#automation"
-          chips={[automation.chip]}
         />
       </div>
     </div>
@@ -207,7 +221,7 @@ const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow dis
     <div class="content-width">
       <div class="grid-12">
         <div class="mc__copy stack">
-          <StatusChip variant="partial" label="PARTIAL · DOCS + STATIC SLICE" />
+          <StatusChip variant="partial" label="ACTIVE DEVELOPMENT · DOCS + STATIC SLICE" />
           <h2 id="mellycore-heading" class="chapter__title" data-flow>MellyCore</h2>
           <p class="reading-width mc__lead" data-flow style="--i:1">
             A systems architecture for agent orchestration: an operating loop where a human
@@ -254,7 +268,7 @@ const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow dis
   <!-- 05 · OpsPilot AI — the plainest, most legible chapter -->
   <section id="automation" class="chapter chapter--light ground-canvas" data-chapter data-title="OpsPilot AI" aria-labelledby="automation-heading">
     <div class="content-width stack">
-      <StatusChip variant="concept" />
+      <StatusChip variant="development" label="IN DEVELOPMENT · WORKFLOW DESIGN" />
       <h2 id="automation-heading" class="chapter__title" data-flow>OpsPilot AI</h2>
       <p class="auto__lead reading-width" data-flow style="--i:1">{automation.statement}</p>
       <ProcessSpine

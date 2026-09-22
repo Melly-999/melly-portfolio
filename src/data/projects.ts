@@ -2,22 +2,31 @@ import type { StatusVariant } from "./claims";
 import { YUZUKI_SOURCE_HREF } from "./social";
 
 /**
- * Project registry. Order is the hierarchy and is identical at every breakpoint:
+ * Project registry. This array's order is the base hierarchy used for
+ * prev/next sequencing on case-study pages (identical at every breakpoint):
  * Yuzuki (flagship) → Klaus Dev Orchestrator (major) → MellyCore →
- * RAG Assistant → MellyTrade → supporting work. Prev/next sequencing reads
- * this order. Job Router Finder is not a top-level entry here: it is an
- * application downstream of Klaus Dev Orchestrator specifically (see
- * /projects/klaus#job-router and /systems), the same relationship OpsPilot AI
- * has to MellyCore below in `concepts`.
+ * RAG Assistant → MellyTrade → supporting work. Job Router Finder is not a
+ * top-level entry here: it is an application downstream of Klaus Dev
+ * Orchestrator specifically (see /projects/klaus#job-router and /systems),
+ * the same relationship OpsPilot AI has to MellyCore below in `concepts`.
+ *
+ * Display order on the homepage and /projects additionally interleaves
+ * OpsPilot AI (from `concepts`, no dedicated case-study page or prev/next
+ * slot) between MellyCore and RAG Assistant, and groups MellyTrade with
+ * Workspace as trailing "Other work" — see index.astro / projects/index.astro.
+ * The locked portfolio priority is: Yuzuki → Klaus (+ Job Router Finder) →
+ * MellyCore → OpsPilot AI → RAG Assistant → Other work.
  *
  * Truth notes:
  *  - Klaus Dev Orchestrator: owner-defined role and architecture only. No
- *    repository or run evidence was located, so it is CONCEPT — no
+ *    repository or run evidence was located, so it is IN DEVELOPMENT — no
  *    implemented capability is claimed.
  *  - RAG Assistant and MellyTrade: interface concept renders used as
  *    portfolio/case-study visuals, not evidence of a live deployment, production
  *    scale or trading system (assets pack ASSET_MANIFEST.md).
- *  - MellyCore: partial; its screenshot is a real static-preview snapshot.
+ *  - MellyCore: active development; its screenshot is a real static-preview
+ *    snapshot, and the case-study page lists concrete implemented items
+ *    (Loop Operations Foundation, Context Gate iteration 4).
  */
 export interface ProjectChip {
   variant: StatusVariant;
@@ -60,7 +69,7 @@ export const projects = [
     stack: "Orchestration · Coding agent · Project context · Review gates",
     href: "/projects/klaus",
     chips: [
-      { variant: "concept", label: "CONCEPT · OWNER-DEFINED ARCHITECTURE" },
+      { variant: "development", label: "IN DEVELOPMENT · OWNER-DEFINED ARCHITECTURE" },
     ] satisfies ProjectChip[],
   },
   {
@@ -75,7 +84,7 @@ export const projects = [
     stack: "Context Graph · Agent Handoffs · Safety Contracts · Static preview",
     href: "/projects/aios",
     chips: [
-      { variant: "partial", label: "PARTIAL · DOCS + STATIC SLICE" },
+      { variant: "partial", label: "ACTIVE DEVELOPMENT · DOCS + STATIC SLICE" },
     ] satisfies ProjectChip[],
   },
   {
@@ -90,12 +99,12 @@ export const projects = [
     stack: "Retrieval · Embeddings · Indexing · Citations",
     href: "/projects/rag-assistant",
     chips: [
-      { variant: "concept", label: "CONCEPT INTERFACE" },
+      { variant: "development", label: "IN DEVELOPMENT · CONCEPT INTERFACE" },
     ] satisfies ProjectChip[],
   },
   {
     slug: "mellytrade",
-    weight: "standard",
+    weight: "supporting",
     variant: "product",
     badge: "Analytics",
     title: "MellyTrade",
@@ -131,7 +140,7 @@ export const concepts = [
     slug: "automation",
     title: "OpsPilot AI",
     tagline: "Operational signals to a human decision",
-    statement: "A concept for a workflow I can build — not a shipped project.",
-    chip: { variant: "concept" } satisfies ProjectChip,
+    statement: "A workflow I'm designing — not a shipped project.",
+    chip: { variant: "development", label: "IN DEVELOPMENT · WORKFLOW DESIGN" } satisfies ProjectChip,
   },
 ] as const;

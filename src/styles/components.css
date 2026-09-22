@@ -344,6 +344,10 @@
   --chip-color: var(--color-state-concept);
 }
 
+.chip--development {
+  --chip-color: var(--color-state-prototype);
+}
+
 .chip--shipped,
 .chip--source,
 .chip--partial {

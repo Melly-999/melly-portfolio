@@ -12,6 +12,7 @@ export type StatusVariant =
   | "implemented"
   | "prototype"
   | "concept"
+  | "development"
   | "shipped"
   | "source"
   | "partial"
@@ -24,9 +25,10 @@ export const statusText: Record<StatusVariant, string> = {
   implemented: "IMPL · NOT LIVE-VERIFIED",
   prototype: "PROTOTYPE / FIXTURE DATA",
   concept: "CONCEPT · NOT YET BUILT",
+  development: "IN DEVELOPMENT",
   shipped: "SHIPPED",
   source: "SOURCE ONLY",
-  partial: "PARTIAL",
+  partial: "ACTIVE DEVELOPMENT",
   planned: "PLANNED",
 };
 
@@ -131,7 +133,7 @@ export const claims: readonly Claim[] = [
   {
     id: "klaus",
     label: "Klaus Dev Orchestrator",
-    status: "concept",
+    status: "development",
     href: "/projects/klaus",
     sections: {},
     source: "Owner-defined role and architecture; no repository evidence located",
@@ -139,7 +141,7 @@ export const claims: readonly Claim[] = [
   {
     id: "rag-assistant",
     label: "RAG Assistant interface",
-    status: "concept",
+    status: "development",
     href: "/projects/rag-assistant",
     sections: {},
     source: "Portfolio concept render (assets pack ASSET_MANIFEST.md truthfulness note)",
@@ -155,7 +157,7 @@ export const claims: readonly Claim[] = [
   {
     id: "opspilot",
     label: "OpsPilot AI",
-    status: "concept",
+    status: "development",
     href: "/#automation",
     sections: { home: "automation" },
     source: `${PROOF} §4`,
