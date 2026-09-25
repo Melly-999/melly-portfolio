@@ -25,6 +25,12 @@ const dossierAlt =
   "Full OpsPilot Acme Robotics lead dossier with qualification, evidence, recommendation, response draft, approval, execution, and audit sections.";
 const executionAlt =
   "OpsPilot executed lead view showing SUCCEEDED together with the visible Simulated and no-live-outbound disclosure.";
+const flowAwaitingAlt =
+  "OpsPilot human approval section in the PENDING state, with the demo approve and reject controls and a visible demo-decision disclosure.";
+const flowApprovedAlt =
+  "OpsPilot human approval section showing APPROVED, and the execution section armed as PENDING and SIMULATED with the simulated-execution control.";
+const flowSucceededAlt =
+  "OpsPilot execution section showing SUCCEEDED beside SIMULATED, with an audit timeline recording the demo approval and a simulated send that delivered no message.";
 const mobileAlt =
   "OpsPilot mobile lead queue at 390 pixels wide, showing identity, status, qualification, recommended action, and demo-data disclosure without page overflow.";
 ---
@@ -128,8 +134,8 @@ const mobileAlt =
           src="/assets/opspilot/03-opspilot-acme-dossier-1440-full.png"
           alt={dossierAlt}
           caption="Acme Robotics dossier — deterministic fixture data, a demo approval decision, and no live outbound action."
-          srcWidth={1425}
-          srcHeight={1695}
+          srcWidth={1440}
+          srcHeight={1913}
           scrollable
           scrollWidth={900}
         />
@@ -153,6 +159,42 @@ const mobileAlt =
           scrollWidth={900}
         />
       </div>
+
+      <ol class="flow-frames" aria-label="Demo approval and simulated execution progression">
+        <li>
+          <ScreenshotFrame
+            src="/assets/opspilot/demo-flow/01-awaiting-approval.png"
+            alt={flowAwaitingAlt}
+            caption="Step 1 — awaiting approval. The decision is the operator's; nothing has been armed."
+            srcWidth={954}
+            srcHeight={405}
+            scrollable
+            scrollWidth={720}
+          />
+        </li>
+        <li>
+          <ScreenshotFrame
+            src="/assets/opspilot/demo-flow/02-approved-ready-to-simulate.png"
+            alt={flowApprovedAlt}
+            caption="Step 2 — approved. Execution is armed as PENDING and SIMULATED, and still has not run."
+            srcWidth={954}
+            srcHeight={430}
+            scrollable
+            scrollWidth={720}
+          />
+        </li>
+        <li>
+          <ScreenshotFrame
+            src="/assets/opspilot/demo-flow/03-succeeded-with-audit.png"
+            alt={flowSucceededAlt}
+            caption="Step 3 — simulated success. The audit timeline records the demo decision and a send that delivered no message."
+            srcWidth={954}
+            srcHeight={938}
+            scrollable
+            scrollWidth={720}
+          />
+        </li>
+      </ol>
     </Chapter>
 
     <Chapter id="responsive" title="06 · Operational at mobile width" ground="surface" eyebrow="Critical context without horizontal discovery">
@@ -343,6 +385,19 @@ const mobileAlt =
   .truth-callout--quiet {
     margin-top: var(--space-24);
     border-color: var(--color-line);
+  }
+
+  /* Approve → arm → simulated success, as three frames of the same chain. */
+  .flow-frames {
+    display: grid;
+    gap: var(--space-24);
+    margin: var(--space-32) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .flow-frames > li {
+    min-width: 0;
   }
 
   .responsive-grid {

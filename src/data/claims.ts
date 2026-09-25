@@ -160,7 +160,7 @@ export const claims: readonly Claim[] = [
     status: "validated",
     href: "/projects/opspilot",
     sections: { home: "automation" },
-    source: "Accepted OpsPilot evidence pack at source SHA 235f22f; real PostgreSQL 16.15 technical acceptance",
+    source: "Accepted OpsPilot evidence pack at source SHA 0280226 (dark visual refresh); real PostgreSQL 16.15 technical acceptance",
   },
 ];
 
