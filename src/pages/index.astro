@@ -7,8 +7,9 @@ import ProjectCard from "../components/ProjectCard.astro";
 import StatusChip from "../components/StatusChip.astro";
 import CycleDiagram from "../components/CycleDiagram.astro";
 import ProcessSpine from "../components/ProcessSpine.astro";
+import ScreenshotFrame from "../components/ScreenshotFrame.astro";
 import SystemsIndex from "../components/SystemsIndex.astro";
-import { projects, concepts } from "../data/projects";
+import { projects } from "../data/projects";
 import { YUZUKI_SOURCE_HREF } from "../data/social";
 
 /**
@@ -18,22 +19,7 @@ import { YUZUKI_SOURCE_HREF } from "../data/social";
  * (canvas ↔ surface). The one engineered peak lives on /projects/yuzuki; the
  * hero is the greet, not a second peak.
  */
-const [yuzuki, klaus, mellycore, rag, mellytrade, workspace] = projects;
-const [automation] = concepts;
-
-/**
- * OpsPilot AI (from `concepts`, no dedicated route) shaped to the same props
- * as a `projects` card so it can sit at its locked priority position — #4,
- * between MellyCore and RAG Assistant — inside the trio below.
- */
-const opsPilot = {
-  title: automation.title,
-  tagline: automation.tagline,
-  description: automation.statement,
-  stack: "Signal · Analysis · Qualification · Suggested action · Human review",
-  href: "#automation",
-  chips: [automation.chip],
-};
+const [yuzuki, klaus, mellycore, opsPilot, rag, mellytrade, workspace] = projects;
 
 const buildStages = [
   { label: "Discover" },
@@ -268,21 +254,37 @@ const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow dis
   <!-- 05 · OpsPilot AI — the plainest, most legible chapter -->
   <section id="automation" class="chapter chapter--light ground-canvas" data-chapter data-title="OpsPilot AI" aria-labelledby="automation-heading">
     <div class="content-width stack">
-      <StatusChip variant="development" label="IN DEVELOPMENT · WORKFLOW DESIGN" />
+      <p class="chip-row">
+        <StatusChip variant="validated" label="FRONTEND + POSTGRESQL · ACCEPTED" />
+        <StatusChip variant="prototype" label="DEMO DATA · SIMULATED · NO LIVE OUTBOUND" />
+      </p>
       <h2 id="automation-heading" class="chapter__title" data-flow>OpsPilot AI</h2>
-      <p class="auto__lead reading-width" data-flow style="--i:1">{automation.statement}</p>
+      <p class="auto__lead reading-width" data-flow style="--i:1">
+        A human-in-the-loop operations console that turns lead evidence into traceable
+        qualification, recommended actions, approval decisions, and safely simulated execution.
+      </p>
       <ProcessSpine
         variant="boxed"
         label="Automation workflow"
         stagger={60}
         steps={[
-          { label: "Signal", sub: "operational" },
-          { label: "Analysis", sub: "AI" },
+          { label: "Inbound lead" },
+          { label: "Analysis", sub: "evidence-led" },
           { label: "Qualification", sub: "HOT / WARM / LOW" },
-          { label: "Suggested action" },
-          { label: "Human review", key: true, sub: "the step that decides" },
+          { label: "Recommended action" },
+          { label: "Human approval", key: true },
+          { label: "Simulated execution", sub: "no live outbound" },
+          { label: "Audit evidence" },
         ]}
       />
+      <div class="auto__media" data-flow style="--i:2">
+        <ScreenshotFrame
+          src="/assets/opspilot/01-opspilot-overview-1440x900.png"
+          alt="OpsPilot operations overview with lead qualification counts, action queue, demo-data disclosure, and no-live-outbound boundary."
+          caption="Accepted OpsPilot overview — deterministic demo data; no live outbound."
+        />
+      </div>
+      <p><a class="button button--secondary" href="/projects/opspilot">Read the OpsPilot case study →</a></p>
     </div>
   </section>
 
@@ -541,6 +543,10 @@ const workflowHref = `mailto:${email}?subject=${encodeURIComponent("Workflow dis
   .auto__lead {
     font-size: var(--text-body-lg);
     color: var(--color-ink);
+  }
+
+  .auto__media {
+    margin-top: var(--space-16);
   }
 
   .how__evidence,

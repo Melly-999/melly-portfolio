@@ -5,15 +5,12 @@ import { YUZUKI_SOURCE_HREF } from "./social";
  * Project registry. This array's order is the base hierarchy used for
  * prev/next sequencing on case-study pages (identical at every breakpoint):
  * Yuzuki (flagship) → Klaus Dev Orchestrator (major) → MellyCore →
- * RAG Assistant → MellyTrade → supporting work. Job Router Finder is not a
+ * OpsPilot AI → RAG Assistant → MellyTrade → supporting work. Job Router Finder is not a
  * top-level entry here: it is an application downstream of Klaus Dev
- * Orchestrator specifically (see /projects/klaus#job-router and /systems),
- * the same relationship OpsPilot AI has to MellyCore below in `concepts`.
- *
- * Display order on the homepage and /projects additionally interleaves
- * OpsPilot AI (from `concepts`, no dedicated case-study page or prev/next
- * slot) between MellyCore and RAG Assistant, and groups MellyTrade with
- * Workspace as trailing "Other work" — see index.astro / projects/index.astro.
+ * Orchestrator specifically (see /projects/klaus#job-router and /systems).
+ * OpsPilot AI is a routed, validated project between MellyCore and RAG Assistant.
+ * The homepage and /projects group MellyTrade with Workspace as trailing
+ * "Other work" - see index.astro / projects/index.astro.
  * The locked portfolio priority is: Yuzuki → Klaus (+ Job Router Finder) →
  * MellyCore → OpsPilot AI → RAG Assistant → Other work.
  *
@@ -88,6 +85,22 @@ export const projects = [
     ] satisfies ProjectChip[],
   },
   {
+    slug: "opspilot",
+    weight: "standard",
+    variant: "product",
+    badge: "Operations system",
+    title: "OpsPilot AI",
+    tagline: "Human-in-the-loop AI operations automation system",
+    description:
+      "An evidence-led operations console for deterministic lead qualification, recommended actions, human approval, safely simulated execution, and audit history.",
+    stack: "React / TypeScript / FastAPI / PostgreSQL / Human approval",
+    href: "/projects/opspilot",
+    chips: [
+      { variant: "validated", label: "FRONTEND + POSTGRESQL / ACCEPTED" },
+      { variant: "prototype", label: "DEMO DATA / SIMULATED / NO LIVE OUTBOUND" },
+    ] satisfies ProjectChip[],
+  },
+  {
     slug: "rag-assistant",
     weight: "standard",
     variant: "product",
@@ -133,14 +146,3 @@ export const projects = [
 ] as const;
 
 export type ProjectSlug = (typeof projects)[number]["slug"];
-
-/** Concepts: honestly labelled, no route, no screenshot, no metrics. */
-export const concepts = [
-  {
-    slug: "automation",
-    title: "OpsPilot AI",
-    tagline: "Operational signals to a human decision",
-    statement: "A workflow I'm designing — not a shipped project.",
-    chip: { variant: "development", label: "IN DEVELOPMENT · WORKFLOW DESIGN" } satisfies ProjectChip,
-  },
-] as const;

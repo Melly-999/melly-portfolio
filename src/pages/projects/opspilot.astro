@@ -1,0 +1,382 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCaseStudyShell from "../../components/ProjectCaseStudyShell.astro";
+import Chapter from "../../components/Chapter.astro";
+import ProcessSpine from "../../components/ProcessSpine.astro";
+import ScreenshotFrame from "../../components/ScreenshotFrame.astro";
+import StatusChip from "../../components/StatusChip.astro";
+
+const workflow = [
+  { label: "Inbound lead" },
+  { label: "Analysis" },
+  { label: "Qualification", sub: "HOT / WARM / LOW" },
+  { label: "Evidence", sub: "HIGH / MEDIUM / LOW / UNKNOWN" },
+  { label: "Recommended action" },
+  { label: "Human approval", key: true },
+  { label: "Simulated execution", sub: "no live outbound" },
+  { label: "Audit evidence" },
+] as const;
+
+const overviewAlt =
+  "OpsPilot operations overview showing lead qualification counts, an action queue, a visible demo-data disclosure, and the no-live-outbound boundary.";
+const queueAlt =
+  "OpsPilot lead queue showing fixture leads with separate status, qualification, recommended action, and received-date fields.";
+const dossierAlt =
+  "Full OpsPilot Acme Robotics lead dossier with qualification, evidence, recommendation, response draft, approval, execution, and audit sections.";
+const executionAlt =
+  "OpsPilot executed lead view showing SUCCEEDED together with the visible Simulated and no-live-outbound disclosure.";
+const mobileAlt =
+  "OpsPilot mobile lead queue at 390 pixels wide, showing identity, status, qualification, recommended action, and demo-data disclosure without page overflow.";
+---
+
+<BaseLayout
+  title="OpsPilot AI — human-in-the-loop operations automation"
+  description="OpsPilot AI: an accepted human-in-the-loop operations system with deterministic qualification, real PostgreSQL technical acceptance, and a safely simulated no-outbound demo."
+>
+  <ProjectCaseStudyShell current="opspilot" bare>
+    <section class="op-hero ground-surface" aria-labelledby="opspilot-title">
+      <div class="content-width stack">
+        <p class="chip-row">
+          <StatusChip variant="validated" label="FRONTEND + POSTGRESQL · ACCEPTED" />
+          <StatusChip variant="prototype" label="DEMO DATA · SIMULATED · NO LIVE OUTBOUND" />
+        </p>
+        <h1 id="opspilot-title" class="op-hero__title" data-reveal>OpsPilot AI</h1>
+        <p class="op-hero__tag reading-width">
+          Human-in-the-loop AI operations automation system.
+        </p>
+        <p class="op-hero__summary reading-width">
+          A traceable workspace that turns lead evidence into deterministic qualification,
+          a recommended action, a human approval decision, and a safely simulated execution
+          record. The demo does not send a message.
+        </p>
+      </div>
+
+      <div class="cinematic-width op-hero__media">
+        <ScreenshotFrame
+          src="/assets/opspilot/01-opspilot-overview-1440x900.png"
+          alt={overviewAlt}
+          caption="Operations overview — accepted fixture-backed demo. DEMO DATA and NO LIVE OUTBOUND remain visible in the product frame."
+          scrollable
+          scrollWidth={900}
+          eager
+        />
+      </div>
+    </section>
+
+    <Chapter id="problem" title="01 · Problem" ground="canvas" eyebrow="Decision quality needs an evidence trail">
+      <div class="reading-width stack">
+        <p class="op-copy">
+          Lead-response operations often split qualification, supporting evidence,
+          approval context, and action history across multiple tools. Operators lose time
+          reconstructing why a lead was prioritised and whether an action was authorised.
+        </p>
+        <p class="op-copy">
+          OpsPilot keeps the decision chain in one place while making each domain concept
+          explicit: qualification is not evidence strength, evidence is not a recommended
+          action, and approval is not execution.
+        </p>
+      </div>
+    </Chapter>
+
+    <Chapter id="system" title="02 · System" ground="surface" eyebrow="Domain rules stay outside presentation">
+      <p class="op-copy reading-width">
+        The React interface displays adapter-provided decisions. Canonical qualification
+        and workflow rules remain in the Python domain layer, with FastAPI boundaries,
+        SQLAlchemy persistence, and Alembic migrations behind them.
+      </p>
+      <dl class="system-grid" aria-label="OpsPilot domain responsibilities">
+        <div>
+          <dt>Qualification</dt>
+          <dd>HOT / WARM / LOW</dd>
+        </div>
+        <div>
+          <dt>Evidence</dt>
+          <dd>HIGH / MEDIUM / LOW / UNKNOWN</dd>
+        </div>
+        <div>
+          <dt>Recommended action</dt>
+          <dd>A separate, explicit operator recommendation</dd>
+        </div>
+        <div>
+          <dt>Control</dt>
+          <dd>Human approval before simulated execution</dd>
+        </div>
+      </dl>
+    </Chapter>
+
+    <Chapter id="workflow" title="03 · Workflow" ground="canvas" eyebrow="One traceable decision chain">
+      <ProcessSpine label="OpsPilot lead workflow" steps={workflow} />
+      <div class="shot-block">
+        <ScreenshotFrame
+          src="/assets/opspilot/02-opspilot-lead-queue-1440x900.png"
+          alt={queueAlt}
+          caption="Lead queue — qualification, workflow status, recommended action, and timing remain separate and scannable."
+          scrollable
+          scrollWidth={900}
+        />
+      </div>
+    </Chapter>
+
+    <Chapter id="dossier" title="04 · Evidence-led dossier" ground="surface" eyebrow="The reasoning stays inspectable">
+      <p class="op-copy reading-width">
+        A representative lead dossier brings the qualification result, supporting evidence,
+        recommended action, response draft, approval state, execution state, and audit events
+        into one operator view.
+      </p>
+      <div class="shot-block">
+        <ScreenshotFrame
+          src="/assets/opspilot/03-opspilot-acme-dossier-1440-full.png"
+          alt={dossierAlt}
+          caption="Acme Robotics dossier — deterministic fixture data, a demo approval decision, and no live outbound action."
+          srcWidth={1425}
+          srcHeight={1695}
+          scrollable
+          scrollWidth={900}
+        />
+      </div>
+    </Chapter>
+
+    <Chapter id="execution" title="05 · Safe simulated execution" ground="canvas" eyebrow="A success state is not a delivery claim">
+      <div class="truth-callout" role="note" aria-label="Demo execution boundary">
+        <strong>SIMULATED · NO LIVE OUTBOUND</strong>
+        <span>
+          Approval and execution controls update an in-memory fixture projection. No API,
+          provider, customer system, or outbound messaging service is contacted by the demo.
+        </span>
+      </div>
+      <div class="shot-block">
+        <ScreenshotFrame
+          src="/assets/opspilot/04-opspilot-simulated-execution-1440x900.png"
+          alt={executionAlt}
+          caption="Executed-lead proof — SUCCEEDED is shown in the same frame as SIMULATED and NO LIVE OUTBOUND."
+          scrollable
+          scrollWidth={900}
+        />
+      </div>
+    </Chapter>
+
+    <Chapter id="responsive" title="06 · Operational at mobile width" ground="surface" eyebrow="Critical context without horizontal discovery">
+      <div class="responsive-grid">
+        <div class="responsive-grid__copy stack">
+          <p class="op-copy">
+            At 390 pixels, each operational card retains lead identity, status,
+            qualification, recommended action, and timing. Queue rows are real links,
+            keyboard focus stays visible, and meaning never depends on colour alone.
+          </p>
+          <p class="op-copy">
+            Loading, loaded, not-found, and recoverable error states are explicit at the
+            adapter boundary, with status or alert semantics where appropriate.
+          </p>
+        </div>
+        <div class="responsive-grid__media">
+          <ScreenshotFrame
+            src="/assets/opspilot/05-opspilot-mobile-queue-390x844.png"
+            alt={mobileAlt}
+            caption="Mobile queue — exact 390 × 844 accepted capture."
+            srcWidth={390}
+            srcHeight={844}
+          />
+        </div>
+      </div>
+    </Chapter>
+
+    <Chapter id="acceptance" title="07 · Engineering proof" ground="canvas" eyebrow="Accepted locally, not presented as production deployment">
+      <dl class="proof-grid" aria-label="OpsPilot acceptance evidence">
+        <div>
+          <dt>497</dt>
+          <dd>repository tests passed</dd>
+        </div>
+        <div>
+          <dt>59</dt>
+          <dd>targeted simulated-E2E tests passed</dd>
+        </div>
+        <div>
+          <dt>PostgreSQL 16.15</dt>
+          <dd>real-database technical acceptance</dd>
+        </div>
+        <div>
+          <dt>Alembic</dt>
+          <dd>canonical migrations reached head</dd>
+        </div>
+        <div>
+          <dt>Ruff</dt>
+          <dd>lint and format gates passed</dd>
+        </div>
+        <div>
+          <dt>strict mypy</dt>
+          <dd>backend type gate passed</dd>
+        </div>
+      </dl>
+      <p class="acceptance-note reading-width">
+        Technical acceptance used a disposable real PostgreSQL 16.15 instance. It proves
+        repository behaviour against PostgreSQL; it does not claim a production database,
+        deployment, customer traffic, provider activation, or real outbound execution.
+      </p>
+    </Chapter>
+
+    <Chapter id="role" title="08 · Role and current state" ground="surface">
+      <div class="role-grid">
+        <div>
+          <h3>My role</h3>
+          <p class="op-copy">
+            Domain-to-interface translation, responsive React implementation, product-truth
+            boundaries, accessibility, rendered QA, and acceptance evidence.
+          </p>
+        </div>
+        <div>
+          <h3>Stack</h3>
+          <p class="op-copy">
+            React 18, TypeScript 5.5, Vite 5.4, React Router, Python 3.12+, FastAPI,
+            Pydantic 2, SQLAlchemy 2, Alembic, PostgreSQL, pytest, Ruff, and mypy.
+          </p>
+        </div>
+      </div>
+      <div class="truth-callout truth-callout--quiet" role="note" aria-label="Current OpsPilot public status">
+        <strong>TECHNICALLY ACCEPTED · NOT PRODUCTION-DEPLOYED</strong>
+        <span>
+          The portfolio demo remains deterministic, fixture-backed, and simulated. No live
+          outbound send or customer-data claim is made.
+        </span>
+      </div>
+    </Chapter>
+  </ProjectCaseStudyShell>
+</BaseLayout>
+
+<style>
+  .op-hero {
+    padding-block: var(--section-spacing) var(--section-spacing-lg);
+  }
+
+  .op-hero__title {
+    max-width: 15ch;
+    font-size: var(--text-display);
+  }
+
+  .op-hero__tag {
+    color: var(--color-ink);
+    font-size: var(--text-h2);
+    font-weight: 600;
+  }
+
+  .op-hero__summary,
+  .op-copy,
+  .acceptance-note {
+    color: var(--color-ink-secondary);
+  }
+
+  .op-hero__summary {
+    font-size: var(--text-body-lg);
+  }
+
+  .op-hero__media,
+  .shot-block {
+    margin-top: var(--space-32);
+  }
+
+  .op-hero__media {
+    padding-inline: var(--gutter-mobile);
+  }
+
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+  }
+
+  .system-grid,
+  .proof-grid,
+  .role-grid {
+    display: grid;
+    gap: var(--space-16);
+  }
+
+  .system-grid,
+  .proof-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  }
+
+  .system-grid > div,
+  .proof-grid > div {
+    min-width: 0;
+    padding: var(--space-16);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-panel);
+  }
+
+  .system-grid dt,
+  .proof-grid dt {
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+
+  .system-grid dd,
+  .proof-grid dd {
+    margin-top: var(--space-4);
+    color: var(--color-ink-secondary);
+  }
+
+  .proof-grid dt {
+    font-family: var(--font-mono);
+    color: var(--color-violet-bright);
+  }
+
+  .truth-callout {
+    display: grid;
+    gap: var(--space-8);
+    padding: var(--space-16);
+    border: 1px solid var(--color-violet);
+    border-radius: var(--radius-md);
+    background: var(--color-panel);
+  }
+
+  .truth-callout strong {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.08em;
+  }
+
+  .truth-callout span {
+    color: var(--color-ink-secondary);
+  }
+
+  .truth-callout--quiet {
+    margin-top: var(--space-24);
+    border-color: var(--color-line);
+  }
+
+  .responsive-grid {
+    display: grid;
+    gap: var(--space-32);
+    align-items: start;
+  }
+
+  .responsive-grid__media {
+    width: min(100%, 390px);
+    margin-inline: auto;
+  }
+
+  .acceptance-note {
+    margin-top: var(--space-16);
+  }
+
+  .role-grid h3 {
+    margin-bottom: var(--space-8);
+    font-size: var(--text-h3);
+  }
+
+  @media (min-width: 768px) {
+    .op-hero__media {
+      padding-inline: var(--gutter-desktop);
+    }
+
+    .responsive-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 390px);
+    }
+
+    .role-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-48);
+    }
+  }
+</style>

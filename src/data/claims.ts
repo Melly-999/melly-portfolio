@@ -157,10 +157,10 @@ export const claims: readonly Claim[] = [
   {
     id: "opspilot",
     label: "OpsPilot AI",
-    status: "development",
-    href: "/#automation",
+    status: "validated",
+    href: "/projects/opspilot",
     sections: { home: "automation" },
-    source: `${PROOF} §4`,
+    source: "Accepted OpsPilot evidence pack at source SHA 235f22f; real PostgreSQL 16.15 technical acceptance",
   },
 ];
 

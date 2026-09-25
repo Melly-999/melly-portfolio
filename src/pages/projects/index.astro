@@ -1,10 +1,9 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
-import { projects, concepts } from "../../data/projects";
+import { projects } from "../../data/projects";
 
-const [yuzuki, klaus, mellycore, rag, mellytrade, workspace] = projects;
-const [automation] = concepts;
+const [yuzuki, klaus, mellycore, opsPilot, rag, mellytrade, workspace] = projects;
 ---
 
 <BaseLayout
@@ -56,15 +55,15 @@ const [automation] = concepts;
         chips={mellycore.chips}
       />
       <ProjectCard
-        weight="standard"
+        weight={opsPilot.weight}
         headingLevel={2}
-        label="Automation"
-        title={automation.title}
-        subtitle={automation.tagline}
-        description={automation.statement}
-        stack="Signal · Analysis · Qualification · Suggested action · Human review"
-        href="/#automation"
-        chips={[automation.chip]}
+        label={opsPilot.badge}
+        title={opsPilot.title}
+        subtitle={opsPilot.tagline}
+        description={opsPilot.description}
+        stack={opsPilot.stack}
+        href={opsPilot.href}
+        chips={opsPilot.chips}
       />
       <ProjectCard
         weight={rag.weight}
